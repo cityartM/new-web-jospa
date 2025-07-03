@@ -31,5 +31,6 @@
     "Package": true,
     "Installer": true,
     "Bank": true,
-    "Wallet": true
+    "Wallet": true,
+    "Frontend": true
 }

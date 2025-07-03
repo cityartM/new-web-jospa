@@ -36,7 +36,7 @@ Route::get('storage-link', function () {
 Route::group(['middleware' => ['auth']], function () {
 
 });
-Route::get('/', function () {
+Route::get('/admin', function () {
     if (auth()->user()->hasRole('employee')) {
         return redirect(RouteServiceProvider::EMPLOYEE_LOGIN_REDIRECT);
     } else {
@@ -149,13 +149,13 @@ Route::group(['prefix' => 'app', 'middleware' => 'auth'], function () {
              * Namespaces indicate folder structure.
              */
             Route::get('/', [BackendController::class, 'index'])->name('home');
-    
+
             Route::post('set-current-branch/{branch_id}', [BackendController::class, 'setCurrentBranch'])->name('set-current-branch');
             Route::post('reset-branch', [BackendController::class, 'resetBranch'])->name('reset-branch');
-    
+
             Route::group(['prefix' => ''], function () {
                 Route::get('dashboard', [BackendController::class, 'index'])->name('dashboard');
-    
+
                 /**
                  * Branch Routes
                  */
@@ -176,7 +176,7 @@ Route::group(['prefix' => 'app', 'middleware' => 'auth'], function () {
                 });
                 Route::get('branch-info', [BranchController::class, 'branchData'])->name('branchData');
                 Route::resource('branch', BranchController::class);
-    
+
                 /*
                 *
                 *  Users Routes
