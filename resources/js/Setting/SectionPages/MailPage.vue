@@ -10,13 +10,13 @@
       <InputField class="col" :is-required="true" :label="$t('setting_mail_page.lbl_username')" placeholder="youremail@gmail.com" v-model="mail_username" :error-message="errors.mail_username"></InputField>
       <InputField class="col" :is-required="true" :label="$t('setting_mail_page.lbl_password')" type="password" placeholder="Password" v-model="mail_password" :error-message="errors.mail_password"></InputField>
       <InputField class="col" :is-required="true" :label="$t('setting_mail_page.lbl_mail')" placeholder="youremail@gmail.com" v-model="mail_from" :error-message="errors.mail_from"></InputField>
-      <InputField class="col" :is-required="true" :label="$t('setting_mail_page.lbl_from_name')" placeholder="Frezka" v-model="from_name" :error-message="errors.from_name"></InputField>
+      <InputField class="col" :is-required="true" :label="$t('setting_mail_page.lbl_from_name')" placeholder="JOSPA" v-model="from_name" :error-message="errors.from_name"></InputField>
     </div>
     <div class="d-grid d-md-flex gap-3 align-items-center">
       <SubmitButton :IS_SUBMITED="IS_SUBMITED" v-if="isEmailVerified"></SubmitButton>
       <button type="button" class="btn btn-primary" :disabled="IS_VERIFY_SUBMITED" @click="verifyEmail">
         <template v-if="IS_VERIFY_SUBMITED">
-          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>    
           Verifing...
         </template>
         <template v-else>

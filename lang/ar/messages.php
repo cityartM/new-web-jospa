@@ -266,6 +266,9 @@ return [
     'top_up' => 'إعادة شحن',
     'withdraw' => 'سحب',
     'wallet_paid' => 'تم الدفع للحجز #',
-
+    'shift_added' => 'تم إضافة الشيفت بنجاح',
+    'shift_updated' => 'تم تحديث الشيفت بنجاح',
+    'shift_deleted' => 'تم حذف الشيفت بنجاح',
+    'shift_not_found' => 'لم يتم العثور على الشيفت',
 
 ];

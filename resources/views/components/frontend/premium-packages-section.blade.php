@@ -1,9 +1,19 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 <section class="py-5">
-    <div class="container" style="padding: 0 5rem;">
+    <div class="container" style="padding: 0 5rem;font-family: 'IBM Plex Sans Arabic', sans-serif !important;">
         <h2 class="mb-5 text-center" style="color: var(--primary-color); font-size: 2.5rem; font-weight: bold;">
-            Our Premium Packages
+            {{ __('messagess.our_premium_packages') }}
         </h2>
+        <div style="display: flex; align-items: center; justify-content: center; width: 100%; margin: 30px 0 45px;">
+  <div style="height: 2px; width: 50px; background: #bc9a69; border-radius: 2px;"></div>
+  <div style="margin: 0 10px; color: #bc9a69; font-size: 25px;">
+    &#10048;
+  </div>
+  <div style="height: 2px; width: 50px; background: #bc9a69; border-radius: 2px;"></div>
+</div>
 
         @if(isset($packages) && $packages->count() > 0)
             <div class="row g-4">
@@ -23,7 +33,7 @@
             </div>
         @else
             <div class="text-center py-5">
-                <p class="text-muted">No packages available at the moment.</p>
+                <p class="text-muted">{{ __('messagess.no_packages') }}</p>
             </div>
         @endif
     </div>
@@ -34,7 +44,7 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="packageModalLabel">Package Details</h5>
+        <h5 class="modal-title" id="packageModalLabel">{{ __('messagess.package_details') }}</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body" style="max-height: 400px; overflow-y: auto;">
@@ -43,7 +53,7 @@
                 <div class="spinner-border text-primary" role="status">
                     <span class="visually-hidden">Loading...</span>
                 </div>
-                <p class="mt-2">Loading package details...</p>
+                <p class="mt-2">{{ __('messagess.loading') }}</p>
             </div>
         </div>
       </div>
@@ -55,40 +65,45 @@
 <script>
   AOS.init({ once: true });
 
-  // Function to show package details
+  function __(key) {
+    const messagess = {
+      'messagess.package_details': @json(__('messagess.package_details')),
+      'messagess.loading': @json(__('messagess.loading')),
+      'messagess.included_services': @json(__('messagess.included_services')),
+      'messagess.service': @json(__('messagess.service')),
+      'messagess.price': @json(__('messagess.price')),
+      'messagess.services_included': @json(__('messagess.services_included')),
+      'messagess.services_count': @json(__('messagess.services_count')),
+      'messagess.error_loading': @json(__('messagess.error_loading')),
+    };
+    return messagess[key] || key;
+  }
+
   function showPackageDetails(packageId) {
     const modal = new bootstrap.Modal(document.getElementById('packageModal'));
     const contentDiv = document.getElementById('packageDetailsContent');
 
-    // Show loading state
     contentDiv.innerHTML = `
       <div class="text-center">
         <div class="spinner-border text-primary" role="status">
           <span class="visually-hidden">Loading...</span>
         </div>
-        <p class="mt-2">Loading package details...</p>
+        <p class="mt-2">${__('messagess.loading')}</p>
       </div>
     `;
 
-    // Prevent scrolling to top by storing current scroll position
     const scrollPos = window.pageYOffset || document.documentElement.scrollTop;
-
     modal.show();
-
-    // Restore scroll position after modal opens
     setTimeout(() => {
       window.scrollTo(0, scrollPos);
     }, 100);
 
-    // Fetch package details from API
     fetch(`/api/v1/packages/${packageId}`)
       .then(response => response.json())
       .then(data => {
         if (data.status && data.data) {
           const package = data.data;
           let servicesHtml = '';
-
-          // Get package image from media array
           const packageImage = package.media && package.media.length > 0 ?
             package.media[0].original_url :
             '{{ asset("images/frontend/slider1.webp") }}';
@@ -96,12 +111,12 @@
           if (package.service && package.service.length > 0) {
             servicesHtml = `
               <div class="mt-3">
-                <h6>Included Services:</h6>
+                <h6>${__('messagess.included_services')}</h6>
                 <ul class="list-unstyled">
                   ${package.service.map(ps => `
                     <li class="mb-2">
                       <i class="fas fa-check text-success me-2"></i>
-                      ${ps.services ? ps.services.name : 'Service'}
+                      ${ps.services ? ps.services.name : __('messagess.service')}
                       ${ps.services ? `(${ps.services.duration_min} min)` : ''}
                     </li>
                   `).join('')}
@@ -117,15 +132,15 @@
               </div>
               <div class="col-md-6">
                 <h4 class="text-primary mb-3">${package.name}</h4>
-                <p class="text-muted mb-3">${package.description || 'No description available.'}</p>
+                <p class="text-muted mb-3">${package.description || __('messagess.no_packages')}</p>
                 <div class="row mb-3">
                   <div class="col-6">
-                    <strong>Price:</strong><br>
+                    <strong>${__('messagess.price')}</strong><br>
                     <span class="text-primary h5">SR ${parseFloat(package.package_price || 0).toFixed(2)}</span>
                   </div>
                   <div class="col-6">
-                    <strong>Services Included:</strong><br>
-                    <span class="badge bg-secondary">${package.service ? package.service.length : 0} services</span>
+                    <strong>${__('messagess.services_included')}</strong><br>
+                    <span class="badge bg-secondary">${package.service ? package.service.length : 0} ${__('messagess.services_count')}</span>
                   </div>
                 </div>
                 ${servicesHtml}
@@ -135,7 +150,7 @@
         } else {
           contentDiv.innerHTML = `
             <div class="text-center text-danger">
-              <p>Error loading package details. Please try again.</p>
+              <p>${__('messagess.error_loading')}</p>
             </div>
           `;
         }
@@ -144,23 +159,19 @@
         console.error('Error:', error);
         contentDiv.innerHTML = `
           <div class="text-center text-danger">
-            <p>Error loading package details. Please try again.</p>
+            <p>${__('messagess.error_loading')}</p>
           </div>
         `;
       });
   }
 
-  // Fix modal backdrop issue
   document.addEventListener('DOMContentLoaded', function() {
     const packageModal = document.getElementById('packageModal');
 
     if (packageModal) {
       packageModal.addEventListener('hidden.bs.modal', function () {
-        // Remove any remaining backdrop
         const backdrops = document.querySelectorAll('.modal-backdrop');
         backdrops.forEach(backdrop => backdrop.remove());
-
-        // Remove modal-open class from body
         document.body.classList.remove('modal-open');
         document.body.style.paddingRight = '';
         document.body.style.overflow = '';

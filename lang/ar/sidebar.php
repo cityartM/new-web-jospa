@@ -50,8 +50,8 @@ return [
     'all_product' => 'جميع المنتجات',
     'orders_report' => 'تقرير الطلب',
     'promotion' => 'ترويج',
-    'package' => 'حزم',
-    'client_packages' => 'حزم العملاء',
-    'customer_packages' => 'حزم الزبائن'
+    'package' => 'الباقات',
+    'client_packages' => 'باقات العملاء',
+    'customer_packages' => 'باقات الزبائن'
 
 ];

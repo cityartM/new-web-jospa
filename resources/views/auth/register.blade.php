@@ -16,7 +16,7 @@
         <!-- Social login -->
         <x-auth-social-login />
 
-        <form method="POST" action="{{ route('register') }}">
+        <form method="POST" action="{{ route('register.store') }}">
             @csrf
 
             <!-- First Name -->

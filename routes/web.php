@@ -15,6 +15,12 @@ use App\Http\Controllers\RolePermission;
 use App\Http\Controllers\SearchController;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\HomeBookingController;
+use App\Http\Controllers\SaloneBookController;
+use App\Http\Controllers\GiftCardController;
+use App\Http\Controllers\BookingCartController;
+use App\Models\BookingCart;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +32,124 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+
+//    Payment API
+
+Route::get('/pay-now', [HomeBookingController::class, 'createPayment']);
+
+Route::get('/payment-success', [HomeBookingController::class, 'handlePaymentResult']);
+
+
+  
+
+
+//    SMS API
+
+Route::post('/send-sms', [HomeBookingController::class, 'send']);
+
+
+
+Route::get('/register', function () {return view('auth.register');})->name('frontend.register');
+
+Route::post('/frontend/register', [SignController::class, 'store'])->name('register.store');
+
+Route::get('/login', function () {return view('auth.login');})->name('frontend.register');
+
+
+
+
+
+Route::get('/homeService', function () {
+    return view('home.create');
+})->name('home.create');
+ 
+Route::get('/details/{id}', [SaloneBookController::class, 'show'])->name('home.details');
+
+ 
+Route::get('/salonService', function () {
+    return view('salon.create');
+})->name('salon.create');
+
+
+
+Route::get('/giffte', function () {
+    return view('salon.gift');
+})->name('gift.page');
+Route::post('/gift-cards', [GiftCardController::class, 'store'])->name('gift.create');
+
+
+Route::get('/ads', function () {
+    return view('components.frontend.ads');
+})->name('ads.page');
+
+Route::get('/cart', function () {
+    
+    $cartItems = BookingCart::where('customer_id', 1)->get();
+
+    return view('components.frontend.cart', compact('cartItems'));
+})->name('cart.page');
+
+
+Route::post('/cart', [BookingCartController::class, 'store'])->name('cart.store');
+
+Route::delete('/cart/{id}', [BookingCartController::class, 'destroy'])->name('cart.destroy');
+
+
+
+Route::get('/service-groups/{gender}', [HomeBookingController::class, 'getServiceGroups']);
+Route::get('/services/{serviceGroupId}', [HomeBookingController::class, 'getServicesByGroup']);
+Route::get('/staff', [HomeBookingController::class, 'index']);
+Route::post('/bookings', [HomeBookingController::class, 'store'])->name('bookings.store');
+
+Route::get('/available/{date}/{staffId}', [HomeBookingController::class, 'getAvailableTimes']);
+
+
+
+Route::get('language/{language}', [LanguageController::class, 'switch'])->name('change.lang');
+
+// Clear config cache
+Route::get('/clear-config', function () {
+    Artisan::call('config:clear');
+    return 'Config cache cleared!';
+});
+
+// Clear application cache
+Route::get('/clear-cache', function () {
+    Artisan::call('cache:clear');
+    return 'Application cache cleared!';
+});
+
+// Clear route cache
+Route::get('/clear-route', function () {
+    Artisan::call('route:clear');
+    return 'Route cache cleared!';
+});
+Route::get('/modules-list', function () {
+    // تنفذ أمر list modules وتلتقط النتيجة
+    Artisan::call('module:list');
+    $output = Artisan::output();
+
+    // ترجع النتيجة كـ plain text (أو تقدر تعرضها في view)
+    return nl2br($output);
+});
+
+// Clear compiled views
+Route::get('/clear-view', function () {
+    Artisan::call('view:clear');
+    return 'View cache cleared!';
+});
+
+// Clear all caches together
+Route::get('/clear-all', function () {
+    Artisan::call('config:clear');
+    Artisan::call('cache:clear');
+    Artisan::call('route:clear');
+    Artisan::call('view:clear');
+    return 'All caches cleared!';
+});
+
+
 
 // Auth Routes
 require __DIR__.'/auth.php';

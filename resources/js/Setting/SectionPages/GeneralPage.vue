@@ -40,7 +40,7 @@
           </div>
           <div class="col-lg-8">
             <div class="d-flex align-items-center gap-2">
-              <input type="file" ref="logoInputRef" class="form-control d-none" id="logo" name="logo" accept=".jpeg, .jpg, .png, .gif" @change="changeLogo" />
+              <input type="file" ref="logoInputRef" class="form-control d-none" id="logo" name="logo" accept=".jpeg, .jpg, .png, .gif , .webp" @change="changeLogo" />
               <label class="btn btn-primary mb-5" for="logo">{{ $t('messages.upload') }}</label>
               <input type="button" class="btn btn-danger mb-5" name="remove" value="Remove" @click="removeLogo()" v-if="logo" />
             </div>
@@ -61,7 +61,7 @@
           </div>
           <div class="col-lg-8">
             <div class="d-flex align-items-center gap-2">
-              <input type="file" ref="logoMiniInputRef" class="form-control d-none" id="mini-logo" name="mini_logo" accept=".jpeg, .jpg, .png, .gif" @change="changeMiniLogo" />
+              <input type="file" ref="logoMiniInputRef" class="form-control d-none" id="mini-logo" name="mini_logo" accept=".jpeg, .jpg, .png, .gif , .webp" @change="changeMiniLogo" />
               <label class="btn btn-primary mb-5" for="mini-logo">{{ $t('messages.upload') }}</label>
               <input type="button" class="btn btn-danger mb-5" name="remove" value="Remove" @click="removeMiniLogo()" v-if="mini_logo" />
             </div>
@@ -82,7 +82,7 @@
           </div>
           <div class="col-lg-8">
             <div class="d-flex align-items-center gap-2">
-              <input type="file" ref="darkLogoInputRef" class="form-control d-none" id="dark-logo" name="dark_logo" accept=".jpeg, .jpg, .png, .gif" @change="changeDarkLogo" />
+              <input type="file" ref="darkLogoInputRef" class="form-control d-none" id="dark-logo" name="dark_logo" accept=".jpeg, .jpg, .png, .gif , .webp" @change="changeDarkLogo" />
               <label class="btn btn-primary mb-5" for="dark-logo">{{ $t('messages.upload') }}</label>
               <input type="button" class="btn btn-danger mb-5" name="remove" value="Remove" @click="removeDarkLogo()" v-if="dark_logo" />
             </div>
@@ -103,7 +103,7 @@
           </div>
           <div class="col-lg-8">
             <div class="d-flex align-items-center gap-2">
-              <input type="file" ref="darkLogoMiniInputRef" class="form-control d-none" id="dark-mini-logo" name="dark_mini_logo" accept=".jpeg, .jpg, .png, .gif" @change="changeDarkMiniLogo" />
+              <input type="file" ref="darkLogoMiniInputRef" class="form-control d-none" id="dark-mini-logo" name="dark_mini_logo" accept=".jpeg, .jpg, .png, .gif , .webp" @change="changeDarkMiniLogo" />
               <label class="btn btn-primary mb-5" for="dark-mini-logo">{{ $t('messages.upload') }}</label>
               <input type="button" class="btn btn-danger mb-5 mb-5" name="remove" value="Remove" @click="removeDarkMiniLogo()" v-if="dark_mini_logo" />
             </div>
@@ -124,7 +124,7 @@
           </div>
           <div class="col-lg-8">
             <div class="d-flex align-items-center gap-2">
-              <input type="file" ref="faviconInputRef" class="form-control d-none" id="favicon-logo" name="favicon" accept=".jpeg, .jpg, .png, .gif" @change="changeFavicon" />
+              <input type="file" ref="faviconInputRef" class="form-control d-none" id="favicon-logo" name="favicon" accept=".jpeg, .jpg, .png, .gif , .webp" @change="changeFavicon" />
               <label class="btn btn-primary mb-5" for="favicon-logo">{{ $t('messages.upload') }}</label>
               <input type="button" class="btn btn-danger mb-5" name="remove" value="Remove" @click="removeFavicon()" v-if="favicon" />
             </div>
@@ -150,11 +150,11 @@ import * as yup from 'yup'
 import { useRequest } from '@/helpers/hooks/useCrudOpration'
 import SubmitButton from './Forms/SubmitButton.vue'
 
-const DEFAULT_LOGO = document.querySelector('[name="logo"]').value
-const DEFAULT_MINI_LOGO = document.querySelector('[name="mini-logo"]').value
-const DEFAULT_DARK_LOGO = document.querySelector('[name="dark-logo"]').value
-const DEFAULT_DARK_MINI_LOGO = document.querySelector('[name="dark-mini-logo"]').value
-const DEFAULT_FAVICON = document.querySelector('[name="favicon"]').value
+const DEFAULT_LOGO = '/images/JOSPA.webp'
+const DEFAULT_MINI_LOGO = '/images/JOSPA.webp'
+const DEFAULT_DARK_LOGO = '/images/JOSPA.webp'
+const DEFAULT_DARK_MINI_LOGO = '/images/JOSPA.webp'
+const DEFAULT_FAVICON = '/images/JOSPA.webp'
 const IS_SUBMITED = ref(false)
 
 const { storeRequest,deleteRequest  } = useRequest()
@@ -179,60 +179,60 @@ const fileUpload = async (e, { imageViewerBS64, changeFile }) => {
   changeFile.value = file
 }
 // Function to delete Images
-const removeImage = ({ imageViewerBS64, changeFile }) => {
-  imageViewerBS64.value = null
+const removeImage = ({ imageViewerBS64, changeFile, defaultImage }) => {
+  imageViewerBS64.value = defaultImage
   changeFile.value = null
 }
 
 const logoViewer = ref(DEFAULT_LOGO)
 const changeLogo = (e) => fileUpload(e, { imageViewerBS64: logoViewer, changeFile: logo })
-const removeLogo = () => removeImage({ imageViewerBS64: logoViewer, changeFile: logo })
+const removeLogo = () => removeImage({ imageViewerBS64: logoViewer, changeFile: logo, defaultImage: DEFAULT_LOGO })
 
 const miniLogoViewer = ref(DEFAULT_MINI_LOGO)
 const changeMiniLogo = (e) => fileUpload(e, { imageViewerBS64: miniLogoViewer, changeFile: mini_logo })
-const removeMiniLogo = () => removeImage({ imageViewerBS64: miniLogoViewer, changeFile: mini_logo })
+const removeMiniLogo = () => removeImage({ imageViewerBS64: miniLogoViewer, changeFile: mini_logo, defaultImage: DEFAULT_MINI_LOGO })
 
 const darkLogoViewer = ref(DEFAULT_DARK_LOGO)
 const changeDarkLogo = (e) => fileUpload(e, { imageViewerBS64: darkLogoViewer, changeFile: dark_logo })
-const removeDarkLogo = () => removeImage({ imageViewerBS64: darkLogoViewer, changeFile: dark_logo })
+const removeDarkLogo = () => removeImage({ imageViewerBS64: darkLogoViewer, changeFile: dark_logo, defaultImage: DEFAULT_DARK_LOGO })
 
 const darkMiniLogoViewer = ref(DEFAULT_DARK_MINI_LOGO)
 const changeDarkMiniLogo = (e) => fileUpload(e, { imageViewerBS64: darkMiniLogoViewer, changeFile: dark_mini_logo })
-const removeDarkMiniLogo = () => removeImage({ imageViewerBS64: darkMiniLogoViewer, changeFile: dark_mini_logo })
+const removeDarkMiniLogo = () => removeImage({ imageViewerBS64: darkMiniLogoViewer, changeFile: dark_mini_logo, defaultImage: DEFAULT_DARK_MINI_LOGO })
 
 const faviconViewer = ref(DEFAULT_FAVICON)
 const changeFavicon = (e) => fileUpload(e, { imageViewerBS64: faviconViewer, changeFile: favicon })
-const removeFavicon = () => removeImage({ imageViewerBS64: faviconViewer, changeFile: favicon })
+const removeFavicon = () => removeImage({ imageViewerBS64: faviconViewer, changeFile: favicon, defaultImage: DEFAULT_FAVICON })
 
 //  Reset Form
 const setFormData = (data) => {
-  ;(logoViewer.value = data.logo),
-    (miniLogoViewer.value = data.mini_logo),
-    (darkLogoViewer.value = data.dark_logo),
-    (darkMiniLogoViewer.value = data.dark_mini_logo),
-    (faviconViewer.value = data.favicon),
+  ;(logoViewer.value = data.logo || DEFAULT_LOGO),
+    (miniLogoViewer.value = data.mini_logo || DEFAULT_MINI_LOGO),
+    (darkLogoViewer.value = data.dark_logo || DEFAULT_DARK_LOGO),
+    (darkMiniLogoViewer.value = data.dark_mini_logo || DEFAULT_DARK_MINI_LOGO),
+    (faviconViewer.value = data.favicon || DEFAULT_FAVICON),
     resetForm({
       values: {
-        app_name: data.app_name,
-        footer_text: data.footer_text,
-        ui_text: data.ui_text,
-        copyright_text: data.copyright_text,
-        helpline_number: data.helpline_number,
-        inquriy_email: data.inquriy_email,
-        site_description: data.site_description,
+        app_name: data.app_name || '',
+        footer_text: data.footer_text || '',
+        ui_text: data.ui_text || '',
+        copyright_text: data.copyright_text || '',
+        helpline_number: data.helpline_number || '',
+        inquriy_email: data.inquriy_email || '',
+        site_description: data.site_description || '',
         logo: '',
         mini_logo: '',
         dark_logo: '',
         dark_mini_logo: '',
         favicon: '',
-        bussiness_address_line_1: data.bussiness_address_line_1,
-        bussiness_address_line_2: data.bussiness_address_line_2,
-        bussiness_address_country: data.bussiness_address_country,
-        bussiness_address_state: data.bussiness_address_state,
-        bussiness_address_city: data.bussiness_address_city,
-        bussiness_address_postal_code: data.bussiness_address_postal_code,
-        bussiness_address_latitude: data.bussiness_address_latitude,
-        bussiness_address_longitude: data.bussiness_address_longitude
+       bussiness_address_line_1: data.bussiness_address_line_1 || '',
+        bussiness_address_line_2: data.bussiness_address_line_2 || '',
+        bussiness_address_country: data.bussiness_address_country || '',
+        bussiness_address_state: data.bussiness_address_state || '',
+        bussiness_address_city: data.bussiness_address_city || '',
+        bussiness_address_postal_code: data.bussiness_address_postal_code || '',
+        bussiness_address_latitude: data.bussiness_address_latitude || '',
+        bussiness_address_longitude: data.bussiness_address_longitude || ''
       }
     })
 }

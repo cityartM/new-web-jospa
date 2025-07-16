@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'lbl_firebase' => 'فايربيز',
     'lbl_google_login' => 'تسجيل الدخول بواسطة جوجل',
     'lbl_secret_key' => 'المفتاح السري',
     'lbl_public_key' => 'المفتاح العام',

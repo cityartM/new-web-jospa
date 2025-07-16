@@ -124,10 +124,7 @@
         <!-- Title and Booking Button -->
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h1 class="category-title">{{ $category->name }}</h1>
-            <a href="#" class="booking-btn">
-                <i class="fas fa-calendar-plus"></i>
-                Booking
-            </a>
+
         </div>
 
         <!-- Description and Image Section -->

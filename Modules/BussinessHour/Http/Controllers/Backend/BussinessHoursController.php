@@ -52,9 +52,27 @@ class BussinessHoursController extends Controller
      */
     public function index_list(Request $request)
     {
+        $query = BussinessHour::query();
         $branch_id = $request->branch_id;
+        $shift_id = $request->shift_id;
 
-        $data = BussinessHour::where('branch_id', $branch_id)->get();
+        if (!$branch_id || $branch_id == 'undefined') {
+            return response()->json([
+                'data' => [],
+                'status' => true,
+                'message' => 'Branch ID is required'
+            ]);
+        }
+        if ($branch_id && $branch_id != 'undefined') {
+            $query->where('branch_id', $request->branch_id);
+        }
+
+        if ( $shift_id && $shift_id != 'undefined') {
+            
+            $query->where('shift_id', $request->shift_id);
+        }
+
+        $data = $query->get();
 
         return response()->json(['data' => $data, 'status' => true]);
     }

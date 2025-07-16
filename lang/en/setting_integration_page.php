@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'lbl_firebase' => 'Firebase',
     'lbl_google_login' => 'Google Login',
     'lbl_secret_key' => 'Secret Key',
     'lbl_public_key' => 'Public key',

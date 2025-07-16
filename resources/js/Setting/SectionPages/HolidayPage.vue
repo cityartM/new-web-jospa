@@ -117,7 +117,18 @@ const calendarOptions = ref({
   },
   dateClick: handleDateClick,
   initialView: 'multiMonthYear',
-  events: events.value
+  events: events.value,
+  locale: 'ar',
+  buttonText: {
+    prev: 'السابق',
+    next: 'التالي',
+    today: 'اليوم',
+    month: 'شهر',
+    week: 'أسبوع',
+    day: 'يوم'
+  },
+  dayHeaderFormat: { weekday: 'long' },
+  titleFormat: { month: 'long', year: 'numeric' }
 })
 
 //Form Submit

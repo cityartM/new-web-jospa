@@ -37,12 +37,12 @@
                                   </label>
                                 </div>
 
-                                <div class="form-check form-check-inline">
+                                 <!-- <div class="form-check form-check-inline">
                                   <input class="form-check-input" type="radio" name="gender" v-model="gender" id="other" value="other">
                                   <label class="form-check-label" for="other">
                                     {{ $t('messages.intersex') }}
                                   </label>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>

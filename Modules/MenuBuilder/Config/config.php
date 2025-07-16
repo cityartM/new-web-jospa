@@ -220,7 +220,7 @@ return [
         [
             'title' => 'sidebar.system',
             'menu_item_type' => 'static',
-            'permission' => ['setting_general', 'setting_misc', 'setting_quick_booking', 'setting_custom_code', 'setting_customization', 'setting_mail', 'setting_notification', 'setting_intigrations', 'setting_custom_fields', 'setting_currency', 'setting_commission', 'setting_holiday', 'setting_bussiness_hours', 'setting_payment_method', 'setting_language', 'setting_menu_builder', 'view_page', 'view_app_banner', 'view_role_permissions'],
+            'permission' => ['setting_general', 'setting_misc', 'setting_quick_booking', 'setting_custom_code', 'setting_customization', 'setting_mail', 'setting_notification', 'setting_intigrations', 'setting_custom_fields', 'setting_currency', 'setting_commission', 'setting_holiday', 'setting_bussiness_hours','setting_shifts_bussiness','setting_work_hours', 'setting_payment_method', 'setting_language', 'setting_menu_builder', 'view_page', 'view_app_banner', 'view_role_permissions'],
             'order' => 22,
         ],
         [

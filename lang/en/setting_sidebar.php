@@ -14,6 +14,9 @@ return [
     'lbl_commission' => 'Commission',
     'lbl_holiday' => 'Holiday',
     'lbl_bussiness' => 'Business Hours',
+    'lbl_shifts_bussiness' => 'Shifts Business Hours', 
+     // ✅ متغير جديد لفترة العمل
+    'lbl_work_hours' => 'Work Hours',
     'lbl_payment' => 'Payment Method',
     'lbl_language' => 'Language Settings',
     'lbl_menu' => 'Menu Builder',

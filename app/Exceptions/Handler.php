@@ -39,6 +39,16 @@ class Handler extends ExceptionHandler
             //
         });
     }
+    
+    public function render($request, Throwable $exception)
+{
+    if ($exception instanceof \Illuminate\Auth\Access\AuthorizationException) {
+        dd('403 from authorization', $exception->getMessage());
+    }
+
+    return parent::render($request, $exception);
+}
+
 
     protected function unauthenticated($request, AuthenticationException $exception)
     {

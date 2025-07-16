@@ -271,4 +271,8 @@ return [
     'messages' => 'Messages',
     'amount_withdrawn' => 'Amount Withdrawn',
     'wallet_paid_order'=>'Paid for order #',
+    'shift_added' => 'Shift added successfully',
+    'shift_updated' => 'Shift updated successfully',
+    'shift_deleted' => 'Shift deleted successfully',
+    'shift_not_found' => 'Shift not found',
 ];

@@ -5,8 +5,13 @@
     </div>
     <div class="form-group col-12" v-if="branch.options.length > 1">
       <label class="form-label">{{ $t('setting_business_hours.lbl_name') }}<span class="text-danger">*</span></label>
-      <Multiselect id="branch_id" v-model="branch_id" v-bind="singleSelectOption" :options="branch.options" @select="branchSelect" class="form-group"></Multiselect>
+      <Multiselect id="branch_id" v-model="branch_id" v-bind="singleSelectOption" :options="branch.options" @select="loadBusinessHours" class="form-group"></Multiselect>
       <span class="text-danger">{{ errors.branch_id }}</span>
+    </div>
+    <div class="form-group col-12" v-if="shift.options.length > 1">
+      <label class="form-label">{{ $t('setting_business_hours.lbl_shift_name') }}<span class="text-danger">*</span></label>
+      <Multiselect id="shift_id" v-model="shift_id" v-bind="singleSelectOption" :options="shift.options" @select="loadBusinessHours" class="form-group"></Multiselect>
+      <span class="text-danger">{{ errors.shift_id }}</span>
     </div>
     <ul class="data-scrollbar list-group list-group-flush">
       <li v-for="(day, index) in weekdays" class="form-group col-md-12 list-group-item" :key="++index">
@@ -54,6 +59,7 @@
 import { ref, onMounted } from 'vue'
 import CardTitle from '@/Setting/Components/CardTitle.vue'
 import { BRANCH_LIST } from '@/vue/constants/branch'
+import { SHIFT_LIST } from '@/vue/constants/shift'
 import { LISTING_URL, STORE_URL } from '@/vue/constants/busssiness_hours'
 import { useRequest } from '@/helpers/hooks/useCrudOpration'
 import { useSelect } from '@/helpers/hooks/useSelect'
@@ -87,14 +93,19 @@ const config = ref({
 const { storeRequest, getRequest } = useRequest()
 
 const validationSchema = yup.object({
-  branch_id: yup.number().required()
+  branch_id: yup.number().required(),
+  shift_id: yup.number().required()
+
 })
 
 const { handleSubmit, errors } = useForm({ validationSchema })
 
 const { value: branch_id } = useField('branch_id')
+const { value: shift_id } = useField('shift_id')
 
 const branch = ref({ options: [], list: [] })
+const shift = ref({ options: [], list: [] })
+
 
 // message
 const display_submit_message = (res) => {
@@ -111,20 +122,30 @@ onMounted(() => {
     branch.value = data
     if (data.options.length === 1) {
       branch_id.value = data.options[0].value
-      branchSelect()
+      // branchSelect()
+      loadBusinessHours()
     }
   })
+
+  useSelect({ url: SHIFT_LIST }, { value: 'id', label: 'name' }).then((data) => {
+    shift.value = data
+    if (data.options.length === 1) {
+      shift_id.value = data.options[0].value
+      loadBusinessHours()
+    }
+  })
+
 })
 
 const defaultData = () => {
   return [
+    { day: 'saturday', start_time: moment().set({ hour: 9, minute: 0, second: 0 }).format('HH:mm'), end_time: moment().set({ hour: 18, minute: 0, second: 0 }).format('HH:mm'), is_holiday: false, breaks: [] },
+    { day: 'sunday', start_time: moment().set({ hour: 9, minute: 0, second: 0 }).format('HH:mm'), end_time: moment().set({ hour: 18, minute: 0, second: 0 }).format('HH:mm'), is_holiday: false, breaks: [] },
     { day: 'monday', start_time: moment().set({ hour: 9, minute: 0, second: 0 }).format('HH:mm'), end_time: moment().set({ hour: 18, minute: 0, second: 0 }).format('HH:mm'), is_holiday: false, breaks: [] },
     { day: 'tuesday', start_time: moment().set({ hour: 9, minute: 0, second: 0 }).format('HH:mm'), end_time: moment().set({ hour: 18, minute: 0, second: 0 }).format('HH:mm'), is_holiday: false, breaks: [] },
     { day: 'wednesday', start_time: moment().set({ hour: 9, minute: 0, second: 0 }).format('HH:mm'), end_time: moment().set({ hour: 18, minute: 0, second: 0 }).format('HH:mm'), is_holiday: false, breaks: [] },
     { day: 'thursday', start_time: moment().set({ hour: 9, minute: 0, second: 0 }).format('HH:mm'), end_time: moment().set({ hour: 18, minute: 0, second: 0 }).format('HH:mm'), is_holiday: false, breaks: [] },
     { day: 'friday', start_time: moment().set({ hour: 9, minute: 0, second: 0 }).format('HH:mm'), end_time: moment().set({ hour: 18, minute: 0, second: 0 }).format('HH:mm'), is_holiday: false, breaks: [] },
-    { day: 'saturday', start_time: moment().set({ hour: 9, minute: 0, second: 0 }).format('HH:mm'), end_time: moment().set({ hour: 18, minute: 0, second: 0 }).format('HH:mm'), is_holiday: false, breaks: [] },
-    { day: 'sunday', start_time: moment().set({ hour: 9, minute: 0, second: 0 }).format('HH:mm'), end_time: moment().set({ hour: 18, minute: 0, second: 0 }).format('HH:mm'), is_holiday: false, breaks: [] }
   ]
 }
 const weekdays = ref(defaultData())
@@ -140,10 +161,11 @@ const handleCopy = () => {
   })
 }
 
-const branchSelect = (e) => {
-  const branchId = branch_id.value
 
-  getRequest({ url: LISTING_URL, id: { branch_id: branchId } }).then((res) => {
+const loadBusinessHours = (e) => {
+  const branchId = branch_id.value
+  const shiftId  = shift_id.value
+  getRequest({ url: LISTING_URL, id: { branch_id: branchId ,shift_id: shiftId} }).then((res) => {
     if (res.status) {
       if (res.data != '') {
         weekdays.value = res.data
@@ -153,6 +175,20 @@ const branchSelect = (e) => {
     }
   })
 }
+
+// const branchSelect = (e) => {
+//   const branchId = branch_id.value
+
+//   getRequest({ url: LISTING_URL, id: { branch_id: branchId } }).then((res) => {
+//     if (res.status) {
+//       if (res.data != '') {
+//         weekdays.value = res.data
+//       } else {
+//         weekdays.value = defaultData()
+//       }
+//     }
+//   })
+// }
 
 const breaks = ref([])
 
@@ -169,6 +205,7 @@ const formSubmit = handleSubmit((values) => {
   IS_SUBMITED.value = true
   values.weekdays = weekdays.value
   values.branch_id = branch_id.value
+  values.shift_id = shift_id.value
 
   storeRequest({ url: STORE_URL, body: values }).then((res) => {
     if (res.status) {

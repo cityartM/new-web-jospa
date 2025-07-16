@@ -96,7 +96,7 @@ export default {
       const obj = {
         value: 'theme-color-default',
         colors: {
-          "--{{prefix}}primary": "#a7398b",
+          "--{{prefix}}primary": "#bf9456",
           "--{{prefix}}secondary": "#19235A",
         }
       }

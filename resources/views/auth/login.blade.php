@@ -39,7 +39,6 @@
 <!-- Custom error message for invalid email format -->
 <span id="emailError" class="text-danger" style="display: none;">Invalid email format</span>
             </div>
-
             <!-- Password -->
             <div class="mt-4">
                 <x-label for="password" :value="__('Password')" />

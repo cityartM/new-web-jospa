@@ -49,6 +49,7 @@
         }
     }
     .logo-main{
+        overflow: hidden;
         .logo-mini{
             min-height: 30px;
             height: 30px;
@@ -101,6 +102,7 @@
         }
     } 
     .logo-main{
+        overflow: hidden;
         .dark-normal{
             transition: all 0.3s ease-in-out;
             opacity: 0;

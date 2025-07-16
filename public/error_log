@@ -1,0 +1,110 @@
+[11-Jul-2025 21:23:26 UTC] PHP Fatal error:  Cannot use App\Models\HomeBookService as HomeBookService because the name is already in use in /home/tayasmart/jospa.tayasmart.com/jospa/app/Http/Controllers/HomeBookingController.php on line 12
+[11-Jul-2025 21:26:59 UTC] PHP Fatal error:  Cannot use App\Models\HomeBookService as HomeBookService because the name is already in use in /home/tayasmart/jospa.tayasmart.com/jospa/app/Http/Controllers/HomeBookingController.php on line 12
+[11-Jul-2025 21:27:05 UTC] PHP Fatal error:  Cannot use App\Models\HomeBookService as HomeBookService because the name is already in use in /home/tayasmart/jospa.tayasmart.com/jospa/app/Http/Controllers/HomeBookingController.php on line 12
+[11-Jul-2025 21:27:15 UTC] PHP Fatal error:  Cannot use App\Models\HomeBookService as HomeBookService because the name is already in use in /home/tayasmart/jospa.tayasmart.com/jospa/app/Http/Controllers/HomeBookingController.php on line 12
+[11-Jul-2025 21:27:29 UTC] PHP Fatal error:  Cannot use App\Models\HomeBookService as HomeBookService because the name is already in use in /home/tayasmart/jospa.tayasmart.com/jospa/app/Http/Controllers/HomeBookingController.php on line 12
+[11-Jul-2025 21:27:41 UTC] PHP Fatal error:  Cannot use App\Models\HomeBookService as HomeBookService because the name is already in use in /home/tayasmart/jospa.tayasmart.com/jospa/app/Http/Controllers/HomeBookingController.php on line 12
+[11-Jul-2025 21:28:33 UTC] PHP Fatal error:  Cannot use App\Models\HomeBookService as HomeBookService because the name is already in use in /home/tayasmart/jospa.tayasmart.com/jospa/app/Http/Controllers/HomeBookingController.php on line 12
+[11-Jul-2025 21:30:49 UTC] PHP Fatal error:  Cannot use App\Models\HomeBookService as HomeBookService because the name is already in use in /home/tayasmart/jospa.tayasmart.com/jospa/app/Http/Controllers/HomeBookingController.php on line 12
+[11-Jul-2025 21:30:56 UTC] PHP Fatal error:  Cannot use App\Models\HomeBookService as HomeBookService because the name is already in use in /home/tayasmart/jospa.tayasmart.com/jospa/app/Http/Controllers/HomeBookingController.php on line 12
+[13-Jul-2025 14:01:34 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function dd() in /home/tayasmart/jospa.tayasmart.com/index.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/tayasmart/jospa.tayasmart.com/index.php on line 8
+[13-Jul-2025 14:01:55 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function dd() in /home/tayasmart/jospa.tayasmart.com/index.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/tayasmart/jospa.tayasmart.com/index.php on line 8
+[13-Jul-2025 14:01:56 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function dd() in /home/tayasmart/jospa.tayasmart.com/index.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/tayasmart/jospa.tayasmart.com/index.php on line 8
+[13-Jul-2025 14:01:57 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function dd() in /home/tayasmart/jospa.tayasmart.com/index.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/tayasmart/jospa.tayasmart.com/index.php on line 8
+[13-Jul-2025 14:01:58 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function dd() in /home/tayasmart/jospa.tayasmart.com/index.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/tayasmart/jospa.tayasmart.com/index.php on line 8
+[13-Jul-2025 14:01:58 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function dd() in /home/tayasmart/jospa.tayasmart.com/index.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/tayasmart/jospa.tayasmart.com/index.php on line 8
+[13-Jul-2025 14:01:58 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function dd() in /home/tayasmart/jospa.tayasmart.com/index.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/tayasmart/jospa.tayasmart.com/index.php on line 8
+[13-Jul-2025 14:01:58 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function dd() in /home/tayasmart/jospa.tayasmart.com/index.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/tayasmart/jospa.tayasmart.com/index.php on line 8
+[13-Jul-2025 14:02:13 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function dd() in /home/tayasmart/jospa.tayasmart.com/index.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/tayasmart/jospa.tayasmart.com/index.php on line 8
+[13-Jul-2025 14:02:18 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function dd() in /home/tayasmart/jospa.tayasmart.com/index.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/tayasmart/jospa.tayasmart.com/index.php on line 8
+[14-Jul-2025 09:23:14 UTC] PHP Fatal error:  Cannot declare class App\Http\Controllers\HomeBookingController, because the name is already in use in /home/tayasmart/jospa.tayasmart.com/jospa/app/Http/Controllers/SaloneBookController.php on line 11
+[14-Jul-2025 09:24:14 UTC] PHP Fatal error:  Cannot declare class App\Http\Controllers\HomeBookingController, because the name is already in use in /home/tayasmart/jospa.tayasmart.com/jospa/app/Http/Controllers/SaloneBookController.php on line 11
+[14-Jul-2025 09:33:34 UTC] PHP Fatal error:  Cannot declare class App\Http\Controllers\HomeBookingController, because the name is already in use in /home/tayasmart/jospa.tayasmart.com/jospa/app/Http/Controllers/SaloneBookController.php on line 13
+[14-Jul-2025 09:34:20 UTC] PHP Fatal error:  Cannot declare class App\Http\Controllers\HomeBookingController, because the name is already in use in /home/tayasmart/jospa.tayasmart.com/jospa/app/Http/Controllers/SaloneBookController.php on line 13
+[14-Jul-2025 09:34:27 UTC] PHP Fatal error:  Cannot declare class App\Http\Controllers\HomeBookingController, because the name is already in use in /home/tayasmart/jospa.tayasmart.com/jospa/app/Http/Controllers/SaloneBookController.php on line 13
+[14-Jul-2025 09:34:31 UTC] PHP Fatal error:  Cannot declare class App\Http\Controllers\HomeBookingController, because the name is already in use in /home/tayasmart/jospa.tayasmart.com/jospa/app/Http/Controllers/SaloneBookController.php on line 13
+[14-Jul-2025 16:47:25 UTC] PHP Warning:  require(/home/tayasmart/jospa.tayasmart.com/public/jospa/vendor/autoload.php): Failed to open stream: No such file or directory in /home/tayasmart/jospa.tayasmart.com/public/index.php on line 37
+[14-Jul-2025 16:47:25 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/tayasmart/jospa.tayasmart.com/public/jospa/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/tayasmart/jospa.tayasmart.com/public/index.php:37
+Stack trace:
+#0 {main}
+  thrown in /home/tayasmart/jospa.tayasmart.com/public/index.php on line 37
+[14-Jul-2025 16:47:34 UTC] PHP Warning:  require(/home/tayasmart/jospa.tayasmart.com/public/jospa/vendor/autoload.php): Failed to open stream: No such file or directory in /home/tayasmart/jospa.tayasmart.com/public/index.php on line 37
+[14-Jul-2025 16:47:34 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/tayasmart/jospa.tayasmart.com/public/jospa/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/tayasmart/jospa.tayasmart.com/public/index.php:37
+Stack trace:
+#0 {main}
+  thrown in /home/tayasmart/jospa.tayasmart.com/public/index.php on line 37
+[14-Jul-2025 16:48:22 UTC] PHP Warning:  require(/home/tayasmart/jospa.tayasmart.com/public/jospa/vendor/autoload.php): Failed to open stream: No such file or directory in /home/tayasmart/jospa.tayasmart.com/public/index.php on line 37
+[14-Jul-2025 16:48:22 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/tayasmart/jospa.tayasmart.com/public/jospa/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/tayasmart/jospa.tayasmart.com/public/index.php:37
+Stack trace:
+#0 {main}
+  thrown in /home/tayasmart/jospa.tayasmart.com/public/index.php on line 37
+[14-Jul-2025 16:48:23 UTC] PHP Warning:  require(/home/tayasmart/jospa.tayasmart.com/public/jospa/vendor/autoload.php): Failed to open stream: No such file or directory in /home/tayasmart/jospa.tayasmart.com/public/index.php on line 37
+[14-Jul-2025 16:48:23 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/tayasmart/jospa.tayasmart.com/public/jospa/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/tayasmart/jospa.tayasmart.com/public/index.php:37
+Stack trace:
+#0 {main}
+  thrown in /home/tayasmart/jospa.tayasmart.com/public/index.php on line 37
+[14-Jul-2025 16:48:24 UTC] PHP Warning:  require(/home/tayasmart/jospa.tayasmart.com/public/jospa/vendor/autoload.php): Failed to open stream: No such file or directory in /home/tayasmart/jospa.tayasmart.com/public/index.php on line 37
+[14-Jul-2025 16:48:24 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/tayasmart/jospa.tayasmart.com/public/jospa/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/tayasmart/jospa.tayasmart.com/public/index.php:37
+Stack trace:
+#0 {main}
+  thrown in /home/tayasmart/jospa.tayasmart.com/public/index.php on line 37
+[14-Jul-2025 16:48:24 UTC] PHP Warning:  require(/home/tayasmart/jospa.tayasmart.com/public/jospa/vendor/autoload.php): Failed to open stream: No such file or directory in /home/tayasmart/jospa.tayasmart.com/public/index.php on line 37
+[14-Jul-2025 16:48:24 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/tayasmart/jospa.tayasmart.com/public/jospa/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/tayasmart/jospa.tayasmart.com/public/index.php:37
+Stack trace:
+#0 {main}
+  thrown in /home/tayasmart/jospa.tayasmart.com/public/index.php on line 37
+[14-Jul-2025 16:48:25 UTC] PHP Warning:  require(/home/tayasmart/jospa.tayasmart.com/public/jospa/vendor/autoload.php): Failed to open stream: No such file or directory in /home/tayasmart/jospa.tayasmart.com/public/index.php on line 37
+[14-Jul-2025 16:48:25 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/tayasmart/jospa.tayasmart.com/public/jospa/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/tayasmart/jospa.tayasmart.com/public/index.php:37
+Stack trace:
+#0 {main}
+  thrown in /home/tayasmart/jospa.tayasmart.com/public/index.php on line 37
+[14-Jul-2025 16:48:25 UTC] PHP Warning:  require(/home/tayasmart/jospa.tayasmart.com/public/jospa/vendor/autoload.php): Failed to open stream: No such file or directory in /home/tayasmart/jospa.tayasmart.com/public/index.php on line 37
+[14-Jul-2025 16:48:25 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/tayasmart/jospa.tayasmart.com/public/jospa/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/tayasmart/jospa.tayasmart.com/public/index.php:37
+Stack trace:
+#0 {main}
+  thrown in /home/tayasmart/jospa.tayasmart.com/public/index.php on line 37
+[14-Jul-2025 16:48:25 UTC] PHP Warning:  require(/home/tayasmart/jospa.tayasmart.com/public/jospa/vendor/autoload.php): Failed to open stream: No such file or directory in /home/tayasmart/jospa.tayasmart.com/public/index.php on line 37
+[14-Jul-2025 16:48:25 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/tayasmart/jospa.tayasmart.com/public/jospa/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/tayasmart/jospa.tayasmart.com/public/index.php:37
+Stack trace:
+#0 {main}
+  thrown in /home/tayasmart/jospa.tayasmart.com/public/index.php on line 37
+[14-Jul-2025 16:48:25 UTC] PHP Warning:  require(/home/tayasmart/jospa.tayasmart.com/public/jospa/vendor/autoload.php): Failed to open stream: No such file or directory in /home/tayasmart/jospa.tayasmart.com/public/index.php on line 37
+[14-Jul-2025 16:48:25 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/tayasmart/jospa.tayasmart.com/public/jospa/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/tayasmart/jospa.tayasmart.com/public/index.php:37
+Stack trace:
+#0 {main}
+  thrown in /home/tayasmart/jospa.tayasmart.com/public/index.php on line 37
+[14-Jul-2025 16:48:25 UTC] PHP Warning:  require(/home/tayasmart/jospa.tayasmart.com/public/jospa/vendor/autoload.php): Failed to open stream: No such file or directory in /home/tayasmart/jospa.tayasmart.com/public/index.php on line 37
+[14-Jul-2025 16:48:25 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/tayasmart/jospa.tayasmart.com/public/jospa/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/tayasmart/jospa.tayasmart.com/public/index.php:37
+Stack trace:
+#0 {main}
+  thrown in /home/tayasmart/jospa.tayasmart.com/public/index.php on line 37

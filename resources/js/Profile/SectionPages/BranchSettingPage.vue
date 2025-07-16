@@ -109,7 +109,7 @@ const ROLES = ref(JSON.parse(document.querySelector('meta[name="auth_user_roles"
 const { getRequest, storeRequest, updateRequest } = useRequest()
 
 const BRANCH_FOR_OPTIONS = reactive([
-  { id: 'unisex', text: 'Unisex' },
+//   { id: 'unisex', text: 'Unisex' },
   { id: 'female', text: 'Female' },
   { id: 'male', text: 'Male' }
   // Add more options as needed

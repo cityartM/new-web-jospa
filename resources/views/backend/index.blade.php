@@ -13,7 +13,7 @@
             <input type="text" name="date_range" value="{{ $date_range }}" class="form-control dashboard-date-range"
               placeholder="24 may 2023 to 25 June 2023" readonly="readonly">
           </div>
-          <button type="submit" name="action" value="filter" class="btn btn-primary" data-bs-toggle="tooltip"
+          <button type="submit" name="action" value="filter" class="btn " data-bs-toggle="tooltip"
             data-bs-title="{{ __('messages.submit_date_filter') }}">{{ __('dashboard.lbl_submit') }}</button>
           {{-- <button type="submit" name="action" value="reset" class="btn btn-secondary btn-icon"
             data-bs-toggle="tooltip" data-bs-title="Reset Filter"><i class="fa-solid fa-clock-rotate-left"></i></button>
@@ -199,7 +199,6 @@
   </div>
 </div>
 @endsection
-
 @push ('after-styles')
 <style>
   #chart-01 {

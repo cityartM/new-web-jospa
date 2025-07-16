@@ -14,6 +14,7 @@ return [
     'lbl_commission' => 'العمولة',
     'lbl_holiday' => 'العطلة',
     'lbl_bussiness' => 'ساعات العمل',
+    'lbl_shifts_bussiness' => 'نوبات العمل',
     'lbl_payment' => 'طريقة الدفع',
     'lbl_language' => 'إعدادات اللغة',
     'lbl_menu' => 'مُنشئ القائمة',

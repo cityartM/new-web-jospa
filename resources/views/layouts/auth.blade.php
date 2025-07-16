@@ -3,8 +3,8 @@
 
 <head>
     <meta charset="utf-8">
-    <link rel="icon" type="image/png" href="{{ setting('favicon') }}">
-    <link rel="apple-touch-icon" sizes="76x76" href="{{ setting('favicon') }}">
+    <link rel="icon" type="image/png" href="{{ asset('images/JOSPA.webp') }}">
+    <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('images/JOSPA.webp') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="{{ setting('meta_description') }}">
     <meta name="keyword" content="{{ setting('meta_keyword') }}">
@@ -53,6 +53,67 @@
             }
             ?>
 
+        }
+        
+        :root {
+            --primary-color: #bf9456 !important;
+            --primary: #bf9456 !important;
+        }
+
+        .btn-primary {
+            background-color: #bf9456 !important;
+            border-color: #bf9456 !important; 
+        }
+        
+        .btn-primary:hover {
+            background-color: #a8834b !important;
+            border-color: #a8834b !important;
+        }
+        
+        a {
+            color: #bf9456 !important;
+        }
+        
+        a:hover {
+            color: #a8834b !important;
+        }
+        
+        .text-primary {
+            color: #bf9456 !important;
+        }
+        
+        .border-primary {
+            border-color: #bf9456 !important;
+        }
+        
+        .bg-primary {
+            background-color: #bf9456 !important;
+        }
+        
+        .icon-primary {
+            color: #bf9456 !important;
+        }
+        
+        input:focus,
+        textarea:focus,
+        select:focus {
+            border-color: #bf9456 !important;
+            box-shadow: 0 0 0 0.2rem rgba(191, 148, 86, 0.25) !important;
+            outline: none !important;
+        }
+        
+        input[type="email"]:focus,
+        input[type="password"]:focus,
+        input[type="text"]:focus,
+        input[type="number"]:focus {
+            border-color: #bf9456 !important;
+            box-shadow: 0 0 0 0.2rem rgba(191, 148, 86, 0.25) !important;
+        }
+        
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #bf9456 !important;
+            box-shadow: 0 0 0 0.2rem rgba(191, 148, 86, 0.25) !important;
         }
     </style>
 </head>

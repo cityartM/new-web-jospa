@@ -33,7 +33,7 @@ class RegisteredUserController extends Controller
     {
         $user = $this->registerTrait($request);
 
-        $user = Auth::login($user);
+        Auth::login($user);
 
         return redirect(RouteServiceProvider::HOME);
     }
