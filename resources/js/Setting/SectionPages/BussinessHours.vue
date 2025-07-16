@@ -3,12 +3,12 @@
     <div class="col-md-12 d-flex justify-content-between">
       <CardTitle :title="$t('setting_sidebar.lbl_bussiness')" icon="fa-solid fa-clock"></CardTitle>
     </div>
-    <div class="form-group col-12" v-if="branch.options.length > 1">
+    <div class="form-group col-12" >
       <label class="form-label">{{ $t('setting_business_hours.lbl_name') }}<span class="text-danger">*</span></label>
       <Multiselect id="branch_id" v-model="branch_id" v-bind="singleSelectOption" :options="branch.options" @select="loadBusinessHours" class="form-group"></Multiselect>
       <span class="text-danger">{{ errors.branch_id }}</span>
     </div>
-    <div class="form-group col-12" v-if="shift.options.length > 1">
+    <div class="form-group col-12" >
       <label class="form-label">{{ $t('setting_business_hours.lbl_shift_name') }}<span class="text-danger">*</span></label>
       <Multiselect id="shift_id" v-model="shift_id" v-bind="singleSelectOption" :options="shift.options" @select="loadBusinessHours" class="form-group"></Multiselect>
       <span class="text-danger">{{ errors.shift_id }}</span>
