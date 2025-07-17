@@ -125,8 +125,8 @@ class HomeBookingController extends Controller
             "description" => "طلب دفع",
             "statement_descriptor" => "Jospa Store",
             "customer" => [
-                "first_name" => "ammar",
-                "email" => "email@a.com",
+                "first_name" => auth()->user()->first_name,
+                "email" => auth()->user()->email ,
             ],
             "source" => [
                 "id" => "src_all"

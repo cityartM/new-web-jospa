@@ -707,10 +707,10 @@
             </div>
             <div class="summary-info">
                 <span class="summary-label">{{ __('messagess.total') }} :</span>
-                <span class="summary-value">SR 575</span>
+                <span class="summary-value">SR <span id="tl">{{$totalPrice}}</span></span>
             </div>
             <div class="wallet-label">
-                {{ __('messagess.wallet_balance') }} : <span class="wallet-value">SR <span id="tl">{{$totalPrice}}</span></span>
+                {{ __('messagess.wallet_balance') }} : <span class="wallet-value">SR 0.00</span>
             </div>
             <div class="pay-options">
                 <label class="pay-label"><input type="radio" class="pay-radio" name="pay" checked>{{ __('messagess.pay_by_card') }}</label>
@@ -739,8 +739,7 @@
     }
 
     function proceedToPayment() {
-        let total = document.getElementById('total').textContent.trim();
-        console.log(total);
+        let total = document.getElementById('tl').textContent.trim();
         Swal.fire({
             icon: 'success',
             title: '{{ __('messagess.success_payment_title') }}',

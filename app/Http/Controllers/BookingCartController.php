@@ -10,7 +10,7 @@ class BookingCartController extends Controller
 public function index(Request $request)
 {
 
-    $cartItems = BookingCart::where('customer_id', 1)->get();
+    $cartItems = BookingCart::where('customer_id', auth()->user()->id)->get();
 
     $totalPrice = $cartItems->sum(function ($item) {
         return $item->service->price ?? 0; // لو service مش موجود ترجع 0 بدل ما يعمل خطأ
