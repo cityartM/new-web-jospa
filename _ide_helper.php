@@ -17306,6 +17306,41 @@ namespace Lavary\Menu {
             }
     }
 
+namespace App\Currency {
+            /**
+     * 
+     *
+     */        class CurrencyFacades {
+                    /**
+         * 
+         *
+         * @static 
+         */        public static function getDefaultCurrency($array = false)
+        {
+                        /** @var \App\Currency\CurrencyChange $instance */
+                        return $instance->getDefaultCurrency($array);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */        public static function defaultSymbol()
+        {
+                        /** @var \App\Currency\CurrencyChange $instance */
+                        return $instance->defaultSymbol();
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */        public static function format($amount)
+        {
+                        /** @var \App\Currency\CurrencyChange $instance */
+                        return $instance->format($amount);
+        }
+            }
+    }
+
 namespace Barryvdh\DomPDF\Facade {
             /**
      * 
@@ -21388,6 +21423,27 @@ namespace Illuminate\Http {
             }
     }
 
+namespace Illuminate\Database\Eloquent\Factories {
+            /**
+     * 
+     *
+     * @template TModel of \Illuminate\Database\Eloquent\Model
+     * @method $this trashed()
+     */        class Factory {
+                    /**
+         * 
+         *
+         * @see \Spatie\Translatable\TranslatableServiceProvider::packageRegistered()
+         * @param array|string $locales
+         * @param mixed|null $value
+         * @static 
+         */        public static function translations($locales, $value)
+        {
+                        return \Illuminate\Database\Eloquent\Factories\Factory::translations($locales, $value);
+        }
+            }
+    }
+
 namespace Illuminate\Routing {
             /**
      * 
@@ -25118,6 +25174,7 @@ namespace  {
             class Vite extends \Illuminate\Support\Facades\Vite {}
             class Menu extends \Lavary\Menu\Facade {}
             class AuthHelper extends \App\Helpers\AuthHelper {}
+            class Currency extends \App\Currency\CurrencyFacades {}
             class PDF extends \Barryvdh\DomPDF\Facade\Pdf {}
             class Pdf extends \Barryvdh\DomPDF\Facade\Pdf {}
             class OneSignal extends \Berkayk\OneSignal\OneSignalFacade {}
