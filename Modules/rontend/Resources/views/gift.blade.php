@@ -476,6 +476,44 @@ body {
         font-size: 0.75rem;
     }
 }
+
+@media (max-width: 991.98px) {
+  .main-container {
+    max-width: 98vw;
+    padding: 8px 2vw;
+  }
+  .gift-card-container {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .product-gallery .main-image-container img {
+    height: 220px;
+  }
+  .form-container {
+    padding: 0 4px;
+  }
+  .input-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}
+@media (max-width: 600px) {
+  .main-container {
+    padding: 2px 1vw;
+  }
+  .gift-card-container {
+    gap: 8px;
+  }
+  .product-gallery .main-image-container img {
+    height: 120px;
+  }
+  .form-container {
+    padding: 0 1px;
+  }
+  .input-row {
+    gap: 4px;
+  }
+}
 </style>
 
 </head>

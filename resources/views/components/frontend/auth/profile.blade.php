@@ -111,15 +111,82 @@
         font-size: 1.15rem;
         color: #222;
       }
-      @media (max-width: 900px) {
-        .profile-info-wide { padding: 18px 6px; }
-        .profile-hero { padding: 32px 0 18px 0; }
-        .profile-balance-corner { top: 18px; right: 12px; left: auto; }
+      @media (max-width: 991.98px) {
+        .profile-info-wide {
+          padding: 10px 2px;
+          max-width: 100%;
+          border-radius: 12px;
+        }
+        .profile-hero {
+          padding: 18px 0 8px 0;
+          border-radius: 0 0 18px 18px;
+        }
+        .profile-avatar-lg {
+          width: 90px;
+          height: 90px;
+          margin-top: -60px;
+          border-width: 3px;
+        }
+        .profile-balance-corner {
+          top: 8px;
+          right: 4px;
+          left: auto;
+          gap: 6px;
+        }
+        .balance-box {
+          font-size: 1rem;
+          padding: 7px 12px 7px 10px;
+          border-radius: 12px;
+        }
+        .charge-btn-icon {
+          width: 34px;
+          height: 34px;
+        }
+        .profile-info-wide h4 {
+          font-size: 1.1rem;
+          margin-bottom: 12px;
+        }
+        .profile-info-wide .info-label, .profile-info-wide .info-value {
+          font-size: 0.98rem;
+        }
       }
       @media (max-width: 600px) {
-        .profile-info-wide { padding: 10px 2px; }
-        .profile-hero { padding: 18px 0 8px 0; }
-        .profile-balance-corner { top: 8px; right: 4px; left: auto; }
+        .profile-info-wide {
+          padding: 4px 0.5vw;
+          border-radius: 8px;
+        }
+        .profile-hero {
+          padding: 10px 0 4px 0;
+          border-radius: 0 0 8px 8px;
+        }
+        .profile-avatar-lg {
+          width: 70px;
+          height: 71px;
+          margin-top: -56px;
+          border-width: 2px;
+        }
+        .profile-balance-corner {
+          top: 2px;
+          right: 2px;
+          left: auto;
+          gap: 3px;
+        }
+        .balance-box {
+          font-size: 0.9rem;
+          padding: 4px 7px 4px 6px;
+          border-radius: 8px;
+        }
+        .charge-btn-icon {
+          width: 26px;
+          height: 26px;
+        }
+        .profile-info-wide h4 {
+          font-size: 1rem;
+          margin-bottom: 8px;
+        }
+        .profile-info-wide .info-label, .profile-info-wide .info-value {
+          font-size: 0.89rem;
+        }
       }
       a svg{
               color:white;

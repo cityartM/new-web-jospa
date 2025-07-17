@@ -96,69 +96,76 @@
 <nav class="d-lg-none d-block position-fixed w-100 bg-black border-top border-primary" style="z-index: 6; bottom: 0;">
     <div class="container px-0">
         <div class="d-flex justify-content-between align-items-center text-center">
-
             <a href="{{ route('frontend.home') }}"
                class="flex-fill py-2 text-white {{ ($active ?? '') === 'home' ? 'bg-primary text-white rounded-3' : '' }}">
                 <div>
-                    <svg width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 2 7.5V14a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-2h2v2a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1V7.5a.5.5 0 0 0-.146-.354l-6-6z"/>
+                    <svg width="26" height="26" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M3 12l9-9 9 9M4 10v10a1 1 0 001 1h3a1 1 0 001-1v-4h2v4a1 1 0 001 1h3a1 1 0 001-1V10" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
                     </svg>
                 </div>
                 <small>{{ __('messagess.nav_home') }}</small>
             </a>
-
             <a href="{{ route('frontend.about') }}"
                class="flex-fill py-2 text-white {{ ($active ?? '') === 'about' ? 'bg-primary text-white rounded-3' : '' }}">
                 <div>
-                    <svg width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm4-3a4 4 0 1 1-8 0 4 4 0 0 1 8 0z"/>
-                        <path d="M14 14s-1-1.5-6-1.5S2 14 2 14V15h12v-1z"/>
+                    <svg width="26" height="26" fill="currentColor" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10" stroke="#fff" stroke-width="2" fill="none"/>
+                        <path d="M12 16v-4" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+                        <circle cx="12" cy="8" r="1" fill="#fff"/>
                     </svg>
                 </div>
                 <small>{{ __('messagess.nav_about') }}</small>
             </a>
-
             <a href="{{ route('frontend.services') }}"
                class="flex-fill py-2 text-white {{ ($active ?? '') === 'services' ? 'bg-primary text-white rounded-3' : '' }}">
                 <div>
-                    <svg width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                    <svg width="26" height="26" fill="currentColor" viewBox="0 0 24 24">
+                        <rect x="3" y="7" width="18" height="13" rx="2" stroke="#fff" stroke-width="2" fill="none"/>
+                        <path d="M16 3v4M8 3v4" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
                     </svg>
                 </div>
                 <small>{{ __('messagess.nav_services') }}</small>
             </a>
-
-            <a href="#"
-               class="flex-fill py-2 text-white {{ ($active ?? '') === 'ads' ? 'bg-primary text-white rounded-3' : '' }}">
-                <div>
-                    <svg width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M2 2h12v12H2z"/>
-                    </svg>
-                </div>
-                <small>{{ __('messagess.nav_ads') }}</small>
-            </a>
-
             <a href="{{ route('frontend.contact') }}"
                class="flex-fill py-2 text-white {{ ($active ?? '') === 'contact' ? 'bg-primary text-white rounded-3' : '' }}">
                 <div>
-                    <svg width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M2 2h12v12H2z"/>
+                    <svg width="26" height="26" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M21 10.5V6a2 2 0 00-2-2H5a2 2 0 00-2 2v4.5M21 10.5l-9 6.5-9-6.5M21 10.5V18a2 2 0 01-2 2H5a2 2 0 01-2-2v-7.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
                     </svg>
                 </div>
                 <small>{{ __('messagess.nav_contact') }}</small>
             </a>
-
-            <a href="javascript:void(0)"
-               onclick="document.getElementById('change-lang-ae-form').submit();"
-               class="flex-fill py-2 text-white fw-bold {{ ($active ?? '') === 'ae' ? 'bg-primary text-white rounded-3' : '' }}">
+            <a href="{{ route('ads.page') }}"
+               class="flex-fill py-2 text-white {{ ($active ?? '') === 'ads' ? 'bg-primary text-white rounded-3' : '' }}">
                 <div>
-                    <svg width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
-                        <text x="4" y="14" font-size="10">Ae</text>
+                    <svg width="26" height="26" fill="currentColor" viewBox="0 0 24 24">
+                        <rect x="3" y="5" width="18" height="14" rx="2" stroke="#fff" stroke-width="2" fill="none"/>
+                        <path d="M7 9h10M7 15h6" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
                     </svg>
                 </div>
-                <small>{{ __('messagess.nav_lang_ar') }}</small>
+                <small>{{ __('messagess.nav_ads') }}</small>
             </a>
-
+            <a href="{{ route('cart.page') }}"
+               class="flex-fill py-2 text-white {{ ($active ?? '') === 'cart' ? 'bg-primary text-white rounded-3' : '' }}">
+                <div>
+                    <svg width="26" height="26" fill="currentColor" viewBox="0 0 24 24">
+                        <circle cx="9" cy="21" r="1" fill="#fff"/>
+                        <circle cx="20" cy="21" r="1" fill="#fff"/>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                    </svg>
+                </div>
+                <small>{{ __('messagess.nav_cart') }}</small>
+            </a>
+            <a href="{{ route('profile') }}"
+               class="flex-fill py-2 text-white {{ ($active ?? '') === 'profile' ? 'bg-primary text-white rounded-3' : '' }}">
+                <div>
+                    <svg width="26" height="26" fill="currentColor" viewBox="0 0 24 24">
+                        <circle cx="12" cy="8" r="4" stroke="#fff" stroke-width="2" fill="none"/>
+                        <path d="M2 20c0-4 8-6 10-6s10 2 10 6" stroke="#fff" stroke-width="2" fill="none"/>
+                    </svg>
+                </div>
+                <small>{{ __('messagess.profile') }}</small>
+            </a>
         </div>
     </div>
 </nav>

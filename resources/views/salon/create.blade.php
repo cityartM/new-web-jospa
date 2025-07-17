@@ -34,7 +34,7 @@
         }
 
         .header-container {
-            max-width: 1200px;
+            width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
             display: flex;
@@ -103,7 +103,7 @@
 
         /* Main Container */
         .container {
-            max-width: 1200px;
+            width: 1200px;
             margin: 30px auto;
             padding: 0 20px;
             display: flex;
@@ -631,42 +631,87 @@
         }
 
         /* Responsive Design */
-        @media (max-width: 768px) {
+        @media (max-width: 991.98px) {
             .container {
                 flex-direction: column;
+                padding: 0 12px;
                 gap: 20px;
             }
-
             .sidebar {
                 width: 100%;
+                border-radius: 16px;
+                padding: 16px;
+                margin-bottom: 20px;
             }
-
-            .gender-selection {
-                flex-direction: column;
-                gap: 20px;
-                align-items: center;
+            .content {
+                padding: 18px 8px;
+                border-radius: 12px;
             }
-
+            .step {
+                padding: 12px 18px;
+                font-size: 1rem;
+            }
             .service-grid {
                 grid-template-columns: 1fr;
             }
-
             .staff-grid {
-                flex-direction: column;
-                align-items: center;
+                gap: 12px;
             }
-
+            .calendar {
+                padding: 16px;
+                border-radius: 10px;
+            }
             .service-detail {
                 flex-direction: column;
+                gap: 12px;
+                align-items: flex-start;
             }
-
             .service-image {
                 width: 100%;
+                height: 180px;
+                border-radius: 10px;
             }
-
-            .form-row {
+            .header {
+                width: 307%;
+            }
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 0 4px;
+                gap: 10px;
+            }
+            .sidebar {
+                padding: 8px 2px;
+                border-radius: 8px;
+            }
+            .content {
+                padding: 8px 2px;
+                border-radius: 8px;
+            }
+            .step {
+                padding: 8px 8px;
+                font-size: 0.95rem;
+            }
+            .service-grid {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            .staff-grid {
+                gap: 6px;
+            }
+            .calendar {
+                padding: 8px;
+                border-radius: 6px;
+            }
+            .service-detail {
                 flex-direction: column;
-                gap: 0;
+                gap: 6px;
+                align-items: flex-start;
+            }
+            .service-image {
+                width: 100%;
+                height: 120px;
+                border-radius: 6px;
             }
         }
 
@@ -891,19 +936,14 @@
                             {{ __('messagess.select_branch') }}
                         </label>
             <br>
-
             <div class="branch-options mt-3" style="display: flex; gap: 150px;">
+            @foreach ($branches as $branche)
                 <label class="form-check" style="text-align: center; cursor: pointer; position: relative; margin-left:100px;">
-                    <input class="form-check-input" type="radio" name="branch" value="manfuha" style="position: absolute; opacity: 0; pointer-events: none;">
+                    <input class="form-check-input" type="radio" name="branch" value="{{$branche->slug}}" style="position: absolute; opacity: 0; pointer-events: none;">
                     <img src="/images/av3.webp" alt="Manfuha" style="width: 120px; height: 100px; border: 2px solid #ccc; border-radius: 10px; padding: 5px; transition: all 0.3s;">
-                    <div style="margin-top: 8px;">{{ __('messagess.manfuha') }}</div>
+                    <div style="margin-top: 8px;">{{ app()->getLocale() == 'ar' ? $branche->name : $branche->slug }}</div>
                 </label>
-
-                <label class="form-check" style="text-align: center; cursor: pointer; position: relative; margin-left: 100px;">
-                    <input class="form-check-input" type="radio" name="branch" value="al-wasila" style="position: absolute; opacity: 0; pointer-events: none;">
-                    <img src="/images/av4.webp" alt="Al-Wasila" style="width: 120px; height: 100px; border: 2px solid #ccc; border-radius: 10px; padding: 5px; transition: all 0.3s;">
-                    <div style="margin-top: 8px;">{{ __('messagess.al-wasila') }}</div>
-                </label>
+            @endforeach
             </div>
         </div>
     </div>
@@ -986,6 +1026,8 @@
     <input type="hidden" name="time" id="inputTime">
     <input type="hidden" name="staff_id" id="inputStaffId">
     <input type="hidden" name="status" id="inputStatus">
+    <input type="hidden" name="agreed" id="inputAgreed">
+    <input type="hidden" name="auto_change_staff" id="inputAutoChangeStaff">
 </form>
 
 <script>
@@ -1350,7 +1392,6 @@ const container = document.querySelector('#time');
                     slot.classList.add('selected');
                     selectedData.time = time;
                     
-                    showSummary();
                 });
 
                 container.appendChild(slot);
@@ -1388,15 +1429,6 @@ function showSummary() {
             </label>
         </div>
     `;
-
-    // Event listeners to update the variables
-    document.getElementById('termsCheck').addEventListener('change', (e) => {
-        termsAgreed = e.target.checked;
-    });
-
-    document.getElementById('flexibleStaff').addEventListener('change', (e) => {
-        flexibleStaff = e.target.checked;
-    });
 }
 
 
@@ -1437,6 +1469,7 @@ function showSummary() {
                 alert('Please select a staff member');
                 return false;
             }
+            showSummary();
             break;
 
         case 7:
@@ -1445,14 +1478,14 @@ function showSummary() {
                 return false;
             }
 
-            showSummary();
                 document.querySelectorAll('.step-content').forEach(el => el.classList.add('hidden'));
                 document.getElementById('summaryCard').classList.remove('hidden');
             
-                // ✅ غيّر نص الزر إلى "Complete"
                 nextBtn.textContent = translations.complete;
             break;
-
+            case 8:
+                            completeBooking();
+                            break;
            }
 
     return true;
@@ -1495,6 +1528,8 @@ function completeBooking() {
     document.getElementById('inputAgreed').value = bookingData.agreed;
     document.getElementById('inputAutoChangeStaff').value = bookingData.auto_change_staff;
 
+console.log(bookingData.auto_change_staff);
+console.log( bookingData.agreed);
 
     document.getElementById('bookingForm').submit();
 }

@@ -221,7 +221,7 @@
         <!-- Description and Image Section -->
         <div class="container my-5">
                 <div class="header-section">
-        <h1 style="font-weight:bold">خدمات الحمام المغربي</h1>
+        <h1 style="font-weight:bold">{{$category->name}}</h1>
         <div class="header-divider">
             <div class="divider-line"></div>
             <span class="divider-icon">
@@ -232,10 +232,10 @@
             </span>
             <div class="divider-line"></div>
         </div>
-        <div class="header-desc">رحلة استجمام وتجديد</div>
+        <div class="header-desc">{{ __('messagess.relaxation_trip') }}</div>
         <div style="display: flex; justify-content: center;">
             <button class="cta-btn">
-                احجزي الآن
+                 {{ __('messagess.hero_book_now')}}
                 <span class="icon"><svg data-v-eec84f9e="" style="width: 15.2px;font-family: 'IBM Plex Sans Arabic', sans-serif !important;" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="paper-plane" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path class="" fill="currentColor" d="M498.1 5.6c10.1 7 15.4 19.1 13.5 31.2l-64 416c-1.5 9.7-7.4 18.2-16 23s-18.9 5.4-28 1.6L284 427.7l-68.5 74.1c-8.9 9.7-22.9 12.9-35.2 8.1S160 493.2 160 480l0-83.6c0-4 1.5-7.8 4.2-10.8L331.8 202.8c5.8-6.3 5.6-16-.4-22s-15.7-6.4-22-.7L106 360.8 17.7 316.6C7.1 311.3 .3 300.7 0 288.9s5.9-22.8 16.1-28.7l448-256c10.7-6.1 23.9-5.5 34 1.4z"></path></svg></span>
             </button>
         </div>
@@ -250,7 +250,7 @@
                 </div>
                 <!-- الصورة -->
                 <div class="col-lg-6 d-flex justify-content-center" data-aos="fade-right" data-aos-duration="1200">
-                    <img src="{{ asset('images/frontend/slider' . (rand(1, 3)) . '.webp') }}" alt="خدمات العناية بالبشرة" style="max-width: 90%; border-radius: 24px; box-shadow: 0 4px 24px #00000015;" class="img-zoom-hover">
+                    <img src="{{ $category->feature_image}}" alt="خدمات العناية بالبشرة" style="max-width: 90%; border-radius: 24px; box-shadow: 0 4px 24px #00000015;" class="img-zoom-hover">
                 </div>
             </div>
         </div>
@@ -258,7 +258,7 @@
             <div class="row align-items-center justify-content-center">
                                 <!-- الصورة -->
                 <div class="col-lg-6 d-flex justify-content-center" data-aos="fade-right" data-aos-duration="1200">
-                    <img src="{{ asset('images/frontend/slider' . (rand(1, 3)) . '.webp') }}" alt="خدمات العناية بالبشرة" style="max-width: 90%; border-radius: 24px; box-shadow: 0 4px 24px #00000015;" class="img-zoom-hover">
+                    <img src="{{ $category->feature_image}}" alt="خدمات العناية بالبشرة" style="max-width: 90%; border-radius: 24px; box-shadow: 0 4px 24px #00000015;" class="img-zoom-hover">
                 </div>
                 <!-- النص -->
                 <div class="col-lg-6 mb-4 mb-lg-0" data-aos="fade-left" data-aos-duration="1200">
@@ -271,7 +271,6 @@
         </div>
         
         <h1 style="text-align:center;margin:50px 0">{{ __('messagess.prices_and_services') }}</h1>
-        
         <!-- Services Section -->
         @if($category->services && $category->services->count() > 0)
             <div class="row g-4">
@@ -294,7 +293,7 @@
 
                             <div class="service-info">
                                 <i class="fas fa-clock"></i>
-                                <span>{{ $service->duration_min ?? 0 }} minutes</span>
+                                <span>{{ $service->duration_min ?? 0 }} {{ __('messagess.minutes') }}</span>
                             </div>
 
                             @if($service->sub_category)
@@ -319,7 +318,7 @@
             </div>
         @else
             <div class="text-center py-5">
-                <p class="text-muted">No services available in this category.</p>
+                <p>{{ __('messagess.no_services_in_category') }}</p>
             </div>
         @endif
     </main>
@@ -329,7 +328,7 @@
       <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="pricingModalLabel">{{ $category->name }} - Services & Pricing</h5>
+            <h5 class="modal-title" id="pricingModalLabel">{{ $category->name }} - {{ __('messagess.services_pricing') }}</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body" style="max-height: 400px; overflow-y: auto;">
@@ -337,10 +336,10 @@
                 <table class="table table-striped">
                   <thead>
                     <tr>
-                      <th>Service</th>
-                      <th>Sub Category</th>
-                      <th>Price (SR)</th>
-                      <th>Duration (minutes)</th>
+                        <th>{{ __('messagess.service') }}</th>
+                        <th>{{ __('messagess.sub_category') }}</th>
+                        <th>{{ __('messagess.price_sr') }}</th>
+                        <th>{{ __('messagess.duration_minutes') }}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -356,7 +355,7 @@
                 </table>
             @else
                 <div class="text-center text-muted">
-                    <p>No services available in this category.</p>
+                    <p>{{ __('messagess.no_services_in_category') }}</p>
                 </div>
             @endif   
           </div>
@@ -436,7 +435,7 @@
     {!! __('messagess.skin_pampering_text') !!}
 </h5>
             <button class="cta-btn">
-                احجزي الآن
+                {{ __('messagess.hero_book_now')}}
                 <span class="icon"><svg data-v-eec84f9e="" style="width: 15.2px;font-family: 'IBM Plex Sans Arabic', sans-serif !important;" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="paper-plane" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path class="" fill="currentColor" d="M498.1 5.6c10.1 7 15.4 19.1 13.5 31.2l-64 416c-1.5 9.7-7.4 18.2-16 23s-18.9 5.4-28 1.6L284 427.7l-68.5 74.1c-8.9 9.7-22.9 12.9-35.2 8.1S160 493.2 160 480l0-83.6c0-4 1.5-7.8 4.2-10.8L331.8 202.8c5.8-6.3 5.6-16-.4-22s-15.7-6.4-22-.7L106 360.8 17.7 316.6C7.1 311.3 .3 300.7 0 288.9s5.9-22.8 16.1-28.7l448-256c10.7-6.1 23.9-5.5 34 1.4z"></path></svg></span>
             </button>
 </div>

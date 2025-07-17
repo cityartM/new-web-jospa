@@ -397,11 +397,13 @@
       text-decoration: underline;
     }
     @media (max-width: 900px) {
+        .input-row {flex-wrap: wrap;}
       .main-container { flex-direction: column; }
       .product-gallery { border-left: none; border-bottom: 1.5px solid #f3e6d7; }
       .form-container { padding: 24px 10px; }
     }
     @media (max-width: 600px) {
+        .input-row {flex-wrap: wrap;}
       .main-container { border-radius: 0; box-shadow: none; }
       .product-gallery { padding: 12px 2px; }
       .form-container { padding: 10px 2px; }
@@ -494,7 +496,7 @@
     <div style="background-image: url(https://jospa.tayasmart.com/images/frontend/slider2.webp);background-position: top;background-repeat: no-repeat;background-size: cover;width: 100%;height: 293px;"> 
     </div>
 
-     <div style="position: relative; overflow: hidden; background: white; direction: ltr; width: 1520px;">
+     <div style="position: relative; overflow: hidden; background: white; direction: ltr; width: 1520px;" class="d-none d-md-block">
       <div class="slider-track" style="padding: 25px;">
         <div class="slider-item"><img src="https://jospa-sa.com/wp-content/uploads/2023/02/6d2e0c3d-fe2f-4c8e-b539-4cadc279f73f-1.jpeg" alt="Image 1"></div>
         <div class="slider-item"><img src="https://jospa-sa.com/wp-content/uploads/2023/02/83e49680-69b5-4d8d-b152-5fcb2a1b1efe-1.jpeg.webp" alt="Image 2"></div>

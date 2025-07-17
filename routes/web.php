@@ -68,7 +68,8 @@ Route::get('/details/{id}', [SaloneBookController::class, 'show'])->name('home.d
 
  
 Route::get('/salonService', function () {
-    return view('salon.create');
+    $branches = \App\Models\Branch::all();
+    return view('salon.create', compact('branches'));
 })->name('salon.create');
 
 

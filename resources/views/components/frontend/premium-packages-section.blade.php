@@ -33,7 +33,7 @@
             </div>
         @else
             <div class="text-center py-5">
-                <p class="text-muted">{{ __('messagess.no_packages') }}</p>
+                <p class="text-muted">{{ __('messagess.no_packages_available') }}</p>
             </div>
         @endif
     </div>
@@ -132,7 +132,7 @@
               </div>
               <div class="col-md-6">
                 <h4 class="text-primary mb-3">${package.name}</h4>
-                <p class="text-muted mb-3">${package.description || __('messagess.no_packages')}</p>
+                <p class="text-muted mb-3">${package.description || __('messagess.no_packages_available')}</p>
                 <div class="row mb-3">
                   <div class="col-6">
                     <strong>${__('messagess.price')}</strong><br>

@@ -23,7 +23,7 @@ return [
     'no_description_available' => 'لا يوجد وصف متاح.',
     'contact_for_pricing' => 'يرجى التواصل لمعرفة السعر',
     'minutes' => 'دقيقة',
-
+'relaxation_trip' => 'رحلة استجمام وتجديد',
     'nav_home'       => 'الرئيسية',
     'nav_about'      => 'من نحن',
     'nav_services'   => 'خدماتنا',

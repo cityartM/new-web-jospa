@@ -420,17 +420,29 @@
         position: relative;
     }
     .service-delete {
-        color: #c7a16b;
-        background: none;
+        background: linear-gradient(135deg, #e53935 0%, #ff7675 100%);
+        color: #fff;
         border: none;
-        font-size: 2.2em;
+        border-radius: 50%;
+        width: 44px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5em;
+        box-shadow: 0 2px 8px #e5393555;
         cursor: pointer;
         margin-top: 8px;
         margin-left: 8px;
-        transition: color 0.2s;
+        transition: background 0.2s, transform 0.2s;
+        position: relative;
+        top: 0;
+        left: 0;
     }
     .service-delete:hover {
-        color: #a67c52;
+        background: linear-gradient(135deg, #c62828 0%, #ff5252 100%);
+        color: #fff;
+        transform: scale(1.08) rotate(-8deg);
     }
     .service-details {
         flex: 1;
@@ -645,10 +657,75 @@
     .floating-btn:hover {
         background: #a67c52;
     }
-    @media (max-width: 700px) {
-        .main-container { padding: 16px 4vw; }
-        .service-card { flex-direction: column; gap: 8px; }
-        .summary-section { flex-direction: column; gap: 12px; }
+    @media (max-width: 991.98px) {
+        .main-container {
+            max-width: 100%;
+            margin: 16px 0 0 0;
+            border-radius: 16px;
+            box-shadow: 0 2px 12px #ede7f6a0;
+            padding: 18px 6px 16px 6px;
+        }
+        .cart-title {
+            font-size: 1.2em;
+            margin-bottom: 18px;
+        }
+        .cart-cards-container {
+            gap: 1rem;
+        }
+        .cart-card {
+            min-width: 90vw;
+            max-width: 98vw;
+            padding: 1.2rem 0.7rem 1rem 0.7rem;
+            border-radius: 12px;
+        }
+        .service-card {
+            flex-direction: column;
+            gap: 12px;
+            padding: 18px 8px 12px 8px;
+            margin-bottom: 18px;
+        }
+        .service-coupon input, .summary-coupon input {
+            min-width: 120px;
+            font-size: 0.95em;
+            padding: 8px 8px;
+        }
+        .service-coupon button, .summary-coupon button {
+            font-size: 0.95em;
+            padding: 8px 12px;
+        }
+        .summary-section {
+            flex-direction: column;
+            gap: 10px;
+        }
+        .pay-btn {
+            font-size: 1em;
+            padding: 12px 0;
+        }
+    }
+    @media (max-width: 600px) {
+        .main-container {
+            padding: 8px 2px 8px 2px;
+            border-radius: 8px;
+        }
+        .cart-title {
+            font-size: 1em;
+        }
+        .cart-card, .service-card {
+            min-width: 98vw;
+            max-width: 100vw;
+            padding: 0.7rem 0.2rem 0.7rem 0.2rem;
+            border-radius: 8px;
+        }
+        .cart-cards-container {
+            gap: 0.5rem;
+        }
+        .summary-section {
+            gap: 6px;
+        }
+        .pay-btn {
+            font-size: 0.95em;
+            padding: 10px 0;
+        }
     }
     a:hover {
         color:white;
@@ -694,7 +771,9 @@
                 <form action="{{route('cart.destroy' ,$item->id)}}" method="post">
                     @csrf
                     @method('DELETE')
-                    <button class="service-delete" title="{{ __('messagess.delete_service') }}" style="position: relative;top: -29px;left: -2%;font-size: 25px;"><i class="fas fa-trash"></i>️</button>
+                    <button class="service-delete" title="{{ __('messagess.delete_service') }}">
+                        <i class="fas fa-trash"></i>
+                    </button>
                 </form>
             </div>
              @endforeach

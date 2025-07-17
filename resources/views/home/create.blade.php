@@ -33,7 +33,7 @@
         }
 
         .header-container {
-            max-width: 1200px;
+            width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
             display: flex;
@@ -102,7 +102,7 @@
 
         /* Main Container */
         .container {
-            max-width: 1200px;
+            width: 1200px;
             margin: 30px auto;
             padding: 0 20px;
             display: flex;
@@ -575,214 +575,68 @@
         }
 
         /* Responsive Design */
-@media (max-width: 768px) {
+@media (max-width: 991.98px) {
     .container {
         flex-direction: column;
         padding: 0 12px;
         gap: 20px;
     }
-
     .sidebar {
         width: 100%;
         border-radius: 16px;
         padding: 16px;
         margin-bottom: 20px;
     }
-
-    .step {
-        padding: 14px 20px;
-        font-size: 1rem;
-    }
-
-    .step.active {
-        border-radius: 10px;
-    }
-
-    .header-container {
-        flex-direction: column;
-        gap: 10px;
-        padding: 0 12px;
-    }
-
-    .logo {
-        justify-content: center;
-    }
-
-    .header-right {
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-
     .content {
-        padding: 20px 15px;
-    }
-
-    .progress-bar {
-        flex-wrap: wrap;
-        gap: 6px;
-    }
-
-    .progress-step {
-        font-size: 12px;
-        min-width: auto;
-        padding: 6px 12px;
-    }
-
-    .gender-selection {
-        flex-direction: column;
-        gap: 16px;
-        margin: 30px 0;
-    }
-
-    .gender-card {
-        min-width: 100%;
-        padding: 25px;
-    }
-
-    .service-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-
-    .staff-grid {
-        flex-direction: column;
-        align-items: center;
-        gap: 20px;
-    }
-
-    .staff-card {
-        width: 100%;
-    }
-
-    .calendar {
-        padding: 20px;
+        padding: 18px 8px;
         border-radius: 12px;
     }
-
-    .calendar-header {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .calendar-title {
-        font-size: 18px;
-    }
-
-    .calendar-weekdays,
-    .calendar-days {
-        gap: 3px;
-    }
-
-    .service-detail {
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    .service-image {
-        width: 100%;
-        height: 180px;
-    }
-
-    .form-row {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .form-group input,
-    .form-group select {
-        font-size: 1rem;
-        padding: 10px;
-    }
-
-    .navigation {
-        flex-direction: column-reverse;
-        gap: 10px;
-    }
-
-    .btn {
-        width: 100%;
-        padding: 12px;
-        font-size: 1rem;
-    }
-
-    .massage-cards {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-
-    .massage-card {
-        padding: 20px;
-    }
-}
-
-@media (max-width: 480px) {
-    .logo-text {
-        font-size: 20px;
-    }
-
-    .logo-subtitle {
-        font-size: 10px;
-    }
-
     .step {
-        font-size: 0.95rem;
-        gap: 10px;
         padding: 12px 18px;
+        font-size: 1rem;
     }
-
-    .calendar-title {
-        font-size: 16px;
+    .service-grid {
+        grid-template-columns: 1fr;
     }
-
-    .gender-icon,
-    .service-icon,
-    .staff-avatar {
-        width: 60px;
-        height: 60px;
-        font-size: 28px;
+    .staff-grid {
+        gap: 12px;
     }
-
-    .form-group label {
-        font-size: 0.95rem;
+    .calendar {
+        padding: 16px;
+        border-radius: 10px;
     }
-
-    .progress-step {
-        font-size: 11px;
-        padding: 5px 10px;
+    .header {
+        width: 307%;
     }
 }
-
-@media (max-width: 360px) {
-    .header-container {
-        padding: 0 8px;
+@media (max-width: 600px) {
+    .container {
+        padding: 0 4px;
+        gap: 10px;
     }
-
+    .sidebar {
+        width: 100% !important;
+        padding: 8px 2px;
+        border-radius: 8px;
+    }
+    .content {
+        padding: 8px 2px;
+        border-radius: 8px;
+    }
     .step {
-        font-size: 0.85rem;
-        padding: 10px 14px;
-    }
-
-    .btn {
+        padding: 8px 8px;
         font-size: 0.95rem;
     }
-
-    .gender-card,
-    .staff-card {
-        padding: 20px;
+    .service-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
     }
-
-    .form-group input,
-    .form-group select {
-        font-size: 0.95rem;
-        padding: 10px;
+    .staff-grid {
+        gap: 6px;
     }
-
     .calendar {
-        padding: 15px;
-    }
-
-    .calendar-title {
-        font-size: 15px;
+        padding: 8px;
+        border-radius: 6px;
     }
 }
         /* Hidden class */
