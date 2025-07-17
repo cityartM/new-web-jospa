@@ -6,4 +6,8 @@ return [
     'horizontal' => 'Horizontal',
     'vertical' => 'Vertical',
     'purge_cache' => 'Purge Cache',
+     "translate" => [
+        'ar' => ' (Arabic) ',
+        'en' => ' (English) ',
+    ],
 ];
