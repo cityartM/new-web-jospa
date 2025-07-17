@@ -42,6 +42,12 @@ Route::get('/pay-now', [HomeBookingController::class, 'createPayment']);
 Route::get('/payment-success', [HomeBookingController::class, 'handlePaymentResult']);
 
 
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> e68b860 (all)
 //    SMS API
 
 Route::post('/send-sms', [HomeBookingController::class, 'send']);
@@ -63,10 +69,14 @@ Route::middleware('user.auth')->group(function () {
 Route::get('/homeService', function () {
     return view('home.create');
 })->name('home.create');
- 
+
+Route::get('/booking-calander', function () {
+    return view('booking.create');
+})->name('booking.create');
+
 Route::get('/details/{id}', [SaloneBookController::class, 'show'])->name('home.details');
 
- 
+
 Route::get('/salonService', function () {
     return view('salon.create');
 })->name('salon.create');
@@ -83,7 +93,16 @@ Route::get('/ads', function () {
     return view('components.frontend.ads');
 })->name('ads.page');
 
+<<<<<<< HEAD
 Route::get('/cart', [BookingCartController::class, 'index'])->name('cart.page');
+=======
+Route::get('/cart', function () {
+
+    $cartItems = BookingCart::where('customer_id', 1)->get();
+
+    return view('components.frontend.cart', compact('cartItems'));
+})->name('cart.page');
+>>>>>>> e68b860 (all)
 
 
 Route::post('/cart', [BookingCartController::class, 'store'])->name('cart.store');
