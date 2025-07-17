@@ -20,6 +20,7 @@ use App\Http\Controllers\HomeBookingController;
 use App\Http\Controllers\SaloneBookController;
 use App\Http\Controllers\GiftCardController;
 use App\Http\Controllers\BookingCartController;
+use App\Http\Controllers\SignController;
 use App\Models\BookingCart;
 
 /*
@@ -41,23 +42,22 @@ Route::get('/pay-now', [HomeBookingController::class, 'createPayment']);
 Route::get('/payment-success', [HomeBookingController::class, 'handlePaymentResult']);
 
 
-  
-
-
 //    SMS API
 
 Route::post('/send-sms', [HomeBookingController::class, 'send']);
 
 
 
-Route::get('/register', function () {return view('auth.register');})->name('frontend.register');
+Route::get('/signup', [SignController::class, 'index'])->name('signup');
 
-Route::post('/frontend/register', [SignController::class, 'store'])->name('register.store');
+Route::post('/signup', [SignController::class, 'store'])->name('signup.store');
 
-Route::get('/login', function () {return view('auth.login');})->name('frontend.register');
+Route::get('/signin', [SignController::class, 'login'])->name('signin');
+
+Route::post('/signin', [SignController::class, 'verify'])->name('signin.verify');
 
 
-
+Route::middleware('user.auth')->group(function () {
 
 
 Route::get('/homeService', function () {
@@ -83,18 +83,17 @@ Route::get('/ads', function () {
     return view('components.frontend.ads');
 })->name('ads.page');
 
-Route::get('/cart', function () {
-    
-    $cartItems = BookingCart::where('customer_id', 1)->get();
-
-    return view('components.frontend.cart', compact('cartItems'));
-})->name('cart.page');
+Route::get('/cart', [BookingCartController::class, 'index'])->name('cart.page');
 
 
 Route::post('/cart', [BookingCartController::class, 'store'])->name('cart.store');
 
 Route::delete('/cart/{id}', [BookingCartController::class, 'destroy'])->name('cart.destroy');
 
+
+Route::get('/profile', [SignController::class, 'profile'])->name('profile');
+
+});
 
 
 Route::get('/service-groups/{gender}', [HomeBookingController::class, 'getServiceGroups']);

@@ -1225,6 +1225,7 @@
 
 <form id="bookingForm" action="{{ route('cart.store') }}" method="POST" style="display: none;">
     @csrf
+    <input type="hidden" name="customer_id" id="inputCustomerId"> 
     <input type="hidden" name="n_name" id="inputCustomerName"> 
     <input type="hidden" name="mobile_no" id="inputMobileNo">
     <input type="hidden" name="neighborhood" id="inputNeighborhood">
@@ -1701,8 +1702,10 @@ function showBookingSummary() {
 
 
     function completeBooking() {
+        const customer_id = {{ auth()->user()->id }};
+
         const bookingData = {
-            // customer_id: document.getElementById('customerName').value,
+            customer_id,
             n_name: document.getElementById('customerName').value,
             mobile_no: document.getElementById('mobileNo').value,
             neighborhood: document.getElementById('neighborhood').value,
@@ -1716,6 +1719,7 @@ function showBookingSummary() {
             agreed: document.getElementById('termsCheck').checked ? 1 : 0,
             auto_change_staff: document.getElementById('flexibleStaff').checked ? 1 : 0,
         };
+            document.getElementById('inputCustomerId').value = bookingData.customer_id;
             document.getElementById('inputCustomerName').value = bookingData.n_name;
             document.getElementById('inputMobileNo').value = bookingData.mobile_no;
             document.getElementById('inputNeighborhood').value = bookingData.neighborhood;

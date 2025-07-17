@@ -39,6 +39,27 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmail
 
     const CUSTOM_FIELD_MODEL = 'App\Models\User';
 
+    protected $fillable = [
+        'username',
+        'first_name',
+        'last_name',
+        'email',
+        'mobile',
+        'login_type',
+        'gender',
+        'date_of_birth',
+        'is_manager',
+        'show_in_calender',
+        'email_verified_at',
+        'password',
+        'avatar',
+        'is_banned',
+        'is_subscribe',
+        'status',
+        'last_notification_seen',
+        'user_setting',
+    ];
+
     protected $guarded = [
         'id',
         'updated_at',

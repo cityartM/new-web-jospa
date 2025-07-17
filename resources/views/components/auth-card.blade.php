@@ -13,7 +13,7 @@
                         {{ $slot }}
                     </div>
 
-                    <div class="text-center mt-3 d-none">
+                    <div class="text-center">
                         {{ $extra }}
                     </div>
                 </div>

@@ -1,21 +1,5 @@
-@php
-    $dir = app()->getLocale() == 'ar' ? 'rtl' : 'ltr';
-@endphp
-<!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}" dir="{{ $dir }}">
-<head>
-<link rel="stylesheet" href="https://jospa.tayasmart.com/css/libs.min.css">
-<link rel="stylesheet" href="https://jospa.tayasmart.com/css/backend.css">
-<link rel="stylesheet" href="https://jospa.tayasmart.com/custom-css/frontend.css">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">  
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal&display=swap" rel="stylesheet">
-    <style>
-        body{
-            font-family: 'IBM Plex Sans Arabic', sans-serif !important;
-        }
+    {{-- <style>
+
         a svg{
             color:white;
         }
@@ -25,13 +9,66 @@
     </style>
 </head>
 <body>
-        <img src="https://jospa.tayasmart.com/images/frontend/slider1.webp" alt="Services Hero" class="w-100" style="object-fit: cover;height:263.4px">
+    </div>
+
+    @include('components.frontend.footer')
+</body>
+</html>
+ --}}
+
+
+
+
+<!DOCTYPE html>
+<html lang="{{ app()->getLocale() }}" dir="{{ language_direction() }}" class="theme-fs-sm">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+
+    <title>@yield('title') | {{ app_name() }}</title>
+
+    <link rel="stylesheet" href="{{ mix('css/libs.min.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/backend.css') }}">
+    @if (language_direction() == 'rtl')
+        <link rel="stylesheet" href="{{ asset('css/rtl.css') }}">
+    @endif
+    <link rel="stylesheet" href="{{ asset('custom-css/frontend.css') }}">
+
+    @stack('after-styles')
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">  
+   <style>
+        body{
+            font-family: 'IBM Plex Sans Arabic', sans-serif !important;
+        }
+   </style>
+</head>
+<body class="bg-white">
+    <!-- Lightning Progress Bar --> 
+    @include('components.frontend.progress-bar')
+
+    <!-- Hero Section (30% of screen) -->
+    <div class="position-relative" style="height: 200px;">
+        <img src="{{ asset('images/frontend/slider1.webp') }}" alt="Contact Hero" class="w-100 " style="object-fit: cover;height: 145%;">
+        <div class="position-absolute top-0 start-0 w-100" style="background: rgba(0,0,0,0.35);height:290.797px"></div>
+
+        <!-- First Navbar -->
         @include('components.frontend.navbar')
+
+        <!-- Second Navbar -->
         @include('components.frontend.second-navbar')
     </div>
+
+    <!-- Page Content -->
     <div style="height: 100vh;">
         
     </div>
+
+    <!-- Footer -->
     @include('components.frontend.footer')
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

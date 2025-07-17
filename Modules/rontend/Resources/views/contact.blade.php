@@ -22,13 +22,13 @@
         rel="stylesheet">
 </head>
 <body class="bg-white">
-    <!-- Lightning Progress Bar -->
+    <!-- Lightning Progress Bar --> 
     @include('components.frontend.progress-bar')
 
     <!-- Hero Section (30% of screen) -->
-    <div class="position-relative" style="height: 30vh;">
-        <img src="{{ asset('images/frontend/slider1.webp') }}" alt="Contact Hero" class="w-100 h-100" style="object-fit: cover;">
-        <div class="position-absolute top-0 start-0 w-100 h-100" style="background: rgba(0,0,0,0.35);"></div>
+    <div class="position-relative" style="height: 200px;">
+        <img src="{{ asset('images/frontend/slider1.webp') }}" alt="Contact Hero" class="w-100 " style="object-fit: cover;height: 145%;">
+        <div class="position-absolute top-0 start-0 w-100" style="background: rgba(0,0,0,0.35);height:290.797px"></div>
 
         <!-- First Navbar -->
         @include('components.frontend.navbar')

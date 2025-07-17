@@ -45,5 +45,23 @@ return [
     'enter_first_name' => 'أدخل الاسم الأول',
     'enter_last_name' => 'أدخل اسم العائلة',
     'enter_email' => 'أدخل البريد الإلكتروني',
-
+    
+    // ترجمات جديدة لصفحة البروفايل
+    'user_profile' => 'بروفايل المستخدم',
+    'personal_info' => 'معلوماتي الشخصية',
+    'mobile_number' => 'رقم الجوال',
+    'registration_date' => 'تاريخ التسجيل',
+    'last_login' => 'آخر تسجيل دخول',
+    'address' => 'العنوان',
+    'city' => 'المدينة',
+    'country' => 'الدولة',
+    'national_id' => 'رقم الهوية',
+    'charge_balance' => 'شحن رصيدي',
+    'charge_my_balance' => 'شحن رصيدي',
+    'amount' => 'المبلغ',
+    'charge' => 'شحن',
+    'balance' => 'الرصيد',
+    'riyal' => 'ريال',
+    'no_data' => '---',
+    'close' => 'إغلاق',
 ];

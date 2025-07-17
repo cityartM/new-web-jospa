@@ -45,5 +45,23 @@ return [
     'enter_first_name' => 'Entrez le prénom',
     'enter_last_name' => 'Entrez le nom de famille',
     'enter_email' => 'Entrez l\'email',
-
+    
+    // Nouvelles traductions pour la page de profil
+    'user_profile' => 'Profil Utilisateur',
+    'personal_info' => 'Mes Informations Personnelles',
+    'mobile_number' => 'Numéro de Mobile',
+    'registration_date' => 'Date d\'Inscription',
+    'last_login' => 'Dernière Connexion',
+    'address' => 'Adresse',
+    'city' => 'Ville',
+    'country' => 'Pays',
+    'national_id' => 'Numéro d\'Identité Nationale',
+    'charge_balance' => 'Recharger Mon Solde',
+    'charge_my_balance' => 'Recharger Mon Solde',
+    'amount' => 'Montant',
+    'charge' => 'Recharger',
+    'balance' => 'Solde',
+    'riyal' => 'Riyal',
+    'no_data' => '---',
+    'close' => 'Fermer',
 ];

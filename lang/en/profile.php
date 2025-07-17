@@ -45,4 +45,23 @@ return [
     'enter_first_name' => 'Enter First Name',
     'enter_last_name' => 'Enter Last Name',
     'enter_email' => 'Enter Email',
+    
+    // New translations for profile page
+    'user_profile' => 'User Profile',
+    'personal_info' => 'My Personal Information',
+    'mobile_number' => 'Mobile Number',
+    'registration_date' => 'Registration Date',
+    'last_login' => 'Last Login',
+    'address' => 'Address',
+    'city' => 'City',
+    'country' => 'Country',
+    'national_id' => 'National ID',
+    'charge_balance' => 'Charge My Balance',
+    'charge_my_balance' => 'Charge My Balance',
+    'amount' => 'Amount',
+    'charge' => 'Charge',
+    'balance' => 'Balance',
+    'riyal' => 'Riyal',
+    'no_data' => '---',
+    'close' => 'Close',
 ];

@@ -1,5 +1,6 @@
 <?php
 return [
+    'profile' => 'My Profile',
     'cart' => 'Shopping Cart',
     'ok' => 'Ok',
     'cart_empty_message' => 'The cart is currently empty.',
@@ -89,7 +90,7 @@ return [
     'time' => 'Time',
     'staff' => 'Staff',
     'agree_terms' => 'I agree to the terms and conditions',
-    'flexible_staff' => 'I’m open to staff replacement if unavailable',
+    'flexible_staff' => 'Iï¿½m open to staff replacement if unavailable',
     'confirm_booking' => 'Confirm Booking',
     'must_agree' => 'You must agree to the terms and conditions to proceed.',
 

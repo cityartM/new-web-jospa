@@ -1460,8 +1460,10 @@ function showSummary() {
 
 
 function completeBooking() {
+    const customer_id = {{ auth()->user()->id }};
+
     const bookingData = {
-        customer_id: 1,
+        customer_id,
         mobile_no: '0500000000',
         neighborhood: 'الربوة',
         branch: selectedData.branch,

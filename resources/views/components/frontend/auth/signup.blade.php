@@ -1,6 +1,6 @@
 <x-auth-layout>
     <x-slot name="title">
-        @lang('Register')
+        @lang('signup')
     </x-slot>
 
     <x-auth-card>
@@ -16,7 +16,7 @@
         <!-- Social login -->
         <x-auth-social-login />
 
-        <form method="POST" action="{{ route('register') }}">
+        <form method="POST" action="{{ route('signup.store') }}">
             @csrf
 
             <!-- First Name -->
@@ -71,8 +71,9 @@
 
         <x-slot name="extra">
             <span>
-                {{ __('Already registered?') }} <a href="{{ route('login') }}">Login</a>.
+                {{ __('Already registered?') }} <a href="{{ route('signin') }}">signin</a>.
             </span>
         </x-slot>
+
     </x-auth-card>
 </x-auth-layout>

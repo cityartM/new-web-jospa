@@ -56,6 +56,14 @@
                         {{ __('messagess.nav_cart') }}
                     </a>
                 </li>
+
+
+                <li class="nav-item h5">
+                    <a class="nav-link text-white {{ request()->routeIs('profile') ? 'text-active' : '' }}"
+                       href="{{ route('profile') }}">
+                       {{ __('messagess.profile') }}
+                    </a>
+                </li>
                 
                   <li class="nav-item h5">
                     @php
