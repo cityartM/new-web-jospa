@@ -41,7 +41,7 @@ Route::get('/pay-now', [HomeBookingController::class, 'createPayment']);
 Route::get('/payment-success', [HomeBookingController::class, 'handlePaymentResult']);
 
 
-  
+
 
 
 //    SMS API
@@ -63,10 +63,14 @@ Route::get('/login', function () {return view('auth.login');})->name('frontend.r
 Route::get('/homeService', function () {
     return view('home.create');
 })->name('home.create');
- 
+
+Route::get('/booking-calander', function () {
+    return view('booking.create');
+})->name('booking.create');
+
 Route::get('/details/{id}', [SaloneBookController::class, 'show'])->name('home.details');
 
- 
+
 Route::get('/salonService', function () {
     return view('salon.create');
 })->name('salon.create');
@@ -84,7 +88,7 @@ Route::get('/ads', function () {
 })->name('ads.page');
 
 Route::get('/cart', function () {
-    
+
     $cartItems = BookingCart::where('customer_id', 1)->get();
 
     return view('components.frontend.cart', compact('cartItems'));
