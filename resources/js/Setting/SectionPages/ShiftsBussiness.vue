@@ -4,7 +4,7 @@
     <div class="card-body">
       <!-- رأس الصفحة -->
       <div class="d-flex justify-content-between align-items-center mb-3">
-        <h5 class="mb-0">النوبات</h5>
+        <h5 class="mb-0">الورديات</h5>
         <button class="btn btn-primary" @click="openForm()">
           <i class="fa fa-plus"></i> جديد
         </button>
@@ -84,7 +84,7 @@ const openForm = (shift = null) => {
 }
 
 const deleteShift = (id) => {
-  if (!window.confirm('هل أنت متأكد من حذف هذا النوبه')) return
+  if (!window.confirm('هل أنت متأكد من حذف هذا الوردية')) return
 
   fetch(`/app/shift/delete/${id}`, {
     method: 'DELETE',

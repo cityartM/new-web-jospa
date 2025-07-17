@@ -6,6 +6,7 @@ use App\Models\Branch;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Modules\BussinessHour\Models\Shift;
 
 class EmployeeRating extends Model
 {
@@ -25,6 +26,11 @@ class EmployeeRating extends Model
     public function getBranch()
     {
         return $this->belongsTo(Branch::class, 'branch_id');
+    }
+
+    public function getShift()
+    {
+        return $this->belongsTo(Shift::class, 'shift_id');
     }
 
     public function user()

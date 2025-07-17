@@ -40,7 +40,7 @@ class Constant extends BaseModel
 
     protected function getTypeDataKeyValue($type)
     {
-        $results = self::getAllConstant()->where('type', $type);
+        $results = self::getAllConstant()->where('status',true)->where('type', $type);
 
         $convertedArray = [];
 

@@ -140,6 +140,13 @@
                 searchable: false
             },
             {
+                data: 'shift_id',
+                name: 'shift_id',
+                title: "{{ __('employee.lbl_shift') }}",
+                orderable: false,
+                searchable: false
+            },
+            {
                 data: 'is_manager',
                 name: 'is_manager',
                 title: "{{ __('employee.lbl_role') }}"

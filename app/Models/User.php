@@ -25,6 +25,7 @@ use Modules\Tip\Models\TipEarning;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\Permission\Traits\HasRoles;
 use Modules\Wallet\Models\Wallet;
+use Modules\BussinessHour\Models\Shift;
 
 class User extends Authenticatable implements HasMedia, MustVerifyEmail
 {
@@ -187,9 +188,19 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmail
         return $this->hasOne(BranchEmployee::class, 'employee_id')->with('getBranch');
     }
 
+    public function shift()
+    {
+        return $this->hasOne(BranchEmployee::class, 'employee_id')->with('getShift');
+    }
+
     public function mainBranch()
     {
         return $this->hasManyThrough(Branch::class, BranchEmployee::class, 'employee_id', 'id', 'id', 'branch_id');
+    }
+
+    public function mainShift()
+    {
+        return $this->hasManyThrough(Shift::class, BranchEmployee::class, 'employee_id', 'id', 'id', 'shift_id');
     }
 
     public function services()

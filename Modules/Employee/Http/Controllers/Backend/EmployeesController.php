@@ -81,6 +81,10 @@ class EmployeesController extends Controller
                 'text' => 'Branch',
             ],
             [
+                'value' => 'shifts',
+                'text' => 'Shift',
+            ],
+            [
                 'value' => 'role',
                 'text' => 'Role',
             ],
@@ -212,7 +216,7 @@ class EmployeesController extends Controller
     public function index_data(Datatables $datatable, Request $request)
     {
         $module_name = $this->module_name;
-        $query = User::select('users.*')->role(['employee', 'manager'])->branch()->with('media', 'mainBranch');
+        $query = User::select('users.*')->role(['employee', 'manager'])->branch()->with('media', 'mainBranch','mainShift');
 
         $filter = $request->filter;
 
@@ -281,6 +285,9 @@ class EmployeesController extends Controller
             })
             ->addColumn('branch_id', function ($data) {
                 return optional($data->mainBranch)->pluck('name')->toArray() ?? '-';
+            })
+            ->addColumn('shift_id', function ($data) {
+                return optional($data->mainShift)->pluck('name')->toArray() ?? '-';
             })
             ->addColumn('wallet_balance', function ($data) {
                 return '<a href="' . route('wallet.history', ['id' => $data->id]) . '">' . Currency::format(optional($data->wallet)->amount) . '</a>';
@@ -402,6 +409,7 @@ class EmployeesController extends Controller
             $branch_data = [
                 'employee_id' => $employee_id,
                 'branch_id' => $request->branch_id,
+                'shift_id' => $request->shift_id,
             ];
             BranchEmployee::create($branch_data);
         }
@@ -469,6 +477,8 @@ class EmployeesController extends Controller
         }
 
         $data['branch_id'] = $data->branch->branch_id ?? null;
+
+        $data['shift_id'] = $data->branch->shift_id ?? null;
 
         $data['service_id'] = $data->services->pluck('service_id') ?? [];
 
@@ -557,6 +567,7 @@ class EmployeesController extends Controller
             $branch_data = [
                 'employee_id' => $id,
                 'branch_id' => $request->branch_id,
+                'shift_id' => $request->shift_id,
             ];
 
             BranchEmployee::create($branch_data);

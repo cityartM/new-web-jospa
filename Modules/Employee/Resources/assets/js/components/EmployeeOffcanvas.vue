@@ -101,6 +101,18 @@
               <span class="text-danger">{{ errors.branch_id }}</span>
             </div>
 
+            <div class="form-group col-md-12" >
+              <label class="form-label" for="shift">{{ $t('employee.lbl_select_shift') }}</label><span class="text-danger">*</span>
+              <Multiselect id="shift_id" v-model="shift_id" :value="shift_id" placeholder="Select shift"
+                v-bind="singleSelectOption" :options="shift.options" @select="shiftSelect" class="form-group">
+              </Multiselect>
+              <span v-if="errorMessages['shift_id']">
+                <ul class="text-danger">
+                  <li v-for="err in errorMessages['shift_id']" :key="err">{{ err }}</li>
+                </ul>
+              </span>
+              <span class="text-danger">{{ errors.shift_id }}</span>
+            </div>
             <div class="form-group">
               <label class="form-label" for="service">{{ $t('employee.lbl_select_service') }}</label>
               <Multiselect id="service_id" v-model="service_id" :multiple="true" :value="service_id"
@@ -169,7 +181,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { EDIT_URL, STORE_URL, UPDATE_URL, BRANCH_LIST, SERVICE_LIST, COMMISSION_LIST, EMAIL_UNIQUE_CHECK } from '../constant/employee'
+import { EDIT_URL, STORE_URL, UPDATE_URL, BRANCH_LIST,SHIFT_LIST, SERVICE_LIST, COMMISSION_LIST, EMAIL_UNIQUE_CHECK } from '../constant/employee'
 import { useField, useForm } from 'vee-validate'
 
 import { VueTelInput } from 'vue3-tel-input'
@@ -191,7 +203,8 @@ const props = defineProps({
   editTitle: { type: String, default: '' },
   defaultImage: { type: String, default: 'https://dummyimage.com/600x300/cfcfcf/000000.png' },
   customefield: { type: Array, default: () => [] },
-  selectedSessionBranchId: {type: Number, default: null}
+  selectedSessionBranchId: {type: Number, default: null},
+  selectedSessionShiftId: {type: Number, default: null}
 })
 
 // Select Options
@@ -219,6 +232,16 @@ const currentId = useModuleId(() => {
     }
     branchSelect()
   })
+  useSelect({ url: SHIFT_LIST }, { value: 'id', label: 'name' }).then((data) => {
+    shift.value = data
+    if(props.selectedSessionShiftId !== null) {
+      shift_id.value = props.selectedSessionShiftId
+    } else if (data.options.length === 1) {
+      shift_id.value = data.options[0].value
+      shiftSelect()
+    }
+    shiftSelect()
+  })
   useSelect({ url: COMMISSION_LIST }, { value: 'id', label: 'name' }).then((data) => (commissions.value = data))
   if (currentId.value > 0) {
     getRequest({ url: EDIT_URL, id: currentId.value }).then((res) => {
@@ -233,6 +256,7 @@ const currentId = useModuleId(() => {
 })
 
 const branch = ref({ options: [], list: [] })
+const shift  = ref({ options: [], list: [] })
 const commissions = ref({ options: [], list: [] })
 const services = ref({ options: [], list: [] })
 
@@ -242,6 +266,9 @@ onMounted(() => {
 
 const branchSelect = () => {
   useSelect({ url: SERVICE_LIST, data: { branch_id: branch_id.value } }, { value: 'id', label: 'name' }).then((data) => (services.value = data))
+}
+const shiftSelect = () => {
+  useSelect({ url: SERVICE_LIST, data: { shift_id: shift_id.value } }, { value: 'id', label: 'name' }).then((data) => (services.value = data))
 }
 
 // File Upload Function
@@ -336,6 +363,7 @@ const setFormData = (data) => {
       gender: data.gender,
       profile_image: data.profile_image,
       branch_id: data.branch_id,
+      shift_id: data.shift_id,
       service_id: data.service_id,
       commission_id: data.commission_id,
       status: data.status ? true : false,
@@ -421,6 +449,8 @@ const validationSchema = yup.object({
       .required('Select commission is a required field'),
       branch_id: yup.string()
       .required('Select Branch is a required field'),
+      shift_id: yup.string()
+     .required('Select Shift is a required field'),
 });
 
 
@@ -437,6 +467,7 @@ const { value: confirm_password } = useField('confirm_password')
 const { value: gender } = useField('gender')
 const { value: mobile } = useField('mobile')
 const { value: branch_id } = useField('branch_id')
+const { value: shift_id } = useField('shift_id')
 const { value: status } = useField('status')
 const { value: service_id } = useField('service_id')
 const { value: commission_id } = useField('commission_id')

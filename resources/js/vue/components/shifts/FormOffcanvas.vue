@@ -2,13 +2,13 @@
 <template>
   <div class="offcanvas offcanvas-end show" tabindex="-1" style="visibility: visible; width: 400px;" aria-modal="true" role="dialog">
     <div class="offcanvas-header">
-      <h5 class="offcanvas-title">{{ modelValue ? 'تعديل الشيفت' : 'إضافة شيفت' }}</h5>
+      <h5 class="offcanvas-title">{{ modelValue ? 'تعديل الوردية' : 'إضافة وردية' }}</h5>
       <button type="button" class="btn-close" @click="$emit('close')"></button>
     </div>
     <div class="offcanvas-body">
       <form @submit.prevent="submitForm">
         <div class="mb-3">
-          <label class="form-label">اسم النوبه</label>
+          <label class="form-label">اسم الوردية</label>
           <input v-model="form.name" type="text" class="form-control" required>
         </div>
         <div class="mb-3">

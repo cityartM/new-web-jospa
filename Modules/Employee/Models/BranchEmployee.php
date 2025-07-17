@@ -6,6 +6,7 @@ use App\Models\Branch;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Modules\BussinessHour\Models\Shift;
 
 class BranchEmployee extends Model
 {
@@ -14,7 +15,7 @@ class BranchEmployee extends Model
     protected $table = 'branch_employee';
 
     protected $fillable = [
-        'employee_id', 'branch_id', 'is_primary',
+        'employee_id', 'branch_id','shift_id', 'is_primary',
     ];
 
     protected static function newFactory()
@@ -25,6 +26,11 @@ class BranchEmployee extends Model
     public function getBranch()
     {
         return $this->belongsTo(Branch::class, 'branch_id');
+    }
+
+     public function getShift()
+    {
+        return $this->belongsTo(Shift::class, 'shift_id');
     }
 
     public function rating()
