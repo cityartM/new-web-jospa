@@ -716,7 +716,7 @@
                 <label class="pay-label"><input type="radio" class="pay-radio" name="pay" checked>{{ __('messagess.pay_by_card') }}</label>
                 <label class="pay-label"><input type="radio" class="pay-radio" name="pay">{{ __('messagess.pay_by_wallet') }}</label>
             </div>
-            <a class="pay-btn">{{ __('messagess.continue_to_pay') }} <i class="fas fa-credit-card"></i> </a>
+            <button onclick="proceedToPayment()" class="pay-btn">{{ __('messagess.continue_to_pay') }} <i class="fas fa-credit-card"></i> </button>
         </div>
         @else
             <!-- لو لم يكن هناك بيانات -->
