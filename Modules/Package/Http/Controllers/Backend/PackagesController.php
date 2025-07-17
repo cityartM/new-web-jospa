@@ -209,6 +209,9 @@ class PackagesController extends Controller
 
 
         return Datatables::of($query)
+            ->addColumn('name', function ($data) {
+                return $data->name; // Assuming 'en' is the default language key
+            })
             ->addColumn('check', function ($data) {
                 return '<input type="checkbox" class="form-check-input select-table-row"  id="datatable-row-' . $data->id . '"  name="datatable_ids[]" value="' . $data->id . '" onclick="dataTableRowCheck(' . $data->id . ')">';
             })
@@ -294,7 +297,7 @@ class PackagesController extends Controller
      */
     public function store(Request $request)
     {
-    
+        $request['name'] = json_decode($request->name, true);
         $request['services'] = is_string($request->services) && !empty(is_string($request->services)) ? json_decode($request->services) : [];
         $request['employee_id'] = is_string($request->employee_id) && !empty($request->employee_id) ? explode(',', $request->employee_id) : [];
         $request['category_id'] = is_string($request->category_id) && !empty($request->category_id) ? explode(',', $request->category_id) : [];
@@ -362,6 +365,7 @@ class PackagesController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request['name'] = json_decode($request->name, true);
         $request['services'] = is_string($request->services) && !empty(is_string($request->services)) ? json_decode($request->services) : [];
         $request['employee_id'] = is_string($request->employee_id) && !empty($request->employee_id) ? explode(',', $request->employee_id) : [];
         $request['category_id'] = is_string($request->category_id) && !empty($request->category_id) ? explode(',', $request->category_id) : [];

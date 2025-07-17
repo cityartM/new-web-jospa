@@ -7,15 +7,21 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Branch;
 use Carbon\Carbon;
+use Spatie\Translatable\HasTranslations;
 
 class Package extends BaseModel
 {
     use HasFactory;
     use SoftDeletes;
+    use HasTranslations;
 
     protected $table = 'packages';
 
-
+    public $translatable = ['name'];
+    
+    protected $casts = [
+        'name' => 'array',
+    ];
 
     const CUSTOM_FIELD_MODEL = 'Modules\Package\Models\Package';
 

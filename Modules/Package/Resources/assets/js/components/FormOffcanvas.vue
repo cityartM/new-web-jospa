@@ -19,7 +19,8 @@
             </div>
 
             <div class="col-md-8">
-              <InputField class="" type="text" :is-required="true" :label="$t('package.lbl_name')" placeholder="Enter Package Name" v-model="name" :error-message="errors['name']"></InputField>
+              <InputField class="" type="text" :is-required="true" :label="$t('package.lbl_name')+' '+ $t('settings.translate.ar')" placeholder="Enter Package Name" v-model="name['ar']" :error-message="errorMessages['name'] && errorMessages['name']['ar']"></InputField>
+              <InputField class="" type="text" :is-required="true" :label="$t('package.lbl_name')+' '+ $t('settings.translate.en')" placeholder="Enter Package Name" v-model="name['en']" :error-message="errorMessages['name'] && errorMessages['name']['en']"></InputField>
               <InputField class="" type="textarea" :textareaRows="5" :label="$t('package.lbl_description')" placeholder="Enter Description" v-model="description"></InputField>
             </div>
           </div>
@@ -292,7 +293,10 @@ const defaultData = () => {
 
   errorMessages.value = {}
   return {
-    name: '',
+    name: {
+        ar: '',
+        en: ''
+      },
     // end_date: new Date(new Date().setDate(new Date().getDate() + 1)).toJSON().slice(0, 10),
     // start_date: new Date().toJSON().slice(0, 10),
     end_date: null,
@@ -316,9 +320,23 @@ const setFormData = (data) => {
   console.log(data)
   ImageViewer.value = data.package_image;
   selectedServices.value = data.service
+  let parsedName = { ar: '', en: '' }
+
+  try {
+    if (typeof data.name === 'string') {
+      parsedName = JSON.parse(data.name)
+    } else if (typeof data.name === 'object' && data.name !== null) {
+      parsedName = {
+        ar: data.name.ar ?? '',
+        en: data.name.en ?? ''
+      }
+    }
+  } catch (e) {
+    console.warn('Invalid JSON name field:', data.name)
+  }
   resetForm({
     values: {
-      name: data.name,
+      name: parsedName,
       description: data.description,
       start_date: data.start_date,
       end_date: data.end_date,
@@ -359,7 +377,10 @@ const reset_datatable_close_offcanvas = (res) => {
 
 // Validations
 const validationSchema = yup.object({
-  name: yup.string().required('Name is a required field'),
+  name: yup.object({
+      ar: yup.string().required('Arabic name is required'),
+      en: yup.string().required('English name is required')
+    }),
   branch_id: yup.string().required('Branch is a required field'),
   start_date: yup.string().required('Start Date  is required'),
   end_date: yup.string()
@@ -402,6 +423,10 @@ const validationSchema = yup.object({
 const { handleSubmit, errors, resetForm } = useForm({
   validationSchema,
   initialValues: {
+    name: {
+      ar: '',
+      en: ''
+    },
     // services: selectedServices.value // Initial value for services from selectedServices
   } })
 const { value: name } = useField('name')
@@ -452,6 +477,7 @@ const formSubmit = handleSubmit((values) => {
     return; // Stop form submission
   }
    IS_SUBMITED.value = true
+   values.name = JSON.stringify(values.name); 
    values.services=JSON.stringify(services.value)
   // values.services = JSON.stringify(selectedServices.value)
   if (currentId.value > 0) {
