@@ -551,28 +551,28 @@
                     <div class="input-row">
                         <div class="input-group">
                             <label class="input-label">{{ __('messagess.gifter_name') }}</label>
-                            <input type="text" class="form-input" required>
+                            <input type="text" name="sender_name" class="form-input" required>
                         </div>
                         <div class="input-group">
                             <label class="input-label">{{ __('messagess.recipient_name') }}</label>
-                            <input type="text" class="form-input" required>
+                            <input type="text" name="recipient_name" class="form-input" required>
                         </div>
                     </div>
 
                     <div class="input-row">
                         <div class="input-group">
                             <label class="input-label">{{ __('messagess.gifter_phone') }}</label>
-                            <input type="tel" class="form-input">
+                            <input type="tel" name="sender_phone" class="form-input">
                         </div>
                         <div class="input-group">
                             <label class="input-label">{{ __('messagess.recipient_phone') }}</label>
-                            <input type="tel" class="form-input">
+                            <input type="tel" name="recipient_phone" class="form-input">
                         </div>
                     </div>
 
                     <div class="input-group full-width">
                         <label class="input-label">{{ __('messagess.optional_services') }}</label>
-                        <textarea class="form-textarea" maxlength="100" placeholder="{{ __('messagess.optional_services') }}..."></textarea>
+                        <textarea class="form-textarea" name="optional_services" maxlength="100" placeholder="{{ __('messagess.optional_services') }}..."></textarea>
                     </div>
                 </div>
 
@@ -584,22 +584,23 @@
 
 
                     <!-- 1 -->
-                    @foreach ($mainCategoriesWithSubs as $item)
+                    @foreach ($subCategories as $sub)
                     <div class="container">
-                        <div class="clickable-div" onclick="toggleList(this)">{{ $item }}</div>
+                        <div class="clickable-div" onclick="toggleList(this)">
+                            {{$sub->name}}
+                        </div>
                         <div class="checkbox-list">
-                            @foreach ($item->subCategories as $sub)
-                                @foreach ($sub->services as $service)
-                            <div class="checkbox-item">
-                                        <input type="checkbox" id="service_{{ $service->id }}" name="services[]" value="{{ $service->id }}">
-                                        <label for="service_{{ $service->id }}">
-                                            {{ $service->name }} - {{ $service->price }} {{ __('messagess.currency') }}
-                                        </label>
-                            </div>
-                                @endforeach
+                            @foreach ($sub->services as $service)
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="service_{{ $service->id }}" name="services[]" value="{{ $service->id }}">
+                                    <label for="service_{{ $service->id }}">
+                                        {{ $service->name }} -
+                                        {{ $service->default_price }} {{ __('messagess.currency') }}
+                                    </label>
+                                </div>
                             @endforeach
-                            </div>
-                            </div>
+                        </div>
+                    </div>
                 @endforeach
                     
                 

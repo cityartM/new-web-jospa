@@ -79,22 +79,7 @@ Route::get('/salonService', function () {
 
 
 
-Route::get('/giffte', function () {
-
-$locale = app()->getLocale();
-    $mainCategoriesWithSubs = Category::with([
-        'services' => function ($query) {
-            $query->where('status', 1);
-        }
-    ])
-    ->whereNull('parent_id')
-    ->where('status', 1)
-    ->selectRaw("JSON_UNQUOTE(JSON_EXTRACT(name, '$.ar')) as name")
-    ->get();
-
-    return view('salon.gift' , compact('mainCategoriesWithSubs'));
-
-})->name('gift.page');
+Route::get('/giffte', [GiftCardController::class, 'index'] )->name('gift.page');
 
 
 
