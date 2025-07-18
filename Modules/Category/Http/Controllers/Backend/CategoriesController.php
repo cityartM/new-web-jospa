@@ -349,6 +349,11 @@ class CategoriesController extends Controller
      */
     public function store(CategoryRequest $request)
     {
+        if (is_string($request->name) && $this->isJson($request->name)) {
+            $request['name'] = json_decode($request->name, true);
+        }else {
+            $request['name'] = ['ar' => $request->name, 'en' => ''];
+        }
         $data = $request->except('feature_image');
 
         $query = Category::create($data);
@@ -413,6 +418,11 @@ class CategoriesController extends Controller
      */
     public function update(CategoryRequest $request, $id)
     {
+        if (is_string($request->name) && $this->isJson($request->name)) {
+            $request['name'] = json_decode($request->name, true);
+        }else {
+            $request['name'] = ['ar' => $request->name, 'en' => ''];
+        }
         $query = Category::findOrFail($id);
 
         $data = $request->except('feature_image');
@@ -461,5 +471,10 @@ class CategoriesController extends Controller
         $this->exportClass = '\App\Exports\SubCategoryExport';
 
         return $this->export($request);
+    }
+    private function isJson($string)
+    {
+        json_decode($string);
+        return json_last_error() === JSON_ERROR_NONE;
     }
 }
