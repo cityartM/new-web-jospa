@@ -352,7 +352,7 @@ class CategoriesController extends Controller
         if (is_string($request->name) && $this->isJson($request->name)) {
             $request['name'] = json_decode($request->name, true);
         }else {
-            $request['name'] = ['ar' => $request->name, 'en' => ''];
+            $request['name'] = ['ar' => $request->name, 'en' => $request->name];
         }
         $data = $request->except('feature_image');
 
@@ -421,7 +421,7 @@ class CategoriesController extends Controller
         if (is_string($request->name) && $this->isJson($request->name)) {
             $request['name'] = json_decode($request->name, true);
         }else {
-            $request['name'] = ['ar' => $request->name, 'en' => ''];
+            $request['name'] = ['ar' => $request->name, 'en' => $request->name];
         }
         $query = Category::findOrFail($id);
 

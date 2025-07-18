@@ -333,7 +333,7 @@ class ServicesController extends Controller
         if (is_string($request->name) && $this->isJson($request->name)) {
             $request['name'] = json_decode($request->name, true);
         }else {
-            $request['name'] = ['ar' => $request->name, 'en' => ''];
+            $request['name'] = ['ar' => $request->name, 'en' => $request->name];
         }
         $data = $request->except('feature_image');
         $userId = Auth()->user()->id;
@@ -418,7 +418,7 @@ class ServicesController extends Controller
         if (is_string($request->name) && $this->isJson($request->name)) {
             $request['name'] = json_decode($request->name, true);
         }else {
-            $request['name'] = ['ar' => $request->name, 'en' => ''];
+            $request['name'] = ['ar' => $request->name, 'en' => $request->name];
         }
         $data = Service::findOrFail($id);
 

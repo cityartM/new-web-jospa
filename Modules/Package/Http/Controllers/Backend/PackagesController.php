@@ -301,7 +301,7 @@ class PackagesController extends Controller
         if (is_string($request->name) && $this->isJson($request->name)) {
             $request['name'] = json_decode($request->name, true);
         }else {
-            $request['name'] = ['ar' => $request->name, 'en' => ''];
+            $request['name'] = ['ar' => $request->name, 'en' => $request->name];
         }
         $request['services'] = is_string($request->services) && !empty(is_string($request->services)) ? json_decode($request->services) : [];
         $request['employee_id'] = is_string($request->employee_id) && !empty($request->employee_id) ? explode(',', $request->employee_id) : [];
@@ -373,7 +373,7 @@ class PackagesController extends Controller
         if (is_string($request->name) && $this->isJson($request->name)) {
             $request['name'] = json_decode($request->name, true);
         }else {
-            $request['name'] = ['ar' => $request->name, 'en' => ''];
+            $request['name'] = ['ar' => $request->name, 'en' => $request->name];
         }
         $request['services'] = is_string($request->services) && !empty(is_string($request->services)) ? json_decode($request->services) : [];
         $request['employee_id'] = is_string($request->employee_id) && !empty($request->employee_id) ? explode(',', $request->employee_id) : [];
