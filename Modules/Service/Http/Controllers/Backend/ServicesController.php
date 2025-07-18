@@ -330,6 +330,11 @@ class ServicesController extends Controller
      */
     public function store(ServiceRequest $request)
     {
+        if (is_string($request->name) && $this->isJson($request->name)) {
+            $request['name'] = json_decode($request->name, true);
+        }else {
+            $request['name'] = ['ar' => $request->name, 'en' => ''];
+        }
         $data = $request->except('feature_image');
         $userId = Auth()->user()->id;
 
@@ -410,6 +415,11 @@ class ServicesController extends Controller
      */
     public function update(ServiceRequest $request, $id)
     {
+        if (is_string($request->name) && $this->isJson($request->name)) {
+            $request['name'] = json_decode($request->name, true);
+        }else {
+            $request['name'] = ['ar' => $request->name, 'en' => ''];
+        }
         $data = Service::findOrFail($id);
 
         $request_data = $request->except('feature_image');
@@ -603,5 +613,11 @@ class ServicesController extends Controller
                 ->doesntExist();
         }
         return response()->json(['isUnique' => $isUnique]);
+    }
+
+    private function isJson($string)
+    {
+        json_decode($string);
+        return json_last_error() === JSON_ERROR_NONE;
     }
 }

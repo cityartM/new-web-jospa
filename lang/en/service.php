@@ -54,4 +54,5 @@ return [
     'select_subcategory'=>'Select Sub Category ',
     'description'=>'Description',
     'select_role'=>'Select role',
+    'placeholder_name' => 'Enter Name of Service',
 ];
