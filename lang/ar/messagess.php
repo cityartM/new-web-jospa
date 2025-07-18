@@ -1,6 +1,12 @@
 <?php   
 
 return [  
+    'location_required'        => 'يرجى إدخال جميع تفاصيل الموقع',
+    'service_required'         => 'يرجى اختيار فئة الخدمة',
+    'date_required'            => 'يرجى اختيار التاريخ',
+    'staff_required'           => 'يرجى اختيار أحد الموظفين',
+    'time_required'            => 'يرجى اختيار الوقت',
+    'specific_service_required'=> 'يرجى اختيار خدمة محددة',
     'profile' => 'حسابي',
     'cart' => 'سلة المشتريات',
     'ok' => 'حسناً',
@@ -30,12 +36,11 @@ return [
     'personalized_experience' => 'تجربة مخصصة',
     'no_services_in_category' => 'لا توجد خدمات متاحة في هذا القسم.',
     'service' => 'الخدمة',
-'sub_category' => 'الفئة الفرعية',
-'price_sr' => 'السعر (ر.س)',
-'duration_minutes' => 'المدة (بالدقائق)',
-'services_pricing' => 'الخدمات والأسعار',
-'minutes' => 'دقائق',
-
+    'sub_category' => 'الفئة الفرعية',
+    'price_sr' => 'السعر (ر.س)',
+    'duration_minutes' => 'المدة (بالدقائق)',
+    'services_pricing' => 'الخدمات والأسعار',
+    'minutes' => 'دقائق',
     'tailored_services' => 'خدمات تلائم احتياجاتك وتفضيلاتك الشخصية.',
     'expert_specialists' => 'خبراء متخصصون',
     'trained_professional_team' => 'فريق من المحترفين المدربين على أعلى مستوى.',

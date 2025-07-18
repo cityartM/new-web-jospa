@@ -21,7 +21,6 @@
             {{ $services_count }} {{ __('messagess.services') }}
         </div>
     @endif
-
     <!-- Category info -->
     <div class="position-absolute ms-5" style="bottom: 78px;">
         <div class="d-flex flex-row gap-2" style="margin: 9px;">

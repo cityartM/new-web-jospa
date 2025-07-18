@@ -119,7 +119,8 @@
 </head>
 
 <body>
-    <!-- Loader Start -->
+    <!-- Lo    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+ader Start -->
     <div id="loading">
         <x-partials._body_loader />
     </div>
@@ -136,3 +137,16 @@
 </body>
 
 </html>
+       @if(session('success'))
+            toastr.success("{{ session('success') }}");
+        @endif
+
+        @if(session('error'))
+            toastr.error("{{ session('error') }}");
+        @endif
+
+        @if($errors->any())
+            @foreach($errors->all() as $error)
+                toastr.error("{{ $error }}");
+            @endforeach
+        @endif

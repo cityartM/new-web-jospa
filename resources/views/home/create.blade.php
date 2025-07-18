@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
     <style>
         * {
@@ -1509,7 +1510,7 @@ function showBookingSummary() {
                 const neighborhood = document.getElementById('neighborhood').value;
 
                 if (!name || !mobile || !neighborhood) {
-                    alert('Please fill in all location details');
+                    toastr.error("{{ __('messagess.location_required') }}");
                     return false;
                 }
 
@@ -1517,32 +1518,32 @@ function showBookingSummary() {
                 break;
             case 3:
                 if (!selectedData.service) {
-                    alert('Please select a service category');
+                    toastr.error("{{ __('messagess.service_required') }}");
                     return false;
                 }
                 break;
             case 4:
                 if (!selectedData.massage) {
-                    alert('Please select a specific service');
+                    toastr.error("{{ __('messagess.specific_service_required') }}");
                     return false;
                 }
                 break;
             case 5:
                 if (!selectedData.date) {
-                    alert('Please select a date');
+                    toastr.error("{{ __('messagess.date_required') }}");
                     return false;
                 }
                 break;
             case 6:
                 if (!selectedData.staff ) {
-                    alert('Please select a staff member ');
+                    toastr.error("{{ __('messagess.staff_required') }}");
                     return false;
                 }
                         showBookingSummary();
                 break;
            case 7:
                 if (!selectedData.time) {
-                    alert('Please select a time');
+                    toastr.error("{{ __('messagess.time_required') }}");
                     return false;
                 }
             
@@ -1592,8 +1593,32 @@ function showBookingSummary() {
 
     // Initialize the application
     document.addEventListener('DOMContentLoaded', initializeApp);
+
+    
 </script>
 
+<!-- jQuery (Toastr depends on it) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<!-- JS for Toastr -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+<!-- Display messages -->
+<script>
+    @if(session('success'))
+        toastr.success("{{ session('success') }}");
+    @endif
+
+    @if(session('error'))
+        toastr.error("{{ session('error') }}");
+    @endif
+
+    @if($errors->any())
+        @foreach($errors->all() as $error)
+            toastr.error("{{ $error }}");
+        @endforeach
+    @endif
+</script>
 
 </body>
 </html>

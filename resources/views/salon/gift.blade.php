@@ -9,9 +9,13 @@
     <title>{{ __('messagess.giftcard') }} - JOSPA</title>
     <link rel="stylesheet" href="jospa-gift-card.css">
     
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    {{-- toastr.css --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     
+    {{-- bootstrap --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+    {{-- font-family --}}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
@@ -576,126 +580,27 @@
                 <div class="services-container">
                     <h3 class="section-title fw-bold">{{ __('messagess.service_selection') }}</h3>
 
+
+
+
                     <!-- 1 -->
-                    <div class="container" >
-                        <div class="clickable-div" onclick="toggleList(this)">{{ __('messagess.skincare')}}</div>
+                    @foreach ($mainCategoriesWithSubs as $item)
+                    <div class="container">
+                        <div class="clickable-div" onclick="toggleList(this)">{{ $item->name }}</div>
                         <div class="checkbox-list">
+                            @foreach ($item->subCategories as $sub)
+                                @foreach ($sub->services as $service)
                             <div class="checkbox-item">
-                                <input type="checkbox" id="item1">
-                                <label for="item1">{{ __('messagess.skin_cleaning') }}</label>
+                                        <input type="checkbox" id="service_{{ $service->id }}" name="services[]" value="{{ $service->id }}">
+                                        <label for="service_{{ $service->id }}">
+                                            {{ $service->name }} - {{ $service->price }} {{ __('messagess.currency') }}
+                                        </label>
                             </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="item2">
-                                <label for="item2">{{ __('messagess.skin_moisturizing') }}</label>
+                                @endforeach
+                            @endforeach
                             </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="item3">
-                                <label for="item3">{{ __('messagess.skin_treatment') }}</label>
                             </div>
-                        </div>
-                    </div>
-                    <!-- 2 -->
-                    <div class="container" >
-                        <div class="clickable-div" onclick="toggleList(this)">{{ __('messagess.facial_care')}}</div>
-                        <div class="checkbox-list">
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="item1">
-                                <label for="item1">{{ __('messagess.face_mask') }}</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="item2">
-                                <label for="item2">{{ __('messagess.face_scrub') }}</label>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- 3 -->
-                    <div class="container" >
-                        <div class="clickable-div" onclick="toggleList(this)">{{ __('messagess.bleaching')}}</div>
-                        <div class="checkbox-list">
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="item1">
-                                <label for="item1">{{ __('messagess.teeth_whitening') }}</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="item2">
-                                <label for="item2">{{ __('messagess.skin_whitening') }}</label>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- 4 -->
-                    <div class="container" >
-                        <div class="clickable-div" onclick="toggleList(this)">{{ __('messagess.wax_services')}}</div>
-                        <div class="checkbox-list" >
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="item1">
-                                <label for="item1">{{ __('messagess.wax_hair_removal') }}</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="item2">
-                                <label for="item2">{{ __('messagess.eyebrow_shaping') }}</label>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- 5 -->
-                    <div class="container" >
-                        <div class="clickable-div" onclick="toggleList(this)">{{ __('messagess.hair_services')}}</div>
-                        <div class="checkbox-list">
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="item1">
-                                <label for="item1">{{ __('messagess.hair_cut') }}</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="item2">
-                                <label for="item2">{{ __('messagess.hair_dye') }}</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="item3">
-                                <label for="item3">{{ __('messagess.hair_styling') }}</label>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- 6 -->
-                    <div class="container" >
-                        <div class="clickable-div" onclick="toggleList(this)">{{ __('messagess.bath_services')}}</div>
-                        <div class="checkbox-list">
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="item1">
-                                <label for="item1">{{ __('messagess.moroccan_bath') }}</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="item2">
-                                <label for="item2">{{ __('messagess.turkish_bath') }}</label>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- 7 -->
-                    <div class="container" >
-                        <div class="clickable-div" onclick="toggleList(this)">{{ __('messagess.cosmetics')}}</div>
-                        <div class="checkbox-list">
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="item1">
-                                <label for="item1">{{ __('messagess.daily_makeup') }}</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="item2">
-                                <label for="item2">{{ __('messagess.evening_makeup') }}</label>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- 8 -->
-                    <div class="container" >
-                        <div class="clickable-div" onclick="toggleList(this)">{{ __('messagess.makeup')}}</div>
-                        <div class="checkbox-list">
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="item1">
-                                <label for="item1">{{ __('messagess.natural_makeup') }}</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="item2">
-                                <label for="item2">{{ __('messagess.professional_makeup') }}</label>
-                            </div>
-                        </div>
-                    </div>
+                @endforeach
                     
                 
                 </div>
@@ -718,7 +623,7 @@
                         <h3>{{ __('messagess.total_amount') }}</h3>
                     <h3 >SR<span id="displayAmount">0.00</span></h3>
                     </div>
-                <button onclick="payNow()" class="add-to-cart-button">
+                <button  class="add-to-cart-button">
                     <svg class="svg-inline--fa fa-credit-card ml-2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="credit-card" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
                         <path fill="currentColor" d="M64 32C28.7 32 0 60.7 0 96l0 32 576 0 0-32c0-35.3-28.7-64-64-64L64 32zM576 224L0 224 0 416c0 35.3 28.7 64 64 64l448 0c35.3 0 64-28.7 64-64l0-192zM112 352l64 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-64 0c-8.8 0-16-7.2-16-16s7.2-16 16-16zm112 16c0-8.8 7.2-16 16-16l128 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-128 0c-8.8 0-16-7.2-16-16z"></path>
                     </svg>
@@ -735,27 +640,12 @@
     
     <script>
 
-    function payNow() {
-    
-        let displayText = document.getElementById("displayAmount").innerText;
-
-        let amount = displayText.trim();
-
-        window.location.href = "/pay-now?am=" + encodeURIComponent(amount);
-}
-
-
 // drop down
-
         function toggleList($par) {
             console.log()
             const list = $par.nextElementSibling;
             list.classList.toggle('show');
         }
-
-
-    
-// JOSPA Gift Card Interface JavaScript
 
 // Image gallery functionality
 function switchMainImage(thumbnailElement) {
@@ -771,415 +661,25 @@ function switchMainImage(thumbnailElement) {
     thumbnailElement.classList.add('active');
 }
 
+</script>
 
-// Service dropdown functionality
-function toggleServiceDropdown(dropdownId) {
-    const dropdownMenu = document.getElementById(dropdownId);
-    const dropdownHeader = dropdownMenu.previousElementSibling;
-    const allDropdowns = document.querySelectorAll('.dropdown-menu');
-    const allHeaders = document.querySelectorAll('.dropdown-header');
-    
-    // Close all other dropdowns
-    allDropdowns.forEach(menu => {
-        if (menu.id !== dropdownId) {
-            menu.classList.remove('show');
-        }
-    });
-    
-    // Remove active class from all headers
-    allHeaders.forEach(header => {
-        if (header !== dropdownHeader) {
-            header.classList.remove('active');
-        }
-    });
-    
-    // Toggle current dropdown
-    dropdownMenu.classList.toggle('show');
-    dropdownHeader.classList.toggle('active');
-}
+     {{-- JS for Toastr  --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script>
+    @if(session('success'))
+        toastr.success("{{ session('success') }}");
+    @endif
 
-// Form validation function
-function validateFormData() {
-    const requiredInputs = document.querySelectorAll('input[required]');
-    let isFormValid = true;
-    
-    requiredInputs.forEach(input => {
-        if (!input.value.trim()) {
-            input.style.borderColor = '#e74c3c';
-            input.style.boxShadow = '0 0 0 2px rgba(231, 76, 60, 0.1)';
-            isFormValid = false;
-        } else {
-            input.style.borderColor = '#e0e0e0';
-            input.style.boxShadow = 'none';
-        }
-    });
-    
-    return isFormValid;
-}
+    @if(session('error'))
+        toastr.error("{{ session('error') }}");
+    @endif
 
-// Add to cart functionality
-function addToCart() {
-    const deliveryMethod = document.querySelector('input[name="delivery_method"]:checked').value;
-    const senderName = document.querySelector('input[placeholder="اسم المهدي"]').value;
-    const recipientName = document.querySelector('input[placeholder="اسم المهدى إليه"]').value;
-    const senderPhone = document.querySelector('input[placeholder="رقم الهاتف المهدي"]').value;
-    const recipientPhone = document.querySelector('input[placeholder="رقم الهاتف المهدى إليه"]').value;
-    const requestedServices = document.querySelector('textarea').value;
-
-    // اجمع الخدمات المختارة
-    const selectedServices = [];
-    document.querySelectorAll('.dropdown-menu a.active').forEach(item => {
-        selectedServices.push(item.textContent.trim());
-    });
-
-    fetch('/gift-cards', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-        },
-        body: JSON.stringify({
-            delivery_method: deliveryMethod,
-            sender_name: senderName,
-            recipient_name: recipientName,
-            sender_phone: senderPhone,
-            recipient_phone: recipientPhone,
-            requested_services: requestedServices,
-            selected_services: selectedServices,
-            options_amount: 0,
-            subtotal: 0
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        alert(data.message);
-    })
-    .catch(error => console.error('Error:', error));
-}
-
-// Collect all form data
-function collectFormData() {
-    const deliveryMethod = document.querySelector('input[name="delivery_method"]:checked')?.value;
-    const senderName = document.querySelectorAll('.form-input')[0]?.value;
-    const recipientName = document.querySelectorAll('.form-input')[1]?.value;
-    const senderPhone = document.querySelectorAll('.form-input')[2]?.value;
-    const recipientPhone = document.querySelectorAll('.form-input')[3]?.value;
-    const serviceMessage = document.querySelector('.form-textarea')?.value;
-    
-    const selectedServices = Array.from(document.querySelectorAll('.dropdown-item.selected'))
-        .map(item => item.textContent.trim());
-    
-    return {
-        deliveryMethod,
-        senderName,
-        recipientName,
-        senderPhone,
-        recipientPhone,
-        serviceMessage,
-        selectedServices,
-        timestamp: new Date().toISOString()
-    };
-}
-
-// Show notification messages
-function showNotificationMessage(message, type = 'info') {
-    // Remove any existing notifications
-    const existingNotification = document.querySelector('.custom-notification');
-    if (existingNotification) {
-        existingNotification.remove();
-    }
-    
-    // Create notification element
-    const notification = document.createElement('div');
-    notification.className = `custom-notification ${type}`;
-    
-    const colors = {
-        success: '#27ae60',
-        error: '#e74c3c',
-        info: '#3498db',
-        warning: '#f39c12'
-    };
-    
-    notification.innerHTML = `
-        <div class="notification-content">
-            <span class="notification-text">${message}</span>
-            <button class="notification-close" onclick="closeNotification(this)">&times;</button>
-        </div>
-    `;
-    
-    // Style the notification
-    notification.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: ${colors[type] || colors.info};
-        color: white;
-        padding: 15px 20px;
-        border-radius: 6px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-        z-index: 1000;
-        max-width: 350px;
-        font-family: 'IBM Plex Sans Arabic', sans-serif !important;
-        animation: slideInRight 0.3s ease;
-        direction: rtl;
-    `;
-    
-    // Add notification styles if not already present
-    if (!document.querySelector('#notification-styles')) {
-        const style = document.createElement('style');
-        style.id = 'notification-styles';
-        style.textContent = `
-            @keyframes slideInRight {
-                from { transform: translateX(100%); opacity: 0; }
-                to { transform: translateX(0); opacity: 1; }
-            }
-            @keyframes slideOutRight {
-                from { transform: translateX(0); opacity: 1; }
-                to { transform: translateX(100%); opacity: 0; }
-            }
-            .notification-content {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                gap: 15px;
-            }
-            .notification-close {
-                background: none;
-                border: none;
-                color: white;
-                font-size: 20px;
-                cursor: pointer;
-                padding: 0;
-                width: 25px;
-                height: 25px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                border-radius: 50%;
-                transition: background-color 0.3s ease;
-            }
-            .notification-close:hover {
-                background-color: rgba(255, 255, 255, 0.2);
-            }
-        `;
-        document.head.appendChild(style);
-    }
-    
-    document.body.appendChild(notification);
-    
-    // Auto-remove after 5 seconds
-    setTimeout(() => {
-        if (notification.parentNode) {
-            closeNotification(notification.querySelector('.notification-close'));
-        }
-    }, 5000);
-}
-
-// Close notification
-function closeNotification(button) {
-    const notification = button.closest('.custom-notification');
-    notification.style.animation = 'slideOutRight 0.3s ease';
-    setTimeout(() => {
-        if (notification.parentNode) {
-            notification.remove();
-        }
-    }, 300);
-}
-
-// Update pricing display
-function updatePricingDisplay() {
-    const selectedServices = document.querySelectorAll('.dropdown-item.selected');
-    const basePrice = 400; // Base gift card price in SAR
-    let optionsAmount = selectedServices.length * 50; // 50 SAR per additional service
-    
-    const optionsAmountElement = document.querySelector('.price-row:first-child .price-value');
-    const subtotalElement = document.querySelector('.price-row:last-child .price-value');
-    
-    if (optionsAmountElement && subtotalElement) {
-        optionsAmountElement.textContent = `${optionsAmount.toFixed(2)} ريال`;
-        subtotalElement.textContent = `${(basePrice + optionsAmount).toFixed(2)} ريال`;
-    }
-}
-
-// Service item selection
-function selectServiceItem(serviceElement) {
-    serviceElement.classList.toggle('selected');
-    serviceElement.style.backgroundColor = serviceElement.classList.contains('selected') 
-        ? '#e8f4f8' : '';
-    updatePricingDisplay();
-}
-
-// Phone number formatting for Saudi numbers
-function formatSaudiPhoneNumber(input) {
-    let value = input.value.replace(/\D/g, '');
-    
-    if (value.length > 0) {
-        if (value.startsWith('966')) {
-            value = '+' + value;
-        } else if (value.startsWith('05') && value.length === 10) {
-            value = '+966' + value.substring(1);
-        } else if (value.length === 9 && value.startsWith('5')) {
-            value = '+966' + value;
-        }
-    }
-    
-    input.value = value;
-}
-
-// Character counter for textarea
-function updateCharacterCount(textarea) {
-    const maxLength = parseInt(textarea.getAttribute('maxlength'));
-    const currentLength = textarea.value.length;
-    
-    let counter = textarea.parentNode.querySelector('.char-counter');
-    if (!counter) {
-        counter = document.createElement('div');
-        counter.className = 'char-counter';
-        counter.style.cssText = `
-            font-size: 0.75rem;
-            color: #888;
-            text-align: left;
-            margin-top: 4px;
-            direction: ltr;
-        `;
-        textarea.parentNode.appendChild(counter);
-    }
-    
-    counter.textContent = `${currentLength}/${maxLength}`;
-    counter.style.color = currentLength > maxLength * 0.9 ? '#e74c3c' : '#888';
-}
-
-// Initialize event listeners
-document.addEventListener('DOMContentLoaded', function() {
-    // Phone number formatting
-    const phoneInputs = document.querySelectorAll('input[type="tel"]');
-    phoneInputs.forEach(input => {
-        input.addEventListener('input', function() {
-            formatSaudiPhoneNumber(this);
-        });
-        
-        input.addEventListener('blur', function() {
-            if (this.value && !this.value.match(/^\+966[5-9]\d{8}$/)) {
-                this.style.borderColor = '#f39c12';
-                this.title = 'يرجى إدخال رقم هاتف سعودي صحيح';
-            } else {
-                this.style.borderColor = '#e0e0e0';
-                this.title = '';
-            }
-        });
-    });
-    
-    // Character counter for textarea
-    const textarea = document.querySelector('.form-textarea');
-    if (textarea) {
-        textarea.addEventListener('input', function() {
-            updateCharacterCount(this);
-        });
-        updateCharacterCount(textarea); // Initialize counter
-    }
-    
-    // Service item selection
-    const serviceItems = document.querySelectorAll('.dropdown-item');
-    serviceItems.forEach(item => {
-        item.addEventListener('click', function(e) {
-            e.preventDefault();
-            selectServiceItem(this);
-        });
-    });
-    
-    // Form validation on blur
-    const requiredInputs = document.querySelectorAll('input[required]');
-    requiredInputs.forEach(input => {
-        input.addEventListener('blur', function() {
-            if (!this.value.trim()) {
-                this.style.borderColor = '#e74c3c';
-            } else {
-                this.style.borderColor = '#e0e0e0';
-            }
-        });
-    });
-    
-    // Close dropdowns when clicking outside
-    document.addEventListener('click', function(e) {
-        if (!e.target.closest('.service-dropdown')) {
-            const allDropdowns = document.querySelectorAll('.dropdown-menu');
-            const allHeaders = document.querySelectorAll('.dropdown-header');
-            
-            allDropdowns.forEach(menu => menu.classList.remove('show'));
-            allHeaders.forEach(header => header.classList.remove('active'));
-        }
-    });
-    
-    // Initialize pricing display
-    updatePricingDisplay();
-    
-    // Handle form submission with Enter key
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') {
-            e.preventDefault();
-            
-            // Find next input or submit if last field
-            const inputs = Array.from(document.querySelectorAll('input, textarea'));
-            const currentIndex = inputs.indexOf(e.target);
-            
-            if (currentIndex < inputs.length - 1) {
-                inputs[currentIndex + 1].focus();
-            } else {
-                addToCart();
-            }
-        }
-        
-        // Close dropdowns with Escape key
-        if (e.key === 'Escape') {
-            const allDropdowns = document.querySelectorAll('.dropdown-menu');
-            const allHeaders = document.querySelectorAll('.dropdown-header');
-            
-            allDropdowns.forEach(menu => menu.classList.remove('show'));
-            allHeaders.forEach(header => header.classList.remove('active'));
-        }
-    });
-});
-
-// Export/Import functionality (for future use)
-function exportGiftCardData() {
-    const data = collectFormData();
-    const dataStr = JSON.stringify(data, null, 2);
-    const dataBlob = new Blob([dataStr], {type: 'application/json'});
-    
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(dataBlob);
-    link.download = `jospa-gift-card-${Date.now()}.json`;
-    link.click();  
-}
-
-// Print gift card (for future use)
-function printGiftCard() {
-    const printContent = document.querySelector('.gift-card-container').innerHTML;
-    const printWindow = window.open('', '_blank');
-    
-    printWindow.document.write(`
-        <!DOCTYPE html>
-        <html dir="rtl">
-        <head>
-            <title>JOSPA Gift Card</title>
-            <style>
-                body { font-family: 'IBM Plex Sans Arabic', sans-serif !important; direction: rtl; }
-                .no-print { display: none; }
-                @media print {
-                    .dropdown-menu { display: none !important; }
-                    .add-to-cart-button { display: none; }
-                }
-            </style>
-        </head>
-        <body>
-            ${printContent}
-        </body>
-        </html>
-    `);
-    
-    printWindow.document.close();
-    printWindow.print();
-}
+    @if($errors->any())
+        @foreach($errors->all() as $error)
+            toastr.error("{{ $error }}");
+        @endforeach
+    @endif
     </script>
 </body>
 </html>

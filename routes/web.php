@@ -22,6 +22,7 @@ use App\Http\Controllers\GiftCardController;
 use App\Http\Controllers\BookingCartController;
 use App\Http\Controllers\SignController;
 use App\Models\BookingCart;
+use Modules\Category\Models\Category;
 
 /*
 |--------------------------------------------------------------------------
@@ -74,9 +75,32 @@ Route::get('/salonService', function () {
 
 
 
+
+
+
+
 Route::get('/giffte', function () {
-    return view('salon.gift');
+
+
+
+    $mainCategoriesWithSubs = Category::with([
+        'subCategories.services' => function ($query) {
+            $query->where('status', 1);
+        }
+    ])
+    ->whereNull('parent_id')
+    ->where('status', 1)
+    ->get();
+
+    return view('salon.gift' , compact('mainCategoriesWithSubs'));
+
 })->name('gift.page');
+
+
+
+
+
+
 Route::post('/gift-cards', [GiftCardController::class, 'store'])->name('gift.create');
 
 

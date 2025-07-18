@@ -1,5 +1,11 @@
 <?php
 return [
+    'location_required'        => 'Please fill in all location details',
+    'service_required'         => 'Please select a service category',
+    'date_required'            => 'Please select a date',
+    'staff_required'           => 'Please select a staff member',
+    'time_required'            => 'Please select a time',
+    'specific_service_required'=> 'Please select a specific service',
     'profile' => 'My Profile',
     'cart' => 'Shopping Cart',
     'ok' => 'Ok',
