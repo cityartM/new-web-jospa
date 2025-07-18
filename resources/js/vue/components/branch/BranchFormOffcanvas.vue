@@ -7,7 +7,6 @@
           <div class="col-12 row">
             <div class="col-12 row">
               <div class="col-md-6">
-                <InputField class="col-md-12" :is-required="true" :label="$t('branch.lbl_branch_name')" :placeholder="$t('branch.branch_name')" v-model="name" :error-message="errors.name" :error-messages="errorMessages['name']"></InputField>
                 <div class="form-group col-md-12">
                   <label class="form-label">{{ $t('branch.lbl_branch_for') }}</label>
                   <div class="btn-group w-100" role="group" aria-label="Basic example">
@@ -18,7 +17,8 @@
                   </div>
                 </div>
               </div>
-              <div class="form-group col-md-6">
+              <div class="col-md-6">
+                <div class="form-group col-md-6">
                 <div class="text-center">
                   <img :src="ImageViewer || defaultImage" alt="feature-image" class="img-fluid mb-2 avatar-140 avatar-rounded" />
                   <div v-if="validationMessage" class="text-danger mb-2">{{ validationMessage }}</div>
@@ -29,7 +29,31 @@
                   </div>
                 </div>
               </div>
+              </div>
             </div>
+            <div class="col-12 row">
+              <div class="col-md-6">
+                 <InputField
+                    :is-required="true"
+                    :label="$t('branch.lbl_name') + ' ' + $t('settings.translate.ar')"
+                    :placeholder="$t('branch.placeholder_name')"
+                    v-model="nameAr"
+                    :error-message="nameArError"
+                    :error-messages="errorMessages['name'] && errorMessages['name']['ar']"
+                  />
+              </div>
+              <div class="col-md-6">
+                <InputField
+                  :is-required="true"
+                  :label="$t('branch.lbl_name') + ' ' + $t('settings.translate.en')"
+                  :placeholder="$t('branch.placeholder_name')"
+                  v-model="nameEn"
+                  :error-message="nameEnError"
+                  :error-messages="errorMessages['name'] && errorMessages['name']['en']"
+                />
+              </div>
+            </div>
+            
             <div class="form-group col-md-12">
               <div class="d-flex justify-content-between">
                 <label for="manager_id">{{ $t('branch.lbl_select_manager') }} <span class="text-danger">*</span></label>
@@ -211,13 +235,23 @@ const numberRegex = /^\d+$/;
  const EMAIL_REGX = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
 
 const validationSchema = yup.object({
-  name: yup.string()
-    .required('Branch Name is a required field')
-    .test('is-string', 'Only strings are allowed', (value) => {
-      // Regular expressions to disallow special characters and numbers
-      const specialCharsRegex = /[!@#$%^&*,.?":{}|<>\-_;'\/+=\[\]\\]/;
-      return !specialCharsRegex.test(value) && !numberRegex.test(value);
-    }),
+  name: yup.object({
+    ar: yup.string()
+      .required('Arabic Branch Name is required')
+      .test('is-string-ar', 'Only Arabic letters are allowed', (value) => {
+        const specialCharsRegex = /[!@#$%^&*,.?":{}|<>\-_;'\/+=\[\]\\]/;
+        const numberRegex = /\d/;
+        return value && !specialCharsRegex.test(value) && !numberRegex.test(value);
+      }),
+
+    en: yup.string()
+      .required('English Branch Name is required')
+      .test('is-string-en', 'Only English letters are allowed', (value) => {
+        const specialCharsRegex = /[!@#$%^&*,.?":{}|<>\-_;'\/+=\[\]\\]/;
+        const numberRegex = /\d/;
+        return value && !specialCharsRegex.test(value) && !numberRegex.test(value);
+      }),
+  }),
   manager_id:  yup.string().required('Assign Manager is a required field').matches(/^(\+?\d+)?(\s?\d+)*$/, 'Phone Number must contain only digits'),
   contact_number: yup.string().required('Contact Number is a required field').matches(/^(\+?\d+)?(\s?\d+)*$/, 'Phone Number must contain only digits'),
   contact_email: yup.string().required('Email is a required field').matches(EMAIL_REGX, 'Must be a valid email'),
@@ -253,11 +287,17 @@ const validationSchema = yup.object({
 const { handleSubmit, errors, resetForm } = useForm({
   validationSchema,
   initialValues: {
+    name: {
+      ar: '',
+      en: ''
+    },
     payment_method: ['cash']
+    
   }
 })
 
-const { value: name } = useField('name')
+const { value: nameAr, errorMessage: nameArError } = useField('name.ar')
+const { value: nameEn, errorMessage: nameEnError } = useField('name.en')
 const { value: postal_code } = useField('address.postal_code')
 const { value: address_line_1 } = useField('address.address_line_1')
 const { value: address_line_2 } = useField('address.address_line_2')
@@ -334,7 +374,10 @@ const defaultData = () => {
   ImageViewer.value = props.defaultImage
   errorMessages.value = {}
   return {
-    name: '',
+     name: {
+        ar: '',
+        en: ''
+      },
     contact_email:'',
     contact_number:'',
     feature_image: null,
@@ -361,9 +404,23 @@ const defaultData = () => {
 //  Reset Form
 const setFormData = (data) => {
   ImageViewer.value = data.feature_image || props.defaultImage
+  let parsedName = { ar: '', en: '' }
+
+  try {
+    if (typeof data.name === 'string') {
+      parsedName = JSON.parse(data.name)
+    } else if (typeof data.name === 'object' && data.name !== null) {
+      parsedName = {
+        ar: data.name.ar ?? '',
+        en: data.name.en ?? ''
+      }
+    }
+  } catch (e) {
+    console.warn('Invalid JSON name field:', data.name)
+  }
   resetForm({
     values: {
-      name: data.name,
+      name: parsedName,
       contact_email:data.contact_email,
       contact_number:data.contact_number,
       feature_image: data.feature_image,
@@ -441,7 +498,7 @@ const formSubmit = handleSubmit((values) => {
   //   values.custom_fields_data = JSON.stringify(values.custom_fields_data)
   //   console.log(values.custom_fields_data );
   // }
-
+  values.name = JSON.stringify(values.name); 
   if (props.customefield.length > 0) {
     const plainCustomFieldsData = JSON.parse(JSON.stringify(values.custom_fields_data));
     values.custom_fields_data = JSON.stringify(plainCustomFieldsData);

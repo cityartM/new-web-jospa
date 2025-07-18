@@ -81,7 +81,10 @@ class BranchController extends Controller
      */
     public function index_list(Request $request)
     {
-        $query = Branch::with('media')->get();
+        $locale = app()->getLocale();
+        $query = Branch::with('media')
+            ->selectRaw("*, name->'$.\"{$locale}\"' as name")
+            ->get();
 
         return response()->json($query);
     }
@@ -273,6 +276,11 @@ class BranchController extends Controller
      */
     public function store(BranchRequest $request)
     {
+        if (is_string($request->name) && $this->isJson($request->name)) {
+            $request['name'] = json_decode($request->name, true);
+        }else {
+            $request['name'] = ['ar' => $request->name, 'en' => ''];
+        }
         $data = $request->except('feature_image');
         if (is_string($request->payment_method)) {
             $data['payment_method'] = explode(',', $request->payment_method);
@@ -367,6 +375,11 @@ class BranchController extends Controller
      */
     public function update(BranchRequest $request, $id)
     {
+        if (is_string($request->name) && $this->isJson($request->name)) {
+            $request['name'] = json_decode($request->name, true);
+        }else {
+            $request['name'] = ['ar' => $request->name, 'en' => ''];
+        }
         $query = Branch::findOrFail($id);
 
         $data = $request->except('feature_image'); // Initialize data
@@ -620,5 +633,11 @@ class BranchController extends Controller
         $message = __('messages.update_form', ['form' => __('branch.branch_setting')]);
 
         return response()->json(['message' => $message, 'status' => true], 200);
+    }
+
+    private function isJson($string)
+    {
+        json_decode($string);
+        return json_last_error() === JSON_ERROR_NONE;
     }
 }

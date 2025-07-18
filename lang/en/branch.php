@@ -61,6 +61,7 @@ return [
     'enter_logtitude'=>'Enter Longitude',
     'enter_decription'=>'Enter Description',
     'select_staff'=>'Select Staff',
+    'placeholder_name' => 'Branch Name',
 
 
 

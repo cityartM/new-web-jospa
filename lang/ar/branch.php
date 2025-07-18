@@ -61,5 +61,6 @@ return [
     'enter_longitude' => 'أدخل خط الطول',
     'enter_description' => 'أدخل الوصف',
     'select_staff' => 'اختر الموظف',
+    'placeholder_name' => 'اسم الفرع',
 
 ];

@@ -11,16 +11,21 @@ use Modules\BussinessHour\Models\BussinessHour;
 use Modules\Employee\Models\BranchEmployee;
 use Modules\Service\Models\Service;
 use Modules\Service\Models\ServiceBranches;
+use Spatie\Translatable\HasTranslations;
 
 class Branch extends BaseModel
 {
     use CustomFieldsTrait;
     use HasFactory;
     use HasSlug;
+    use HasTranslations;
 
     const CUSTOM_FIELD_MODEL = 'App\Models\Branch';
 
+    public $translatable = ['name'];
+    
     protected $casts = [
+        'name' => 'array',
         'contact_number' => 'string',
         'payment_method' => 'array',
         'city' => 'integer',
@@ -29,7 +34,7 @@ class Branch extends BaseModel
     ];
 
     protected $appends = ['feature_image'];
-
+   
     /**
      * Get all the settings.
      *
