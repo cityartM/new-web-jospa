@@ -27,6 +27,7 @@
                 :placeholder="$t('package.placeholder_name')"
                 v-model="nameAr"
                 :error-message="nameArError"
+                :error-messages="errorMessages['name'] && errorMessages['name']['ar']"
               />
 
               <InputField
@@ -35,6 +36,7 @@
                 :placeholder="$t('package.placeholder_name')"
                 v-model="nameEn"
                 :error-message="nameEnError"
+                :error-messages="errorMessages['name'] && errorMessages['name']['en']"
               />
               <InputField class="" type="textarea" :textareaRows="5" :label="$t('package.lbl_description')" placeholder="Enter Description" v-model="description"></InputField>
             </div>
