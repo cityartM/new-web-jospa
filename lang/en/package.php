@@ -38,6 +38,7 @@ return [
     'view_package' => 'View Package',
     "no_services" => "No services added. Please add a service.",
     'no_of_services' => 'No of services',
+    'placeholder_name' => 'Enter Package Name',
 
 
 

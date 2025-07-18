@@ -22,5 +22,6 @@ return [
     'lbl_service_price' => 'سعر الخدمة في الحزمة',
     "no_services" => "لم تتم إضافة أي خدمات. يرجى إضافة خدمة.",
     'no_of_services' => 'عدد الخدمات',
+    'placeholder_name' => 'أدخل اسم الحزمة',
 
 ];

@@ -54,5 +54,6 @@ return [
     'select_subcategory' => 'اختر الفئة الفرعية',
     'description' => 'الوصف',
     'select_role' => 'اختر الدور',
+    'placeholder_name' => ' أدخل اسم الخدمة',
 
 ];

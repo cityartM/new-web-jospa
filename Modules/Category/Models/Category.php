@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\Service\Models\Service;
 use Modules\Service\Models\ServiceBranches;
+use Spatie\Translatable\HasTranslations;
 
 class Category extends BaseModel
 {
@@ -16,7 +17,8 @@ class Category extends BaseModel
     use HasFactory;
     use HasSlug;
     use SoftDeletes;
-
+    use HasTranslations;
+    
     protected $table = 'categories';
 
     protected $fillable = ['slug', 'name', 'status', 'parent_id'];
@@ -24,6 +26,12 @@ class Category extends BaseModel
     const CUSTOM_FIELD_MODEL = 'Modules\Category\Models\Category';
 
     protected $appends = ['feature_image'];
+
+    public $translatable = ['name'];
+    
+    protected $casts = [
+        'name' => 'array',
+    ];
 
     /**
      * Create a new factory instance for the model.

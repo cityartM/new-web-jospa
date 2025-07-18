@@ -14,7 +14,23 @@
             </div>
           </div>
         </div>
-        <InputField class="col-md-12" type="text" :is-required="true" :label="$t('service.lbl_name')" :placeholder="$t('service.enter_name')" v-model="name" :error-message="errors['name']" :error-messages="errorMessages['name']"></InputField>
+        <InputField
+          :is-required="true"
+          :label="$t('service.lbl_name') + ' ' + $t('settings.translate.ar')"
+          :placeholder="$t('service.placeholder_name')"
+          v-model="nameAr"
+          :error-message="nameArError"
+          :error-messages="errorMessages['name'] && errorMessages['name']['ar']"
+        />
+
+        <InputField
+          :is-required="true"
+          :label="$t('service.lbl_name') + ' ' + $t('settings.translate.en')"
+          :placeholder="$t('service.placeholder_name')"
+          v-model="nameEn"
+          :error-message="nameEnError"
+          :error-messages="errorMessages['name'] && errorMessages['name']['en']"
+        />
         <InputField class="col-md-12" type="text" :is-required="true" :label="$t('service.lbl_duration_min')"  :placeholder="$t('service.service_duration')" v-model="duration_min" :error-message="errors['duration_min']" :error-messages="errorMessages['duration_min']"></InputField>
         <InputField class="col-md-12" type="text" :is-required="true" :label="`${$t('service.lbl_default_price')} (${CURRENCY_SYMBOL})`"  :placeholder="$t('service.enter_price')" v-model="default_price" :error-message="errors['default_price']" :error-messages="errorMessages['default_price']"></InputField>
 
@@ -157,7 +173,10 @@ const defaultData = () => {
   errorMessages.value = {}
   return {
     id: null,
-    name: '',
+    name: {
+        ar: '',
+        en: ''
+      },
     description: '',
     duration_min: '',
     default_price: '',
@@ -177,10 +196,24 @@ const setFormData = (data) => {
     else {
       ImageViewer.value = data.feature_image;
     }
+  let parsedName = { ar: '', en: '' }
+
+  try {
+    if (typeof data.name === 'string') {
+      parsedName = JSON.parse(data.name)
+    } else if (typeof data.name === 'object' && data.name !== null) {
+      parsedName = {
+        ar: data.name.ar ?? '',
+        en: data.name.en ?? ''
+      }
+    }
+  } catch (e) {
+    console.warn('Invalid JSON name field:', data.name)
+  }
   resetForm({
     values: {
       id: data.id,
-      name: data.name,
+      name: parsedName,
       description: data.description,
       duration_min: data.duration_min,
       default_price: data.default_price,
@@ -211,23 +244,56 @@ const reset_datatable_close_offcanvas = (res) => {
 const numberRegex = /^\d+$/
 // Validations
 const validationSchema = yup.object({
-  name: yup.string().required('Name is a required field')
-  .test('unique', 'Email must be unique', async function(value) {
-      const serviceId  = id.value;
-      
-          const isUnique = await storeRequest({ url: SERVICES_UNIQUE_CHECK, body: { service: value,service_id:serviceId }, type: 'file' });
-          if (!isUnique.isUnique) {
-              return this.createError({ path: 'name', message: 'Name must be unique' });
-              }
-          return true;
-        }),
-  duration_min: yup.string().required('Service Duration ( Mins ) is a required field').matches(/^\d+$/, 'Only numbers are allowed'),
-  default_price: yup.number().typeError('Default Price must be a number')
-                .required('Default Price is a required field')
-                .min(0, 'Default Price cannot be negative'),
-  category_id: yup.string().required('Category is a required field').matches(/^\d+$/, 'Only numbers are allowed'),
+  name: yup.object({
+    ar: yup.string().required('Arabic Name is a required field')
+      .test('unique-ar', 'Arabic name must be unique', async function (value) {
+        const serviceId = id.value;
 
-})
+        const isUnique = await storeRequest({
+          url: SERVICES_UNIQUE_CHECK,
+          body: { service: value, service_id: serviceId, lang: 'ar' },
+          type: 'file'
+        });
+
+        if (!isUnique.isUnique) {
+          return this.createError({ path: 'name.ar', message: 'Arabic name must be unique' });
+        }
+
+        return true;
+      }),
+
+    en: yup.string().required('English Name is a required field')
+      .test('unique-en', 'English name must be unique', async function (value) {
+        const serviceId = id.value;
+
+        const isUnique = await storeRequest({
+          url: SERVICES_UNIQUE_CHECK,
+          body: { service: value, service_id: serviceId, lang: 'en' },
+          type: 'file'
+        });
+
+        if (!isUnique.isUnique) {
+          return this.createError({ path: 'name.en', message: 'English name must be unique' });
+        }
+
+        return true;
+      }),
+  }),
+
+  duration_min: yup.string()
+    .required('Service Duration (Mins) is a required field')
+    .matches(/^\d+$/, 'Only numbers are allowed'),
+
+  default_price: yup.number()
+    .typeError('Default Price must be a number')
+    .required('Default Price is a required field')
+    .min(0, 'Default Price cannot be negative'),
+
+  category_id: yup.string()
+    .required('Category is a required field')
+    .matches(/^\d+$/, 'Only numbers are allowed'),
+});
+
 
 
 const { handleSubmit, errors, resetForm } = useForm({
@@ -235,7 +301,9 @@ const { handleSubmit, errors, resetForm } = useForm({
 })
 const { value: id } = useField('id')
 
-const { value: name } = useField('name')
+// const { value: name } = useField('name')
+const { value: nameAr, errorMessage: nameArError } = useField('name.ar')
+const { value: nameEn, errorMessage: nameEnError } = useField('name.en')
 const { value: description } = useField('description')
 const { value: duration_min } = useField('duration_min')
 const { value: default_price } = useField('default_price')
@@ -278,6 +346,7 @@ onMounted(() => {
 const IS_SUBMITED = ref(false)
   const formSubmit = handleSubmit((values) => {
   if(IS_SUBMITED.value) return false
+    values.name = JSON.stringify(values.name); 
     IS_SUBMITED.value = true; // Disable the save button and show loading spinner
 
   values.custom_fields_data = JSON.stringify(values.custom_fields_data);

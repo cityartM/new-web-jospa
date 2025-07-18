@@ -8,6 +8,8 @@ use App\Trait\CustomFieldsTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\Category\Models\Category;
+use Spatie\Translatable\HasTranslations;
+use App\Models\Branch;
 
 class Service extends BaseModel
 {
@@ -15,6 +17,7 @@ class Service extends BaseModel
     use HasFactory;
     use HasSlug;
     use SoftDeletes;
+    use HasTranslations;
 
     protected $table = 'services';
 
@@ -22,8 +25,10 @@ class Service extends BaseModel
 
     protected $appends = ['feature_image'];
 
-    protected $casts = [
+    public $translatable = ['name'];
 
+    protected $casts = [
+        'name' => 'array',
         'duration_min' => 'integer',
         'default_price' => 'double',
         'category_id' => 'integer',

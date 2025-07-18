@@ -31,7 +31,24 @@
               <label for="category" class="form-label">{{$t('category.lbl_parent_category')}}</label>
               <Multiselect v-bind="singleSelectOption" v-model="parent_id" :value="parent_id"  :placeholder="$t('category.placeholder_parent_category')" :options="categories"></Multiselect>
             </div>
-            <InputField :is-required="true" :label="$t('category.lbl_name')" :placeholder="$t('category.placeholder_name')" v-model="name" :error-message="errors.name" :error-messages="errorMessages['name']"></InputField>
+            <InputField
+              :is-required="true"
+              :label="$t('category.lbl_name') + ' ' + $t('settings.translate.ar')"
+              :placeholder="$t('category.placeholder_name')"
+              v-model="nameAr"
+              :error-message="nameArError"
+              :error-messages="errorMessages['name'] && errorMessages['name']['ar']"
+            />
+
+            <InputField
+              :is-required="true"
+              :label="$t('category.lbl_name') + ' ' + $t('settings.translate.en')"
+              :placeholder="$t('category.placeholder_name')"
+              v-model="nameEn"
+              :error-message="nameEnError"
+              :error-messages="errorMessages['name'] && errorMessages['name']['en']"
+            />
+
             <div v-for="field in customefield" :key="field.id">
               <FormElement v-model="custom_fields_data" :name="field.name" :label="field.label" :type="field.type" :required="field.required" :options="field.value"  :field_id="field.id"  ></FormElement>
             </div>
@@ -178,7 +195,10 @@ const defaultData = () => {
   ImageViewer.value = props.defaultImage
   errorMessages.value = {}
   return {
-    name: '',
+     name: {
+        ar: '',
+        en: ''
+      },
     parent_id: props.categoryId ?? null,
     status: true,
     feature_image: null,
@@ -196,9 +216,23 @@ const setFormData = (data) => {
       ImageViewer.value = data.feature_image;
     }
   category_name.value = data.category_name
+  let parsedName = { ar: '', en: '' }
+
+  try {
+    if (typeof data.name === 'string') {
+      parsedName = JSON.parse(data.name)
+    } else if (typeof data.name === 'object' && data.name !== null) {
+      parsedName = {
+        ar: data.name.ar ?? '',
+        en: data.name.en ?? ''
+      }
+    }
+  } catch (e) {
+    console.warn('Invalid JSON name field:', data.name)
+  }
   resetForm({
     values: {
-      name: data.name,
+      name: parsedName,
       parent_id: data.parent_id,
       status: data.status ? true : false,
       feature_image: data.feature_image,
@@ -225,22 +259,29 @@ const reset_datatable_close_offcanvas = (res) => {
 }
 
 const numberRegex = /^\d+$/;
+const specialCharsRegex = /[!@#$%^&*(),.?":{}|<>\-_;'\/+=\[\]\\]/;
 // Validations
 const validationSchema = yup.object({
-  name: yup.string()
-    .required('Category name is a required field')
-    .test('is-string', 'Only strings are allowed', (value) => {
-      // Regular expressions to disallow special characters and numbers
-      const specialCharsRegex = /[!@#$%^&*(),.?":{}|<>\-_;'\/+=\[\]\\]/;
-      return !specialCharsRegex.test(value) && !numberRegex.test(value);
-    }),
-
+  name: yup.object({
+      ar: yup.string()
+        .required('Arabic name is required')
+        .test('is-valid-ar', 'Arabic name must not contain numbers or special characters', value =>
+          value && !specialCharsRegex.test(value) && !numberRegex.test(value)
+        ),
+      en: yup.string()
+        .required('English name is required')
+        .test('is-valid-en', 'English name must not contain numbers or special characters', value =>
+          value && !specialCharsRegex.test(value) && !numberRegex.test(value)
+        )
+    })
 })
 
 
 const { handleSubmit, errors, resetForm } = useForm({ validationSchema })
 
-const { value: name } = useField('name')
+// const { value: name } = useField('name')
+const { value: nameAr, errorMessage: nameArError } = useField('name.ar')
+const { value: nameEn, errorMessage: nameEnError } = useField('name.en')
 const { value: parent_id } = useField('parent_id')
 const { value: status } = useField('status')
 const { value: feature_image } = useField('feature_image')
@@ -251,6 +292,7 @@ const IS_SUBMITED = ref(false)
 const formSubmit = handleSubmit((values) => {
   if(IS_SUBMITED.value) return false
   IS_SUBMITED.value = true
+  values.name = JSON.stringify(values.name); 
   values.custom_fields_data = JSON.stringify(values.custom_fields_data)
   if (currentId.value > 0) {
     updateRequest({ url: UPDATE_URL, id: currentId.value, body: values, type: 'file' }).then((res) => reset_datatable_close_offcanvas(res))

@@ -19,8 +19,25 @@
             </div>
 
             <div class="col-md-8">
-              <InputField class="" type="text" :is-required="true" :label="$t('package.lbl_name')+' '+ $t('settings.translate.ar')" placeholder="Enter Package Name" v-model="name['ar']" :error-message="errorMessages['name'] && errorMessages['name']['ar']"></InputField>
-              <InputField class="" type="text" :is-required="true" :label="$t('package.lbl_name')+' '+ $t('settings.translate.en')" placeholder="Enter Package Name" v-model="name['en']" :error-message="errorMessages['name'] && errorMessages['name']['en']"></InputField>
+              <!-- <InputField class="" type="text" :is-required="true" :label="$t('package.lbl_name')+' '+ $t('settings.translate.ar')" placeholder="Enter Package Name" v-model="name['ar']" :error-message="errorMessages['name'] && errorMessages['name']['ar']"></InputField>
+              <InputField class="" type="text" :is-required="true" :label="$t('package.lbl_name')+' '+ $t('settings.translate.en')" placeholder="Enter Package Name" v-model="name['en']" :error-message="errorMessages['name'] && errorMessages['name']['en']"></InputField> -->
+              <InputField
+                :is-required="true"
+                :label="$t('package.lbl_name') + ' ' + $t('settings.translate.ar')"
+                :placeholder="$t('package.placeholder_name')"
+                v-model="nameAr"
+                :error-message="nameArError"
+                :error-messages="errorMessages['name'] && errorMessages['name']['ar']"
+              />
+
+              <InputField
+                :is-required="true"
+                :label="$t('package.lbl_name') + ' ' + $t('settings.translate.en')"
+                :placeholder="$t('package.placeholder_name')"
+                v-model="nameEn"
+                :error-message="nameEnError"
+                :error-messages="errorMessages['name'] && errorMessages['name']['en']"
+              />
               <InputField class="" type="textarea" :textareaRows="5" :label="$t('package.lbl_description')" placeholder="Enter Description" v-model="description"></InputField>
             </div>
           </div>
@@ -429,7 +446,9 @@ const { handleSubmit, errors, resetForm } = useForm({
     },
     // services: selectedServices.value // Initial value for services from selectedServices
   } })
-const { value: name } = useField('name')
+// const { value: name } = useField('name')
+const { value: nameAr, errorMessage: nameArError } = useField('name.ar')
+const { value: nameEn, errorMessage: nameEnError } = useField('name.en')
 const { value: branch_id } = useField('branch_id')
 const { value: status } = useField('status')
 const { value: is_featured } = useField('is_featured')
