@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -12,13 +13,13 @@ return new class extends Migration
     public function up(): void
     {
         // Step 1: Update existing data to be valid JSON
-        DB::table('packages')->get()->each(function ($branch) {
+        DB::table('packages')->get()->each(function ($data) {
             DB::table('packages')
-                ->where('id', $branch->id)
+                ->where('id', $data->id)
                 ->update([
-                    'name' => json_encode(['ar' => $branch->name, 'en' => '']),
-                    // 'description' => $branch->description
-                    //     ? json_encode(['ar' => $branch->description, 'en' => ''])
+                    'name' => json_encode(['ar' => $data->name, 'en' => '']),
+                    // 'description' => $data->description
+                    //     ? json_encode(['ar' => $data->description, 'en' => ''])
                     //     : null,
                 ]);
         });

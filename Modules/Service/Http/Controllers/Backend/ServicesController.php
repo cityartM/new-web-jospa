@@ -126,8 +126,8 @@ class ServicesController extends Controller
                 $q->where('branch_id', $branch_id);
             });
         }
-
-        $data = $data->get();
+        $locale = app()->getLocale();
+        $data = $data->selectRaw("*, name->'$.\"{$locale}\"' as name")->get();
 
         return response()->json($data);
     }

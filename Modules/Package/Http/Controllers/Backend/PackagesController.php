@@ -93,13 +93,14 @@ class PackagesController extends Controller
 
         // $query_data = Package::with('service.services','branch')->get();
         $branchId = $request->get('branch_id');
-
+        $locale = app()->getLocale();
         // Query the packages with or without filtering by branch
         $query_data = Package::with('service.services', 'branch')
             ->when($branchId, function ($query, $branchId) {
                 // If branch_id is provided, filter by it
                 return $query->where('branch_id', $branchId);
             })
+            ->selectRaw("*, name->'$.\"{$locale}\"' as name")
             ->get();
 
         $data = [];

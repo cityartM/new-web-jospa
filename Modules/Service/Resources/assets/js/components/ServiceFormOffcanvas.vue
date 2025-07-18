@@ -29,7 +29,7 @@
           :placeholder="$t('service.placeholder_name')"
           v-model="nameEn"
           :error-message="nameEnError"
-          :error-messages="errorMessages['name'] && errorMessages['name']['ar']"
+          :error-messages="errorMessages['name'] && errorMessages['name']['en']"
         />
         <InputField class="col-md-12" type="text" :is-required="true" :label="$t('service.lbl_duration_min')"  :placeholder="$t('service.service_duration')" v-model="duration_min" :error-message="errors['duration_min']" :error-messages="errorMessages['duration_min']"></InputField>
         <InputField class="col-md-12" type="text" :is-required="true" :label="`${$t('service.lbl_default_price')} (${CURRENCY_SYMBOL})`"  :placeholder="$t('service.enter_price')" v-model="default_price" :error-message="errors['default_price']" :error-messages="errorMessages['default_price']"></InputField>

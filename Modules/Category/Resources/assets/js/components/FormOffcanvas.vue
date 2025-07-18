@@ -46,7 +46,7 @@
               :placeholder="$t('category.placeholder_name')"
               v-model="nameEn"
               :error-message="nameEnError"
-              :error-messages="errorMessages['name'] && errorMessages['name']['ar']"
+              :error-messages="errorMessages['name'] && errorMessages['name']['en']"
             />
 
             <div v-for="field in customefield" :key="field.id">
