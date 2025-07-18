@@ -13,7 +13,7 @@ class Package extends BaseModel
 {
     use HasFactory;
     use SoftDeletes;
-    // use HasTranslations;
+    use HasTranslations;
 
     protected $table = 'packages';
 

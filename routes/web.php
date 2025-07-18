@@ -81,15 +81,15 @@ Route::get('/salonService', function () {
 
 Route::get('/giffte', function () {
 
-
-
+$locale = app()->getLocale();
     $mainCategoriesWithSubs = Category::with([
-        'subCategories.services' => function ($query) {
+        'services' => function ($query) {
             $query->where('status', 1);
         }
     ])
     ->whereNull('parent_id')
     ->where('status', 1)
+    ->selectRaw("JSON_UNQUOTE(JSON_EXTRACT(name, '$.ar')) as name")
     ->get();
 
     return view('salon.gift' , compact('mainCategoriesWithSubs'));

@@ -586,7 +586,7 @@
                     <!-- 1 -->
                     @foreach ($mainCategoriesWithSubs as $item)
                     <div class="container">
-                        <div class="clickable-div" onclick="toggleList(this)">{{ $item->name }}</div>
+                        <div class="clickable-div" onclick="toggleList(this)">{{ $item }}</div>
                         <div class="checkbox-list">
                             @foreach ($item->subCategories as $sub)
                                 @foreach ($sub->services as $service)
