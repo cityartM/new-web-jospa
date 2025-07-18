@@ -13,12 +13,11 @@ return new class extends Migration
     public function up(): void
     {
         // Step 1: Update existing data to be valid JSON
-        DB::table('categories')->get()->each(function ($branch) {
+        DB::table('categories')->get()->each(function ($data) {
             DB::table('categories')
-                ->where('id', $branch->id)
+                ->where('id', $data->id)
                 ->update([
-                    'name' => json_encode(['ar' => $branch->name, 'en' => '']),
-                    
+                    'name' => json_encode(['ar' => $data->name, 'en' => $data->name]),
                 ]);
         });
 

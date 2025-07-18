@@ -17,9 +17,9 @@ return new class extends Migration
             DB::table('services')
                 ->where('id', $data->id)
                 ->update([
-                    'name' => json_encode(['ar' => $data->name, 'en' => '']),
+                    'name' => json_encode(['ar' => $data->name, 'en' => $data->name]),
                     // 'description' => $data->description
-                    //     ? json_encode(['ar' => $data->description, 'en' => ''])
+                    //     ? json_encode(['ar' => $data->description, 'en' => $data->description])
                     //     : null,
                 ]);
         });
