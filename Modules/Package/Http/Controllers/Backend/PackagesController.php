@@ -297,7 +297,11 @@ class PackagesController extends Controller
      */
     public function store(Request $request)
     {
-        $request['name'] = json_decode($request->name, true);
+        if (is_string($request->name) && $this->isJson($request->name)) {
+            $request['name'] = json_decode($request->name, true);
+        }else {
+            $request['name'] = ['ar' => $request->name, 'en' => ''];
+        }
         $request['services'] = is_string($request->services) && !empty(is_string($request->services)) ? json_decode($request->services) : [];
         $request['employee_id'] = is_string($request->employee_id) && !empty($request->employee_id) ? explode(',', $request->employee_id) : [];
         $request['category_id'] = is_string($request->category_id) && !empty($request->category_id) ? explode(',', $request->category_id) : [];
@@ -365,7 +369,11 @@ class PackagesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request['name'] = json_decode($request->name, true);
+        if (is_string($request->name) && $this->isJson($request->name)) {
+            $request['name'] = json_decode($request->name, true);
+        }else {
+            $request['name'] = ['ar' => $request->name, 'en' => ''];
+        }
         $request['services'] = is_string($request->services) && !empty(is_string($request->services)) ? json_decode($request->services) : [];
         $request['employee_id'] = is_string($request->employee_id) && !empty($request->employee_id) ? explode(',', $request->employee_id) : [];
         $request['category_id'] = is_string($request->category_id) && !empty($request->category_id) ? explode(',', $request->category_id) : [];
@@ -619,7 +627,12 @@ class PackagesController extends Controller
 
         return response()->json(['data' => $data, 'status' => true]);
     }
-
+    
+    private function isJson($string)
+    {
+        json_decode($string);
+        return json_last_error() === JSON_ERROR_NONE;
+    }
 
 }
 
