@@ -941,9 +941,10 @@
             <br>
             <div class="branch-options mt-3" style="display: flex; gap: 150px;">
             @foreach ($branches as $branche)
+            
                 <label class="form-check" style="text-align: center; cursor: pointer; position: relative; margin-left:100px;">
                     <input class="form-check-input" type="radio" name="branch" value="{{$branche->slug}}" style="position: absolute; opacity: 0; pointer-events: none;">
-                    <img src="/images/av3.webp" alt="Manfuha" style="width: 120px; height: 100px; border: 2px solid #ccc; border-radius: 10px; padding: 5px; transition: all 0.3s;">
+                    <img src="{{$branche->feature_image}}" alt="Manfuha" style="width: 120px; height: 100px; border: 2px solid #ccc; border-radius: 10px; padding: 5px; transition: all 0.3s;">
                     <div style="margin-top: 8px;">{{ app()->getLocale() == 'ar' ? $branche->name : $branche->slug }}</div>
                 </label>
             @endforeach
