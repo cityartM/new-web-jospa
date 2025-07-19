@@ -24,7 +24,7 @@ font-family: 'IBM Plex Sans Arabic', sans-serif !important;
                 @foreach($categories as $index => $category)
                     <div class="col-12 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="{{ $index * 100 }}">
                         @include('components.frontend.category-card', [
-                            'image' => asset('images/frontend/slider' . (($index % 3) + 1) . '.webp'),
+                            'image' => $category->feature_image,
                             'name' => $category->name,
                             'price_range' => $category->services && $category->services->count() > 0 && $category->services->whereNotNull('default_price')->count() > 0 ?
                                 'SR ' . number_format($category->services->whereNotNull('default_price')->min('default_price'), 2) . ' - SR ' . number_format($category->services->whereNotNull('default_price')->max('default_price'), 2) :

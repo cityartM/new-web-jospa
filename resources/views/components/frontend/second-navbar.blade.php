@@ -44,12 +44,12 @@
                     </a>
                 </li>
                 
-                <li class="nav-item h5">
+                {{-- <li class="nav-item h5">
                     <a class="nav-link text-white {{ request()->routeIs('ads.page') ? 'text-active' : '' }}"
                        href="{{ route('ads.page') }}">
                         {{ __('messagess.nav_ads') }}
                     </a>
-                </li>
+                </li> --}}
                 <li class="nav-item h5">
                     <a class="nav-link text-white {{ request()->routeIs('cart.page') ? 'text-active' : '' }}"
                        href="{{ route('cart.page') }}">
@@ -135,7 +135,7 @@
                 </div>
                 <small>{{ __('messagess.nav_contact') }}</small>
             </a>
-            <a href="{{ route('ads.page') }}"
+            {{-- <a href="{{ route('ads.page') }}"
                class="flex-fill py-2 text-white {{ ($active ?? '') === 'ads' ? 'bg-primary text-white rounded-3' : '' }}">
                 <div>
                     <svg width="26" height="26" fill="currentColor" viewBox="0 0 24 24">
@@ -144,7 +144,7 @@
                     </svg>
                 </div>
                 <small>{{ __('messagess.nav_ads') }}</small>
-            </a>
+            </a> --}}
             <a href="{{ route('cart.page') }}"
                class="flex-fill py-2 text-white {{ ($active ?? '') === 'cart' ? 'bg-primary text-white rounded-3' : '' }}">
                 <div>

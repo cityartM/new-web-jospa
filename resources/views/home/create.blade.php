@@ -963,7 +963,7 @@
             <div class="progress-step active">{{ __('messagess.location') }}</div>
             <!--<div class="progress-step">{{ __('messagess.gender') }}</div>-->
             <div class="progress-step">{{ __('messagess.group') }}</div>
-            <div class="progress-step">{{ __('messagess.services') }}</div>
+            <div class="progress-step">{{ __('messagess.service') }}</div>
             <div class="progress-step">{{ __('messagess.date') }}</div>
             <div class="progress-step">{{ __('messagess.staff') }}</div>
             <div class="progress-step">{{ __('messagess.time') }}</div>

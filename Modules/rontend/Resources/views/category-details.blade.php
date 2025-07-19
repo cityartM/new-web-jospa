@@ -195,8 +195,8 @@
             gap: 10px;
             transition: background 0.2s;
         }
-        .cta-btn:hover {
-            background: #8a6b4a;
+        a:hover {
+            color: white;
         }
         .cta-btn .icon {
             font-size: 22px;
@@ -234,10 +234,10 @@
         </div>
         <div class="header-desc">{{ __('messagess.relaxation_trip') }}</div>
         <div style="display: flex; justify-content: center;">
-            <button class="cta-btn">
+            <a href="{{route('salon.create')}}" class="cta-btn">
                  {{ __('messagess.hero_book_now')}}
                 <span class="icon"><svg data-v-eec84f9e="" style="width: 15.2px;font-family: 'IBM Plex Sans Arabic', sans-serif !important;" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="paper-plane" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path class="" fill="currentColor" d="M498.1 5.6c10.1 7 15.4 19.1 13.5 31.2l-64 416c-1.5 9.7-7.4 18.2-16 23s-18.9 5.4-28 1.6L284 427.7l-68.5 74.1c-8.9 9.7-22.9 12.9-35.2 8.1S160 493.2 160 480l0-83.6c0-4 1.5-7.8 4.2-10.8L331.8 202.8c5.8-6.3 5.6-16-.4-22s-15.7-6.4-22-.7L106 360.8 17.7 316.6C7.1 311.3 .3 300.7 0 288.9s5.9-22.8 16.1-28.7l448-256c10.7-6.1 23.9-5.5 34 1.4z"></path></svg></span>
-            </button>
+            </a>
         </div>
     </div>
             <div class="row align-items-center justify-content-center">
@@ -434,10 +434,10 @@
 <h5 style="text-align:center; margin: 44px 0;">
     {!! __('messagess.skin_pampering_text') !!}
 </h5>
-            <button class="cta-btn">
+            <a href="{{route('salon.create')}}" class="cta-btn">
                 {{ __('messagess.hero_book_now')}}
                 <span class="icon"><svg data-v-eec84f9e="" style="width: 15.2px;font-family: 'IBM Plex Sans Arabic', sans-serif !important;" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="paper-plane" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path class="" fill="currentColor" d="M498.1 5.6c10.1 7 15.4 19.1 13.5 31.2l-64 416c-1.5 9.7-7.4 18.2-16 23s-18.9 5.4-28 1.6L284 427.7l-68.5 74.1c-8.9 9.7-22.9 12.9-35.2 8.1S160 493.2 160 480l0-83.6c0-4 1.5-7.8 4.2-10.8L331.8 202.8c5.8-6.3 5.6-16-.4-22s-15.7-6.4-22-.7L106 360.8 17.7 316.6C7.1 311.3 .3 300.7 0 288.9s5.9-22.8 16.1-28.7l448-256c10.7-6.1 23.9-5.5 34 1.4z"></path></svg></span>
-            </button>
+            </a>
 </div>
 
     @include('components.frontend.footer')
