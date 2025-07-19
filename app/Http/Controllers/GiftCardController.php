@@ -12,15 +12,15 @@ class GiftCardController extends Controller
 
     public function index(){
         
-        $subCategories = Category::with(['services' => function ($q) {
-            $q->select('id', 'name', 'default_price', 'sub_category_id')
+        $subCategories = Category::with(['Services' => function ($q) {
+            $q->select('id', 'name', 'default_price','category_id', 'sub_category_id')
                 ->where('status', 1);
         }])
-        ->whereNotNull('parent_id')
+        ->whereNull('parent_id')
         ->where('status', 1)
         ->get();
 
-
+        
         return view('salon.gift' , compact('subCategories'));
 
         }
