@@ -317,7 +317,7 @@
             </div>
 
             <div class="d-flex" style="padding: 10px;gap: 7px;">
-            <div class="balance-box">{{ number_format($balance, 2) }}
+            <div class="balance-box">{{$balance}}
               <span class="text-muted ms-1" style="font-size: 0.98rem;">{{ __('profile.riyal') }}</span>
             </div>
             <button type="button" class="charge-btn-icon" data-bs-toggle="modal" data-bs-target="#chargeModal" title="{{ __('profile.charge_my_balance') }}">
