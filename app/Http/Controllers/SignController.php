@@ -14,10 +14,7 @@ class SignController extends Controller
 {
     public function index()
     {
-        $wallet = Wallet::where('user_id', auth()->id())->first();
-        dd( auth()->id() );
-        $balance = $wallet ? $wallet->amount : 0.00;
-    
+       
         return view("components.frontend.auth.signup" , compact('balance'));
     }
 
@@ -72,8 +69,9 @@ class SignController extends Controller
     public function profile()
     {
         $user = auth()->user();
-        $balance = $user->wallet->balance ?? 0;
-        return view('components.frontend.auth.profile', compact('user', 'balance'));
+        $wallet = Wallet::where('user_id', auth()->id())->first();
+        $balance = $wallet ? $wallet->amount : 0.00;
+            return view('components.frontend.auth.profile', compact('user', 'balance'));
     }
 
 
