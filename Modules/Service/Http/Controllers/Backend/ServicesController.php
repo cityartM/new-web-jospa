@@ -127,7 +127,7 @@ class ServicesController extends Controller
             });
         }
         $locale = app()->getLocale();
-        $data = $data->selectRaw("*, name->'$.\"{$locale}\"' as name")->get();
+        $data = $data->selectRaw("*, JSON_UNQUOTE(JSON_EXTRACT(name, '$.\"{$locale}\"')) as name")->get();
 
         return response()->json($data);
     }
@@ -394,7 +394,7 @@ class ServicesController extends Controller
     {
         $locale = app()->getLocale();
 
-        $data = Service::selectRaw("*, name->'$.\"{$locale}\"' as name")
+        $data = Service::->selectRaw("*, JSON_UNQUOTE(JSON_EXTRACT(name, '$.\"{$locale}\"')) as name")
             ->where('id', $id)
             ->firstOrFail();
 
@@ -573,7 +573,10 @@ class ServicesController extends Controller
 
     public function getGalleryImages($id)
     {
-        $service = Service::findOrFail($id);
+        $locale = app()->getLocale();
+        $service = Service::->selectRaw("*, JSON_UNQUOTE(JSON_EXTRACT(name, '$.\"{$locale}\"')) as name")
+        ->where('id', $id)
+        ->firstOrFail();
 
         $data = ServiceGallery::where('service_id', $id)->get();
 
