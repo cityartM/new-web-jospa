@@ -83,7 +83,7 @@ class BranchController extends Controller
     {
         $locale = app()->getLocale();
         $query = Branch::with('media')
-            ->selectRaw("*, JSON_UNQUOTE(JSON_EXTRACT(name, '$.\"{$locale}\"')) as name")
+            ->selectRaw("*, JSON_EXTRACT(name, '$.\"{$locale}\"') as name") 
             ->get();
 
         return response()->json($query);

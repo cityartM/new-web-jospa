@@ -100,7 +100,7 @@ class PackagesController extends Controller
                 // If branch_id is provided, filter by it
                 return $query->where('branch_id', $branchId);
             })
-            ->selectRaw("*, JSON_UNQUOTE(JSON_EXTRACT(name, '$.\"{$locale}\"')) as name")
+            ->selectRaw("*, JSON_EXTRACT(name, '$.\"{$locale}\"') as name") 
             ->get();
 
         $data = [];
