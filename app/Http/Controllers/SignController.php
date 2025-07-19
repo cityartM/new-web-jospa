@@ -51,9 +51,8 @@ class SignController extends Controller
                 'email'    => 'required|email',
                 'password' => 'required|string|min:6',
             ]);
-
             if (auth()->attempt($credentials, $request->filled('remember'))) {
-                $request->session()->regenerate(); 
+                $request->session()->regenerate();
 
                 return redirect()->to('/')->with('success', 'تم تسجيل الدخول بنجاح');
             }

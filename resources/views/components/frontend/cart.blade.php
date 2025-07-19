@@ -395,7 +395,7 @@
     .main-container {
         max-width: 1140px;
         margin: 48px auto 0 auto;
-        background: #fff; 
+        background: #fff;
         border-radius: 24px;
         box-shadow: 0 4px 32px #ede7f6a0;
         padding: 40px 32px 32px 32px;
@@ -678,28 +678,36 @@
         @if($cartItems->count())
              <div class="main-container">
             <div class="cart-title">{{ __('messagess.cart') }}</div>
-             @foreach($cartItems as $item)
-            <div class="service-card">
-                <div class="service-details">
-                    <div class="service-name">{{ $item->service->name }}</div>
-                    <div class="service-info">{{ __('messagess.employee') }}: {{ $item->staff->name}}</div>
-                    <div class="service-info">{{ __('messagess.branch') }}:{{ $item->branch }}</div>
-                    <div class="service-date">{{ __('messagess.date') }}: {{ $item->date }} - {{ $item->time }}</div>
-                    <div class="service-price">SR {{ $item->service->price }} :{{ __('messagess.price') }}</div>
-                </div>
-                <div class="service-coupon">
-                    <button>{{ __('messagess.apply_coupon') }}</button>
-                    <input type="text" placeholder="{{ __('messagess.enter_coupon') }}">
-                </div>
-                <form action="{{route('cart.destroy' ,$item->id)}}" method="post">
-                    @csrf
-                    @method('DELETE')
-                    <button class="service-delete" title="{{ __('messagess.delete_service') }}" style="position: relative;top: -29px;left: -2%;font-size: 25px;"><i class="fas fa-trash"></i>️</button>
-                </form>
-            </div>
-             @endforeach
-            
-            <div class="summary-section">
+                 @foreach($cartItems as $item)
+                     @foreach($item->services as $service)
+                         <div class="service-card">
+                             <div class="service-details">
+                                 <div class="service-name">{{ $service->service_name ?? '-' }}</div>
+                                 <div class="service-info">{{ __('messagess.employee') }}: {{ $service->employee->full_name ?? '-' }}</div>
+                                 <div class="service-info">{{ __('messagess.branch') }}: {{ $item->branch->name ?? '-' }}</div>
+                                 <div class="service-date">{{ __('messagess.date') }}:
+                                     {{ \Carbon\Carbon::parse($item->start_date_time)->format('Y-m-d') }} -
+                                     {{ \Carbon\Carbon::parse($item->start_date_time)->format('H:i') }}
+                                 </div>
+                                 <div class="service-price"> {{ __('messagess.price') }}:  {{ $service->service->default_price ?? 0 }} SR</div>
+                             </div>
+                             <div class="service-coupon">
+                                 <button>{{ __('messagess.apply_coupon') }}</button>
+                                 <input type="text" placeholder="{{ __('messagess.enter_coupon') }}">
+                             </div>
+                             <form action="{{ route('cart.destroy', $item->id) }}" method="post">
+                                 @csrf
+                                 @method('DELETE')
+                                 <button class="service-delete" title="{{ __('messagess.delete_service') }}">
+                                     <i class="fas fa-trash"></i>
+                                 </button>
+                             </form>
+                         </div>
+                     @endforeach
+                 @endforeach
+
+
+                 <div class="summary-section">
                 <div class="summary-coupon">
                     <button>{{ __('messagess.add_invoice_coupon') }}</button>
                     <input type="text" placeholder="{{ __('messagess.enter_invoice_coupon') }}">
@@ -729,7 +737,7 @@
                 </div>
         @endif
     </div>
-    
+
     <!-- Footer -->
     @include('components.frontend.footer')
 <!-- Modal & دفع -->
@@ -751,7 +759,7 @@
             }
         });
     }
-    
+
         function calculateTotal() {
         let total = 0;
         document.querySelectorAll('[data-price]').forEach(card => {

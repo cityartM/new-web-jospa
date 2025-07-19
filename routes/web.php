@@ -22,6 +22,7 @@ use App\Http\Controllers\GiftCardController;
 use App\Http\Controllers\BookingCartController;
 use App\Http\Controllers\SignController;
 use App\Models\BookingCart;
+use App\Models\Branch;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,12 +43,6 @@ Route::get('/pay-now', [HomeBookingController::class, 'createPayment']);
 Route::get('/payment-success', [HomeBookingController::class, 'handlePaymentResult']);
 
 
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> e68b860 (all)
 //    SMS API
 
 Route::post('/send-sms', [HomeBookingController::class, 'send']);
@@ -65,25 +60,25 @@ Route::post('/signin', [SignController::class, 'verify'])->name('signin.verify')
 
 Route::middleware('user.auth')->group(function () {
 
+    Route::get('/homeService', function () {
+        return view('home.create');
+    })->name('home.create');
 
-Route::get('/homeService', function () {
-    return view('home.create');
-})->name('home.create');
 
-Route::get('/booking-calander', function () {
+    Route::get('/booking-calander', function () {
     return view('booking.create');
-})->name('booking.create');
+        })->name('booking.create');
 
 Route::get('/details/{id}', [SaloneBookController::class, 'show'])->name('home.details');
 
 
-Route::get('/salonService', function () {
-    return view('salon.create');
-})->name('salon.create');
+    Route::get('/salonService', function () {
+        $branches = Branch::all(); // يجيب كل الفروع من قاعدة البيانات
+        return view('salon.create', compact('branches'));
+    })->name('salon.create');
 
 
-
-Route::get('/giffte', function () {
+    Route::get('/giffte', function () {
     return view('salon.gift');
 })->name('gift.page');
 Route::post('/gift-cards', [GiftCardController::class, 'store'])->name('gift.create');
@@ -93,16 +88,13 @@ Route::get('/ads', function () {
     return view('components.frontend.ads');
 })->name('ads.page');
 
-<<<<<<< HEAD
 Route::get('/cart', [BookingCartController::class, 'index'])->name('cart.page');
-=======
-Route::get('/cart', function () {
-
-    $cartItems = BookingCart::where('customer_id', 1)->get();
-
-    return view('components.frontend.cart', compact('cartItems'));
-})->name('cart.page');
->>>>>>> e68b860 (all)
+//Route::get('/cart', function () {
+//
+//    $cartItems = \Modules\Booking\Models\Booking::with(['services.employee', 'branch'])->get();
+//    //return $cartItems;
+//    return view('components.frontend.cart', compact('cartItems'));
+//})->name('cart.page');
 
 
 Route::post('/cart', [BookingCartController::class, 'store'])->name('cart.store');

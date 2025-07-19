@@ -5,8 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\BookingCart;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Modules\Booking\Models\Booking;
 use Modules\Service\Models\Service;
-
+use Carbon\Carbon;
+use Modules\Booking\Models\BookingService;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 class CalanderBookingController extends Controller
 {
     public function getservices(){
@@ -20,32 +24,68 @@ class CalanderBookingController extends Controller
             'employees' => $employees
         ]);
     }
-
     public function store(Request $request)
     {
-        $data = $request->validated();
+        try {
+            // 🟢 تحقق من صحة البيانات
+            $data = $request->validate([
+                'n_name'            => 'required|string|max:255',
+                'mobile_no'         => 'required|string|max:20',
+                'neighborhood'      => 'required|string|max:255',
+                'gender'            => 'required|in:men,women',
+                'service_group_id'  => 'required|integer',
+                'service_id'        => 'required|integer|exists:services,id',
+                'date'              => 'required|date',
+                'time'              => 'required|string',
+                'branch'            => 'nullable|integer|exists:branches,id',
+                'staff_id'          => 'required|integer|exists:users,id',
+                'agreed'            => 'nullable|boolean',
+                'auto_change_staff' => 'nullable|boolean',
+                'note' => 'nullable',
+            ]);
 
-        $booking = BookingCart::create([
-            'n_name'              => $data['clientName'], // ← الاسم
-            'mobile_no'           => $data['clientPhone'], // ← رقم الهاتف
-            'customer_id'         => auth()->id() ?? null, // ← إن كان المستخدم مسجلاً
-            'neighborhood'        => $data['location'], // ← الموقع
-            'branch'              => $data['branch'] ?? null, // ← فرع إذا موجود
-            'gender'              => $data['gender'] ?? null, // ← اختيارية
-            'service_group_id'    => $data['service_group_id'] ?? null, // ← إذا كانت موجودة
-            'service_id'          => $data['service'], // ← ID الخدمة
-            'date'                => $data['bookingDate'], // ← تاريخ الحجز
-            'time'                => $data['bookingTime'], // ← وقت الحجز
-            'staff_id'            => $data['staff_id'], // ← الموظف
-            'status'              => 'pending', // ← الحالة الابتدائية
-            'agreed'              => $data['agreed'] ?? false, // ← إذا وافق على الشروط مثلاً
-            'auto_change_staff'   => $data['auto_change_staff'] ?? false, // ← إذا سمح بتبديل الموظف تلقائياً
-        ]);
+            // 🟢 دمج التاريخ والوقت
+            $startDateTime = Carbon::createFromFormat('Y-m-d h:i A', $data['date'] . ' ' . $data['time'])->format('Y-m-d H:i:s');
 
-        return response()->json([
-            'message' => 'Booking created successfully',
-            'booking' => $booking
-        ], 201);
+            // 🟢 إنشاء الحجز
+            $booking = new Booking();
+
+            $booking->start_date_time = $startDateTime;
+            $booking->user_id         = $data['staff_id'];
+            $booking->branch_id       = $data['branch'] ?? 1;
+            $booking->created_by      = Auth::id() ?? 1;
+            $booking->status          = 'pending';
+            $booking->save();
+
+            // 🟢 إنشاء السطر في جدول booking_services
+            BookingService::create([
+                'booking_id'      => $booking->id,
+                'service_id'      => $data['service_id'],
+                'employee_id'     => $data['staff_id'],
+                'start_date_time' => $startDateTime,
+                'service_price'   => Service::find($data['service_id'])?->default_price ?? 0,
+                'duration_min'    => 30,
+                'sequance'        => 1,
+                'created_by'      => Auth::id() ?? 1,
+            ]);
+
+            return response()->json([
+                'message' => 'تم إنشاء الحجز بنجاح.',
+                'booking' => $booking
+            ], 201);
+
+        } catch (\Exception $e) {
+            Log::error('Booking Store Error', [
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+                'data' => $request->all(),
+            ]);
+
+            return response()->json([
+                'message' => 'حدث خطأ أثناء حفظ الحجز.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
     public function update(Request $request, $id)
     {

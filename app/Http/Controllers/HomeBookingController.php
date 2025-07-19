@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\HomeBookService;
 use App\Models\ServiceHome;
 use App\Models\StaffHome;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\ServiceGroupHome;
 use Carbon\Carbon;
@@ -15,6 +16,10 @@ use Illuminate\Support\Facades\Auth;
 
 // To Payment & SMS
 use Illuminate\Support\Facades\Http;
+use Modules\Booking\Models\Booking;
+use Modules\Category\Models\Category;
+use Modules\Service\Models\Service;
+use Illuminate\Support\Facades\Log;
 
 
 class HomeBookingController extends Controller
@@ -33,9 +38,12 @@ class HomeBookingController extends Controller
         $end = Carbon::createFromFormat('H:i:s', $workingHours->end_time);
 
         // 2. جلب أوقات الحجز الموجودة لذلك الموظف والتاريخ
-        $bookedTimes = HomeBookService::where('staff_id', $staffId)
+        $bookedTimes = Booking::where('staff_id', $staffId)
             ->where('date', $date)
-            ->pluck('time') // تفترض أن الوقت مخزن كـ 'H:i:s' أو 'H:i'
+            ->pluck('start_date_time')
+            ->map(function ($time) use ($date) {
+                return $date . ' ' . $time . ':00'; // إذا time مثل '10:00'
+            })
             ->toArray();
 
         // 3. توليد الفترات الزمنية بفاصل ساعة
@@ -59,43 +67,68 @@ class HomeBookingController extends Controller
 
     public function index()
     {
-        return response()->json(StaffHome::all());
+
+        $employees = User::role('employee')->get(); // هذا ميثود من spatie مباشرة
+        return response()->json($employees);
     }
 
     public function getServiceGroups($gender)
     {
-        $groups = ServiceGroupHome::where('gender', $gender)->get();
+        $groups = Category::all();
 
         return response()->json($groups);
     }
 
     public function getServicesByGroup($serviceGroupId)
     {
-        $services = ServiceHome::where('service_group_homes_id', $serviceGroupId)->get();
+        $services = Service::where('category_id', $serviceGroupId)->get();
 
         return response()->json($services);
     }
 
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'customer_name'     => 'required|string|max:255',
-            'mobile_no'         => 'required|string|max:20',
-            'neighborhood'      => 'required|string|max:255',
-            'gender'            => 'required|in:men,women',
-            'service_group_id'  => 'required|exists:service_group_homes,id',
-            'service_id'        => 'required|exists:service_homes,id',
-            'date'              => 'required|date',
-            'time'              => 'required|string',
-            'branch'              => 'required|string',
-            'staff_id'          => 'required|exists:staff_homes,id',
-        ]);
+        try {
+            Log::info('Booking data berfo validated successfully', $request);
 
-        $data['type'] = 'home';
+            $data = $request->validate([
+                'customer_name'     => 'required|string|max:255',
+                'mobile_no'         => 'required|string|max:20',
+                'neighborhood'      => 'required|string|max:255',
+                'gender'            => 'required|in:men,women',
+                'service_group_id'  => 'required|exists:service_group_homes,id',
+                'service_id'        => 'required|exists:service_homes,id',
+                'date'              => 'required|date',
+                'time'              => 'required|string',
+                'branch'            => 'required|exists:branches,id',
+                'staff_id'          => 'required|exists:staff_homes,id',
+            ]);
+            Log::info('Booking data validated successfully', $data);
 
-        HomeBookService::create($data);
+            $booking = new Booking();
+            $booking->note = 'Customer: ' . $data['customer_name'] . ', Mobile: ' . $data['mobile_no'] .
+                ', Neighborhood: ' . $data['neighborhood'] . ', Gender: ' . $data['gender'];
+            $booking->status = 'pending';
+            $booking->start_date_time = $data['date'] . ' ' . $data['time'];
+            $booking->user_id = $data['staff_id'];
+            $booking->branch_id = $data['branch'];
+            $booking->created_by = 1;
 
-        return response()->json(['message' => 'Booking saved successfully']);
+            $booking->save();
+
+            return response()->json(['message' => 'Booking saved successfully']);
+        } catch (\Exception $e) {
+            // 🧾 سجل الخطأ في ملف laravel.log
+            Log::error('Booking Store Error: ' . $e->getMessage(), [
+                'stack' => $e->getTraceAsString(),
+                'request_data' => $request->all(),
+            ]);
+
+            return response()->json([
+                'message' => 'حدث خطأ أثناء حفظ الحجز',
+                'error' => $e->getMessage(), // اختياري للـ debug فقط، احذف في الإنتاج
+            ], 500);
+        }
     }
 
 
@@ -105,9 +138,9 @@ class HomeBookingController extends Controller
 
     public function createPayment(Request $request)
     {
-        
+
         $amount = $request->query('am');
-    
+
         if (!$amount || !is_numeric($amount)) {
             return redirect()->back()->with('error', 'Invalid amount');
         }
@@ -153,7 +186,7 @@ class HomeBookingController extends Controller
 {
     $tapId = $request->get('tap_id');
 
-    if (!$tapId) { 
+    if (!$tapId) {
         return view('components.frontend.status.ERPAY')->with('error', 'No tap_id provided.');
     }
 

@@ -51,7 +51,6 @@ Route::get('branch-service', [BranchController::class, 'branchService']);
 Route::get('branch-review', [BranchController::class, 'branchReviews']);
 Route::get('branch-employee', [BranchController::class, 'branchEmployee']);
 Route::get('branch-gallery', [BranchController::class, 'branchGallery']);
-
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('branch/assign/{id}', [BranchController::class, 'assign_update']);
     Route::apiResource('branch', BranchController::class);
