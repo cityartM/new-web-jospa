@@ -57,6 +57,9 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmail
         'is_banned',
         'is_subscribe',
         'status',
+        'address',
+        'city',
+        'country',
         'last_notification_seen',
         'user_setting',
     ];

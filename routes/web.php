@@ -102,6 +102,7 @@ Route::delete('/cart/{id}', [BookingCartController::class, 'destroy'])->name('ca
 
 
 Route::get('/profile', [SignController::class, 'profile'])->name('profile');
+Route::put('/profile/{id}/update', [SignController::class, 'update'])->name('profile.update');
 
 });
 

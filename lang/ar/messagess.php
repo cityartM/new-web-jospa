@@ -1,6 +1,8 @@
 <?php   
 
 return [  
+    'e_wallet'                 => 'المحفظه الالكترونيه',
+    'my_bookings'              => 'حجوزاتي',
     'location_required'        => 'يرجى إدخال جميع تفاصيل الموقع',
     'service_required'         => 'يرجى اختيار فئة الخدمة',
     'date_required'            => 'يرجى اختيار التاريخ',

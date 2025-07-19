@@ -15,6 +15,10 @@
     <link rel="stylesheet" href="{{ asset('custom-css/frontend.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     @stack('after-styles')
+    <!-- Toastr CSS -->
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">  
@@ -45,9 +49,8 @@
       .profile-balance-corner {
         position: absolute;
         top: 0;
-        display: flex;
         align-items: center;
-        gap: 10px;
+        padding: 10px;
         z-index: 10;
       }
       .balance-box {
@@ -188,9 +191,7 @@
           font-size: 0.89rem;
         }
       }
-      a svg{
-              color:white;
-          }
+  
           .h5{
               font-size:15.6px;
           }
@@ -303,28 +304,80 @@
     <!-- Hero Section -->
     <div class="profile-hero text-center">
       <div class="profile-hero text-center position-relative">
+
+
+
+
+
+
         <!-- رصيد المستخدم في الزاوية -->
-        <div class="profile-balance-corner"
-             style="{{ app()->getLocale() == 'ar' ? 'right:48px;' : 'left:48px;' }}">
-          <div class="balance-box">
-            {{ number_format($balance, 2) }}
-            <span class="text-muted ms-1" style="font-size: 0.98rem;">{{ __('profile.riyal') }}</span>
+        <div class="profile-balance-corner"style="{{ app()->getLocale() == 'ar' ? 'right:19%;' : 'left:19%;' }}">
+            
+            <div>
+              <h3>{{ __('messagess.e_wallet') }}</h3>
+            </div>
+
+            <div class="d-flex" style="padding: 10px;gap: 7px;">
+            <div class="balance-box">{{ number_format($balance, 2) }}
+              <span class="text-muted ms-1" style="font-size: 0.98rem;">{{ __('profile.riyal') }}</span>
+            </div>
+            <button type="button" class="charge-btn-icon" data-bs-toggle="modal" data-bs-target="#chargeModal" title="{{ __('profile.charge_my_balance') }}">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+            </button>
           </div>
-          <button type="button" class="charge-btn-icon" data-bs-toggle="modal" data-bs-target="#chargeModal" title="{{ __('profile.charge_my_balance') }}">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
-          </button>
+
+
         </div>
-      <img src="{{ $user->profile_image ?? asset('images/default-avatar.png') }}" alt="avatar" class="profile-avatar-lg">
+
+        <div class="profile-balance-corner "style="{{ app()->getLocale() == 'ar' ? 'left:19%;' : 'right:19%;' }}">
+            <a href="" style="text-decoration-line: none;background-color: #bc9a69;color: #fff;border-radius: 35px;padding: 13px;font-size: 16px;font-weight: bold;" >{{ __('messagess.my_bookings') }}</a>
+        </div>
+
+
+
+
+
+
+
+      <img src="{{ $user->avatar ?? asset('images/default-avatar.png') }}" alt="avatar" class="profile-avatar-lg">
       <h2 class="fw-bold mt-2 mb-1">{{ $user->first_name }} {{ $user->last_name }}</h2>
       <div class="text-muted mb-2">{{ $user->email }}</div>
       
+
+
+
+
+
     <!-- معلومات المستخدم -->
-    <div class="profile-info-wide mt-0 mb-5">
+    <div class="profile-info-wide mt-0 mb-5 position-relative">
+      <a href="#" class="btn btn-sm btn-outline-primary position-absolute" style="top: 16px; {{ app()->getLocale() == 'ar' ? 'left: 16px;' : 'right: 16px;' }}; z-index: 2; padding: 6px 8px; border-radius: 50%;" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+        <i class="fas fa-edit"></i>
+      </a>
       <h4 class="mb-4">{{ __('profile.personal_info') }}</h4>
       <div class="row">
+          {{-- العنوان --}}
+          <div class="col-md-4 col-12 mb-3">
+            <div class="info-label">{{ __('profile.address') }}</div>
+            <div class="info-value">{{ $user->address ?? __('profile.no_data') }}</div>
+          </div>
+          <div class="col-md-4 col-12 mb-3">
+            <div class="info-label">{{ __('profile.city') }}</div>
+            <div class="info-value">{{ $user->city ?? __('profile.no_data') }}</div>
+          </div>
+          <div class="col-md-4 col-12 mb-3">
+            <div class="info-label">{{ __('profile.country') }}</div>
+            <div class="info-value">{{ $user->country ?? __('profile.no_data') }}</div>
+          </div>
+        {{-- معلومات الاتصال --}}
         <div class="col-md-4 col-12 mb-3">
           <div class="info-label">{{ __('profile.mobile_number') }}</div>
           <div class="info-value">{{ $user->mobile }}</div>
+        </div>
+      
+        {{-- التواريخ: التسجيل، الميلاد، آخر دخول --}}
+        <div class="col-md-4 col-12 mb-3">
+          <div class="info-label">{{ __('profile.birth_date') }}</div>
+          <div class="info-value">{{ $user->date_of_birth ?? __('profile.no_data') }}</div>
         </div>
         <div class="col-md-4 col-12 mb-3">
           <div class="info-label">{{ __('profile.registration_date') }}</div>
@@ -332,25 +385,13 @@
         </div>
         <div class="col-md-4 col-12 mb-3">
           <div class="info-label">{{ __('profile.last_login') }}</div>
-          <div class="info-value">{{ $user->last_login_at ?? __('profile.no_data') }}</div>
+          <div class="info-value">
+            {{ auth()->user()->last_login_at?->format('Y-m-d H:i') ?? __('profile.no_data') }}
+          </div>
         </div>
-        <div class="col-md-4 col-12 mb-3">
-          <div class="info-label">{{ __('profile.address') }}</div>
-          <div class="info-value">{{ $user->address->address_line_1 ?? __('profile.no_data') }}</div>
-        </div>
-        <div class="col-md-4 col-12 mb-3">
-          <div class="info-label">{{ __('profile.city') }}</div>
-          <div class="info-value">{{ $user->address->city ?? __('profile.no_data') }}</div>
-        </div>
-        <div class="col-md-4 col-12 mb-3">
-          <div class="info-label">{{ __('profile.country') }}</div>
-          <div class="info-value">{{ $user->address->country ?? __('profile.no_data') }}</div>
-        </div>
-        <div class="col-md-4 col-12 mb-3">
-          <div class="info-label">{{ __('profile.national_id') }}</div>
-          <div class="info-value">{{ $user->national_id ?? __('profile.no_data') }}</div>
-        </div>
+
       </div>
+      
     </div>
     </div>
     <!-- Modal شحن الرصيد -->
@@ -364,8 +405,8 @@
             <h5 class="modal-title w-100 text-center charge-modal-title" id="chargeModalLabel">{{ __('profile.charge_my_balance') }}</h5>
             <button type="button" class="btn-close position-absolute end-0 top-0 m-3" data-bs-dismiss="modal" aria-label="{{ __('profile.close') }}"></button>
           </div>
-          {{-- <form method="POST" action="#"> --}}
-            {{-- @csrf --}}
+          <form method="POST" action="">
+            @csrf
             <div class="modal-body pt-0">
               <label for="amount" class="form-label charge-modal-label">{{ __('profile.amount') }}</label>
               <div class="input-group charge-modal-input-group mb-3">
@@ -378,12 +419,92 @@
             <div class="modal-footer border-0 pt-0 d-flex justify-content-center">
               <button  class="btn charge-modal-btn w-100">{{ __('profile.charge') }}</button>
             </div>
-          {{-- </form> --}}
+          </form>
         </div>
+      </div>
+    </div>
+    <!-- مودال تعديل البروفايل -->
+    <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <form method="POST" action="{{ route('profile.update' , auth()->user()->id) }}" enctype="multipart/form-data" id="profileEditForm">
+          @csrf
+          @method('PUT')
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="editProfileModalLabel">تعديل البروفايل</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="إغلاق"></button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="mb-3 col-12 text-center">
+                  <label for="profile_image" class="form-label d-block">صورة البروفايل</label>
+                  <input type="file" id="profile_image" name="profile_image" accept="image/*" class="form-control mx-auto" style="max-width:300px;">
+                </div>
+                <div class="mb-3 col-6">
+                  <label class="form-label">الاسم الأول</label>
+                  <input type="text" name="first_name" class="form-control" value="{{ $user->first_name }}">
+                </div>
+                <div class="mb-3 col-6">
+                  <label class="form-label">اسم العائلة</label>
+                  <input type="text" name="last_name" class="form-control" value="{{ $user->last_name }}">
+                </div>
+                <div class="mb-3 col-6">
+                  <label class="form-label">الجوال</label>
+                  <input type="text" name="mobile" class="form-control" value="{{ $user->mobile }}">
+                </div>
+                <div class="mb-3 col-6">
+                  <label class="form-label">البريد الإلكتروني</label>
+                  <input type="email" name="email" class="form-control" value="{{ $user->email }}">
+                </div>
+                <div class="mb-3 col-6">
+                  <label class="form-label">العنوان</label>
+                  <input type="text" name="address" class="form-control" value="{{ $user->address ?? ($user->address->address_line_1 ?? '') }}">
+                </div>
+                <div class="mb-3 col-6">
+                  <label class="form-label">المدينة</label>
+                  <input type="text" name="city" class="form-control" value="{{ $user->city ?? ($user->address->city ?? '') }}">
+                </div>
+                <div class="mb-3 col-6">
+                  <label class="form-label">الدولة</label>
+                  <input type="text" name="country" class="form-control" value="{{ $user->country ?? ($user->address->country ?? '') }}">
+                </div>
+                <div class="mb-3 col-6">
+                  <label class="form-label">تاريخ الميلاد</label>
+                  <input type="date" name="date_of_birth" class="form-control" value="{{ $user->date_of_birth }}">
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">حفظ التعديلات</button>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
     <!-- Footer -->
     @include('components.frontend.footer')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    
+    <!-- Toastr JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+      <script>
+      document.addEventListener("DOMContentLoaded", function () {
+          @if(session('success'))
+              toastr.success("{{ session('success') }}");
+          @endif
+  
+          @if(session('error'))
+              toastr.error("{{ session('error') }}");
+          @endif
+  
+          @if($errors->any())
+              @foreach($errors->all() as $error)
+                  toastr.error("{{ $error }}");
+              @endforeach
+          @endif
+      });
+  </script>
 </body>
 </html>

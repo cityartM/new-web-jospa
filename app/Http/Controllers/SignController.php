@@ -69,4 +69,49 @@ class SignController extends Controller
         $balance = $user->wallet->balance ?? 0;
         return view('components.frontend.auth.profile', compact('user', 'balance'));
     }
+
+
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'first_name'     => 'required|string|max:255',
+            'last_name'      => 'required|string|max:255',
+            'mobile'         => 'required|string|max:20',
+            'email'          => 'required|email|max:255|unique:users,email,' . $id,
+            'address'        => 'nullable|string|max:255',
+            'city'           => 'nullable|string|max:255',
+            'country'        => 'nullable|string|max:255',
+            'date_of_birth'  => 'nullable|date|before:today',
+            'profile_image'  => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+        ]);
+    
+        $data = [];
+    
+        if ($request->hasFile('profile_image')) {
+            $image = $request->file('profile_image');
+            $imageName = 'user_' . $id . '_' . time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('profile_images'), $imageName);
+            $data['avatar'] = 'profile_images/' . $imageName;
+        } else {
+            $data['avatar'] = auth()->user()->avatar;
+        }
+    
+        $data['first_name']    = $request->first_name;
+        $data['last_name']     = $request->last_name;
+        $data['email']         = $request->email;
+        $data['mobile']        = $request->mobile;
+        $data['date_of_birth'] = $request->date_of_birth;
+        $data['address']       = $request->address;
+        $data['city']          = $request->city;
+        $data['country']       = $request->country;
+    
+        User::where('id', $id)->update($data);
+    
+        return redirect()->back()->with('success', __('messages.profile_updated'));
+    }
+    
+    
 }
+
+

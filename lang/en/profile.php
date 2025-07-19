@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'birth_date' => 'Birth Date',
     'title' => 'My Profile',
     'info' => 'Information',
     'change_password' => 'Change Password',

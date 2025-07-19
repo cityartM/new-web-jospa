@@ -1,5 +1,8 @@
 <?php
 return [
+  'profile_updated' => 'Profile updated successfully',
+    'e_wallet'                 => 'E-Wallet',
+    'my_bookings'              => 'My Bookings',
     'location_required'        => 'Please fill in all location details',
     'service_required'         => 'Please select a service category',
     'date_required'            => 'Please select a date',
