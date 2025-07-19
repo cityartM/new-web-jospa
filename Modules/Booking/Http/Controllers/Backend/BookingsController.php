@@ -204,7 +204,9 @@ class BookingsController extends Controller
     {
         $employee_id = $request->employee_id;
         $branch_id = $request->branch_id;
-        $data = Service::select('services.name as service_name', 'service_branches.*')
+        $locale = app()->getLocale();
+        $data = Service::selectRaw("JSON_UNQUOTE(JSON_EXTRACT(services.name, '$.\"$locale\"')) as service_name,service_branches.*")
+            // select('services.name as service_name', 'service_branches.*')
             ->with('employee')
             ->leftJoin('service_branches', 'service_branches.service_id', 'services.id')
             ->whereHas('category', function ($q) {

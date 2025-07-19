@@ -392,7 +392,11 @@ class ServicesController extends Controller
      */
     public function edit($id)
     {
-        $data = Service::findOrFail($id);
+        $locale = app()->getLocale();
+
+        $data = Service::selectRaw("*, name->'$.\"{$locale}\"' as name")
+            ->where('id', $id)
+            ->firstOrFail();
 
         if (!is_null($data)) {
             $custom_field_data = $data->withCustomFields();

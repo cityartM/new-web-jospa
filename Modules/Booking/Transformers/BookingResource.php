@@ -21,7 +21,7 @@ class BookingResource extends JsonResource
         });
         foreach ($reclaimBookingPackages as $bookingPackage) {
             $userPackageServices = UserPackageServices::with('packageService')
-                -> where('user_id', $bookingPackage->user_id)
+                ->where('user_id', $bookingPackage->user_id)
                 ->where('package_id', $bookingPackage->package_id)
                 ->get();
         }
