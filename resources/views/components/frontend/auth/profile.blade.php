@@ -338,7 +338,7 @@
 
 
 
-
+{{-- //////////////////////////////////////////////////////////////////////// --}}
       <img src="{{ $user->avatar ?? asset('images/default-avatar.png') }}" alt="avatar" class="profile-avatar-lg">
       <h2 class="fw-bold mt-2 mb-1">{{ $user->first_name }} {{ $user->last_name }}</h2>
       <div class="text-muted mb-2">{{ $user->email }}</div>
