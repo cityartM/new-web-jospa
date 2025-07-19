@@ -22,7 +22,6 @@ class HomeBookingController extends Controller
 
     public function getAvailableTimes($date, $staffId)
     {
-        // 1. جلب دوام الموظف (افترض جدول staff_working_hours يحتوي start_time و end_time كـ TIME)
         $workingHours = StaffWorkingHour::where('staff_id', $staffId)->first();
 
         if (!$workingHours) {

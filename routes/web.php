@@ -39,70 +39,50 @@ use Modules\Category\Models\Category;
 //    Payment API
 
 Route::get('/pay-now', [HomeBookingController::class, 'createPayment']);
-
 Route::get('/payment-success', [HomeBookingController::class, 'handlePaymentResult']);
 
-
 //    SMS API
-
 Route::post('/send-sms', [HomeBookingController::class, 'send']);
 
-
-
+// Sign
 Route::get('/signup', [SignController::class, 'index'])->name('signup');
-
 Route::post('/signup', [SignController::class, 'store'])->name('signup.store');
-
 Route::get('/signin', [SignController::class, 'login'])->name('signin');
-
 Route::post('/signin', [SignController::class, 'verify'])->name('signin.verify');
 
 
 Route::middleware('user.auth')->group(function () {
 
+// details & home
+Route::get('/homeService', function () {return view('home.create');})->name('home.create');
 
-Route::get('/homeService', function () {
-    return view('home.create');
-})->name('home.create');
- 
 Route::get('/details/{id}', [SaloneBookController::class, 'show'])->name('home.details');
 
- 
-Route::get('/salonService', function () {
-    $branches = \App\Models\Branch::all();
-    return view('salon.create', compact('branches'));
-})->name('salon.create');
-
-
-
-
-
-
+//  Geft & salon
+Route::get('/salonService', function () {$branches = \App\Models\Branch::all();return view('salon.create', compact('branches'));})->name('salon.create');
 
 Route::get('/giffte', [GiftCardController::class, 'index'] )->name('gift.page');
 
-
-
-
-
-
 Route::post('/gift-cards', [GiftCardController::class, 'store'])->name('gift.create');
 
+// ADS page
+Route::get('/ads', function () {return view('components.frontend.ads');})->name('ads.page');
 
-Route::get('/ads', function () {
-    return view('components.frontend.ads');
-})->name('ads.page');
-
+// Cart
 Route::get('/cart', [BookingCartController::class, 'index'])->name('cart.page');
-
 
 Route::post('/cart', [BookingCartController::class, 'store'])->name('cart.store');
 
 Route::delete('/cart/{id}', [BookingCartController::class, 'destroy'])->name('cart.destroy');
 
-
+// Profile
 Route::get('/profile', [SignController::class, 'profile'])->name('profile');
 Route::put('/profile/{id}/update', [SignController::class, 'update'])->name('profile.update');
+
+//  Balance 
+Route::get('/pay-balance', [SignController::class, 'createPayment'])->name('balance');
+Route::get('/success-py', [SignController::class, 'handlePaymentResult']);
+
 
 });
 
@@ -331,3 +311,5 @@ Route::group(['prefix' => 'app', 'middleware' => 'auth'], function () {
         });
     });
 });
+
+Route::get('/my-bookings', [SignController::class, 'myBookings'])->name('profile.my_bookings');

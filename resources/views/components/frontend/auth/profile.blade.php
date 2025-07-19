@@ -330,7 +330,7 @@
         </div>
 
         <div class="profile-balance-corner "style="{{ app()->getLocale() == 'ar' ? 'left:19%;' : 'right:19%;' }}">
-            <a href="" style="text-decoration-line: none;background-color: #bc9a69;color: #fff;border-radius: 35px;padding: 13px;font-size: 16px;font-weight: bold;" >{{ __('messagess.my_bookings') }}</a>
+            <a href="{{route('profile.my_bookings')}}" style="text-decoration-line: none;background-color: #bc9a69;color: #fff;border-radius: 35px;padding: 13px;font-size: 16px;font-weight: bold;" >{{ __('messagess.my_bookings') }}</a>
         </div>
 
 
@@ -405,15 +405,14 @@
             <h5 class="modal-title w-100 text-center charge-modal-title" id="chargeModalLabel">{{ __('profile.charge_my_balance') }}</h5>
             <button type="button" class="btn-close position-absolute end-0 top-0 m-3" data-bs-dismiss="modal" aria-label="{{ __('profile.close') }}"></button>
           </div>
-          <form method="POST" action="">
-            @csrf
+          <form method="GET" action="{{route('balance')}}">
             <div class="modal-body pt-0">
               <label for="amount" class="form-label charge-modal-label">{{ __('profile.amount') }}</label>
               <div class="input-group charge-modal-input-group mb-3">
                 <span class="input-group-text charge-modal-input-icon">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 0V4m0 16v-4" /></svg>
                 </span>
-                <input type="number" min="1" class="form-control charge-modal-input" id="amount" name="amount" required placeholder="{{ __('profile.amount') }}">
+                <input type="number" min="1" class="form-control charge-modal-input" name="amount" id="amount" name="amount" required placeholder="{{ __('profile.amount') }}">
               </div>
             </div>
             <div class="modal-footer border-0 pt-0 d-flex justify-content-center">
@@ -431,51 +430,51 @@
           @method('PUT')
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="editProfileModalLabel">تعديل البروفايل</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="إغلاق"></button>
+              <h5 class="modal-title" id="editProfileModalLabel">{{ __('profile.edit_profile') }}</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ __('profile.close') }}"></button>
             </div>
             <div class="modal-body">
               <div class="row">
                 <div class="mb-3 col-12 text-center">
-                  <label for="profile_image" class="form-label d-block">صورة البروفايل</label>
+                  <label for="profile_image" class="form-label d-block">{{ __('profile.profile_image') }}</label>
                   <input type="file" id="profile_image" name="profile_image" accept="image/*" class="form-control mx-auto" style="max-width:300px;">
                 </div>
                 <div class="mb-3 col-6">
-                  <label class="form-label">الاسم الأول</label>
+                  <label class="form-label">{{ __('profile.first_name') }}</label>
                   <input type="text" name="first_name" class="form-control" value="{{ $user->first_name }}">
                 </div>
                 <div class="mb-3 col-6">
-                  <label class="form-label">اسم العائلة</label>
+                  <label class="form-label">{{ __('profile.last_name') }}</label>
                   <input type="text" name="last_name" class="form-control" value="{{ $user->last_name }}">
                 </div>
                 <div class="mb-3 col-6">
-                  <label class="form-label">الجوال</label>
+                  <label class="form-label">{{ __('profile.mobile_number') }}</label>
                   <input type="text" name="mobile" class="form-control" value="{{ $user->mobile }}">
                 </div>
                 <div class="mb-3 col-6">
-                  <label class="form-label">البريد الإلكتروني</label>
+                  <label class="form-label">{{ __('profile.email') }}</label>
                   <input type="email" name="email" class="form-control" value="{{ $user->email }}">
                 </div>
                 <div class="mb-3 col-6">
-                  <label class="form-label">العنوان</label>
+                  <label class="form-label">{{ __('profile.address') }}</label>
                   <input type="text" name="address" class="form-control" value="{{ $user->address ?? ($user->address->address_line_1 ?? '') }}">
                 </div>
                 <div class="mb-3 col-6">
-                  <label class="form-label">المدينة</label>
+                  <label class="form-label">{{ __('profile.city') }}</label>
                   <input type="text" name="city" class="form-control" value="{{ $user->city ?? ($user->address->city ?? '') }}">
                 </div>
                 <div class="mb-3 col-6">
-                  <label class="form-label">الدولة</label>
+                  <label class="form-label">{{ __('profile.country') }}</label>
                   <input type="text" name="country" class="form-control" value="{{ $user->country ?? ($user->address->country ?? '') }}">
                 </div>
                 <div class="mb-3 col-6">
-                  <label class="form-label">تاريخ الميلاد</label>
+                  <label class="form-label">{{ __('profile.birth_date') }}</label>
                   <input type="date" name="date_of_birth" class="form-control" value="{{ $user->date_of_birth }}">
                 </div>
               </div>
             </div>
             <div class="modal-footer">
-              <button type="submit" class="btn btn-primary">حفظ التعديلات</button>
+              <button type="submit" class="btn btn-primary">{{ __('profile.save_changes') }}</button>
             </div>
           </div>
         </form>

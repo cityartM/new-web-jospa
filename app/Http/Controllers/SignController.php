@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Http;
+use Modules\Wallet\Models\Wallet;
 
 class SignController extends Controller
 {
@@ -111,7 +113,96 @@ class SignController extends Controller
         return redirect()->back()->with('success', __('messages.profile_updated'));
     }
     
+    public function myBookings()
+    {
+        $user = auth()->user();
+        $bookings = \App\Models\BookingCart::where('customer_id', $user->id)->get();
+        return view('components.frontend.auth.my-bookings', compact('bookings'));
+    }
+
+
+
+
+
+
+
+    // payment-balance
+
+    public function createPayment(Request $request)
+    {
+        
+        $amount = $request->amount;
     
+        if (!$amount || !is_numeric($amount)) {
+            return redirect()->back()->with('error', 'Invalid amount');
+        }
+
+        $apiKey1 = env('TAP_SECRET_KEY');
+        // 1. بيانات الطلب
+        $response = Http::withHeaders([
+            'Authorization' => "Bearer $apiKey1",
+            'Content-Type' => 'application/json',
+        ])->post('https://api.tap.company/v2/charges', [
+            "amount" => $amount, // المبلغ   changed
+            "currency" => "SAR",
+            "threeDSecure" => true,
+            "save_card" => false,
+            "description" => "طلب دفع",
+            "statement_descriptor" => "Jospa Store",
+            "customer" => [
+                "first_name" => auth()->user()->first_name,
+                "email" => auth()->user()->email ,
+            ],
+            "source" => [
+                "id" => "src_all"
+            ],
+            "redirect" => [
+                "url" => url("/success-py?am=$amount") 
+            ]
+        ]);
+
+        // 2. استقبل بيانات العملية
+        $data = $response->json();
+
+        // 3. لو فيه لينك للبوابة
+        if (isset($data['transaction']['url'])) {
+            return redirect()->to($data['transaction']['url']);
+        }
+
+        // 4. في حالة فشل
+        return view('components.frontend.status.ERPAY');
+    }
+
+    public function handlePaymentResult(Request $request)
+    {
+        $tapId = $request->get('tap_id');
+    
+        if (!$tapId) { 
+            return view('components.frontend.status.ERPAY')->with('error', 'No tap_id provided.');
+        }
+    
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . env('TAP_SECRET_KEY'),
+        ])->get("https://api.tap.company/v2/charges/{$tapId}");
+    
+        $charge = $response->json();
+    
+        if (isset($charge['status']) && $charge['status'] === 'CAPTURED') {
+
+                $amount = floatval($request->query('am'));
+                $wallet = Wallet::firstOrCreate(
+                    ['user_id' => auth()->id()],
+                    ['amount' => 0] 
+                );
+            
+                $wallet->increment('amount', $amount);
+            
+            return view('components.frontend.status.CAPTURED');
+        } else {
+
+            return view('components.frontend.status.FAILED');
+        }
+    }
 }
 
 
