@@ -31,6 +31,7 @@ class Service extends BaseModel
         'name' => 'array',
         'duration_min' => 'integer',
         'default_price' => 'double',
+        'service_price' => 'double',
         'category_id' => 'integer',
         'sub_category_id' => 'integer',
         'status' => 'integer',
