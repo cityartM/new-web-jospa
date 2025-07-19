@@ -31,6 +31,9 @@ class Category extends BaseModel
     
     protected $casts = [
         'name' => 'array',
+        'summary' => 'array',
+        'description' => 'array',
+        'desc2' => 'array',
     ];
 
     /**

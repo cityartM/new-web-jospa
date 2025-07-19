@@ -245,7 +245,7 @@
                 <div class="col-lg-6 mb-4 mb-lg-0" data-aos="fade-left" data-aos-duration="1200">
                     <div style="background: #fff; border-radius: 18px; box-shadow: 0 4px 24px #00000015; padding: 40px 32px; text-align: right;">
                         <p style="font-size: 1.25rem; line-height: 2;">
-                        {{ $category->description ?? __('messagess.category_description_default', ['name' => $category->name]) }}
+                            {{ $category->description[$currentLocale] ?? __('messagess.category_description_default', ['name' => $category->name]) }}
                     </div>
                 </div>
                 <!-- الصورة -->
@@ -258,14 +258,14 @@
             <div class="row align-items-center justify-content-center">
                                 <!-- الصورة -->
                 <div class="col-lg-6 d-flex justify-content-center" data-aos="fade-right" data-aos-duration="1200">
-                    <img src="{{ $category->feature_image}}" alt="خدمات العناية بالبشرة" style="max-width: 90%; border-radius: 24px; box-shadow: 0 4px 24px #00000015;" class="img-zoom-hover">
+                    <img src="{{ asset("images/av_cat/$category->av2")}}" alt="خدمات العناية بالبشرة" style="max-width: 90%; border-radius: 24px; box-shadow: 0 4px 24px #00000015;" class="img-zoom-hover">
                 </div>
                 <!-- النص -->
                 <div class="col-lg-6 mb-4 mb-lg-0" data-aos="fade-left" data-aos-duration="1200">
                     <div style="background: #fff; border-radius: 18px; box-shadow: 0 4px 24px #00000015; padding: 40px 32px; text-align: right;">
                         <p style="font-size: 1.25rem; line-height: 2;">
-                        {{ $category->description ?? __('messagess.category_description_default', ['name' => $category->name]) }}
-                    </div>
+                            {{ $category->desc2[$currentLocale] ?? __('messagess.category_desc2_default', ['name' => $category->name]) }}
+                        </div>
                 </div>
             </div>
         </div>
@@ -432,7 +432,7 @@
         </div>
     </div>
 <h5 style="text-align:center; margin: 44px 0;">
-    {!! __('messagess.skin_pampering_text') !!}
+    {{ $category->summary[app()->getLocale()] ?? '' }}
 </h5>
             <a href="{{route('salon.create')}}" class="cta-btn">
                 {{ __('messagess.hero_book_now')}}
