@@ -195,7 +195,10 @@ class SignController extends Controller
                 $amount = floatval($request->query('am'));
                 $wallet = Wallet::firstOrCreate(
                     ['user_id' => auth()->id()],
-                    ['amount' => 0] 
+                    [
+                        'amount' => 0,
+                        'title' => auth()->user()->first_name . " " . auth()->user()->second_name,
+                    ]                
                 );
             
                 $wallet->increment('amount', $amount);

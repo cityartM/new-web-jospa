@@ -309,7 +309,6 @@
 
 
 
-
         <!-- رصيد المستخدم في الزاوية -->
         <div class="profile-balance-corner"style="{{ app()->getLocale() == 'ar' ? 'right:19%;' : 'left:19%;' }}">
             
@@ -338,8 +337,7 @@
 
 
 
-{{-- //////////////////////////////////////////////////////////////////////// --}}
-      <img src="{{ $user->avatar ?? asset('images/default-avatar.png') }}" alt="avatar" class="profile-avatar-lg">
+      <img src="{{ $user->avatar ?? $user->profile_image }}" alt="avatar" class="profile-avatar-lg">
       <h2 class="fw-bold mt-2 mb-1">{{ $user->first_name }} {{ $user->last_name }}</h2>
       <div class="text-muted mb-2">{{ $user->email }}</div>
       
