@@ -128,7 +128,7 @@ class PackagesController extends Controller
                         'name' => $row->name,
                         'description' => $row->description,
                         'services' => $services,
-                        'branch_name' => $row->branch->name,
+                        'branch_name' => $row->branch->name[$locale] ?? '',
                         'package_price' => $row->package_price,
                         'purchase_date' => $row->start_date,
                         'start_date' => $row->start_date,
