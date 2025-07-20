@@ -23,6 +23,7 @@ use App\Http\Controllers\BookingCartController;
 use App\Http\Controllers\SignController;
 use App\Models\BookingCart;
 use Modules\Category\Models\Category;
+use App\Models\Branch;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +42,7 @@ use Modules\Category\Models\Category;
 Route::get('/pay-now', [HomeBookingController::class, 'createPayment']);
 Route::get('/payment-success', [HomeBookingController::class, 'handlePaymentResult']);
 
+
 //    SMS API
 Route::post('/send-sms', [HomeBookingController::class, 'send']);
 
@@ -53,16 +55,31 @@ Route::post('/signin', [SignController::class, 'verify'])->name('signin.verify')
 
 Route::middleware('user.auth')->group(function () {
 
-// details & home
-Route::get('/homeService', function () {return view('home.create');})->name('home.create');
+    Route::get('/homeService', function () {
+        return view('home.create');
+    })->name('home.create');
+
+    Route::get('/homeService', function () {
+        return view('home.create');
+    })->name('home.create');
+
+
+    Route::get('/booking-calander', function () {
+    return view('booking.create');
+        })->name('booking.create');
 
 Route::get('/details/{id}', [SaloneBookController::class, 'show'])->name('home.details');
 
-//  Geft & salon
-Route::get('/salonService', function () {$branches = \App\Models\Branch::all();return view('salon.create', compact('branches'));})->name('salon.create');
 
-Route::get('/giffte', [GiftCardController::class, 'index'] )->name('gift.page');
+    Route::get('/salonService', function () {
+        $branches = Branch::all(); // يجيب كل الفروع من قاعدة البيانات
+        return view('salon.create', compact('branches'));
+    })->name('salon.create');
 
+
+    Route::get('/giffte', function () {
+    return view('salon.gift');
+})->name('gift.page');
 Route::post('/gift-cards', [GiftCardController::class, 'store'])->name('gift.create');
 
 Route::post('/success-py-gift', [GiftCardController::class, 'handlePaymentResult']);
@@ -70,8 +87,14 @@ Route::post('/success-py-gift', [GiftCardController::class, 'handlePaymentResult
 // ADS page
 Route::get('/ads', function () {return view('components.frontend.ads');})->name('ads.page');
 
-// Cart
 Route::get('/cart', [BookingCartController::class, 'index'])->name('cart.page');
+//Route::get('/cart', function () {
+//
+//    $cartItems = \Modules\Booking\Models\Booking::with(['services.employee', 'branch'])->get();
+//    //return $cartItems;
+//    return view('components.frontend.cart', compact('cartItems'));
+//})->name('cart.page');
+
 
 Route::post('/cart', [BookingCartController::class, 'store'])->name('cart.store');
 

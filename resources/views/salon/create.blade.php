@@ -166,7 +166,8 @@
       border: 2px solid #fff;
       box-shadow: 0 1px 4px #bc9a6920;
       transition: background 0.3s;
-    } 
+    }
+    }
     .step.active .step-number {
       background: #fff;
       border: 2px solid #bc9a69;
@@ -814,7 +815,7 @@
   grid-template-columns: repeat(4, 1fr);
   gap: 16px;
     }
-    
+
     .staff-card {
       background: #f1f1f1;
       border-radius: 8px;
@@ -822,7 +823,7 @@
       text-align: center;
       cursor: pointer;
     }
-    
+
     .staff-avatar {
       width: 60px;
       height: 60px;
@@ -876,7 +877,7 @@
   </div>
 </header>
 
-  
+
 
 <!-- Main Container -->
 <div class="container">
@@ -932,24 +933,28 @@
         </div>
 
         <!-- Step 1: Location -->
-            <div id="step1" class="step-content">
+    <div id="step1" class="step-content">
                 <div class="location-form">
                     <div class="form-group">
                         <label style="font-weight: bold; font-size: 16px; display: block; text-align: center;">
                             {{ __('messagess.select_branch') }}
                         </label>
-            <br>
-            <div class="branch-options mt-3" style="display: flex; gap: 150px;">
-            @foreach ($branches as $branche)
-            
-                <label class="form-check" style="text-align: center; cursor: pointer; position: relative; margin-left:100px;">
-                    <input class="form-check-input" type="radio" name="branch" value="{{$branche->slug}}" style="position: absolute; opacity: 0; pointer-events: none;">
-                    <img src="{{$branche->feature_image}}" alt="Manfuha" style="width: 120px; height: 100px; border: 2px solid #ccc; border-radius: 10px; padding: 5px; transition: all 0.3s;">
-                    <div style="margin-top: 8px;">{{ app()->getLocale() == 'ar' ? $branche->name : $branche->slug }}</div>
-                </label>
-            @endforeach
-            </div>
-        </div>
+                <br>
+
+                        <div class="branch-options mt-3" style="display: flex; flex-wrap: wrap; gap: 50px; justify-content: center;">
+                            @foreach($branches as $branch)
+                                <label class="form-check" style="text-align: center; cursor: pointer; position: relative;">
+                                    <input class="form-check-input" type="radio" name="branch" value="{{ $branch->id }}"
+                                           style="position: absolute; opacity: 0; pointer-events: none;">
+                                    <img src="{{ asset('storage/branches/' . ($branch->image ?? 'default.png')) }}"
+                                         alt="{{ $branch->name }}"
+                                         style="width: 120px; height: 100px; border: 2px solid #ccc; border-radius: 10px; padding: 5px; transition: all 0.3s;">
+                                    <div style="margin-top: 8px;">{{ $branch->name }}</div>
+                                </label>
+                            @endforeach
+                        </div>
+
+                    </div>
     </div>
 </div>
         <!-- Step 3: Service Categories -->
@@ -993,19 +998,49 @@
             </div>
         </div>
             <!-- Time Slots -->
-       <div id="step7" class="step-content hidden">
-    <div class="time-slots">
-        <div class="time-period">
-            <div class="time-period-title">{{ __('messagess.select_time') }}</div>
-            <div class="time-grid" id="time">
-              
+        <div id="step7" class="step-content hidden">
+            <div class="time-slots">
+                <div class="time-period">
+                    <div class="time-period-title">{{ __('messagess.select_time') }}</div>
+
+                    {{-- قبل الظهر --}}
+                    <div class="time-section">
+                        <h4>{{ __('messages.morning') }}</h4>
+                        <div class="time-grid">
+                            @for ($hour = 0; $hour < 12; $hour++)
+                                @for ($min = 0; $min < 60; $min += 30)
+                                    @php
+                                        $time = \Carbon\Carbon::createFromTime($hour, $min);
+                                        $label = $time->format('h:i A'); // 01:30 AM
+                                    @endphp
+                                    <div class="time-slot" data-time="{{ $time->format('H:i') }}">{{ $label }}</div>
+                                @endfor
+                            @endfor
+                        </div>
+                    </div>
+
+                    {{-- بعد الظهر --}}
+                    <div class="time-section mt-4">
+                        <h4>{{ __('messagess.afternoon') }}</h4>
+                        <div class="time-grid">
+                            @for ($hour = 12; $hour < 24; $hour++)
+                                @for ($min = 0; $min < 60; $min += 30)
+                                    @php
+                                        $time = \Carbon\Carbon::createFromTime($hour, $min);
+                                        $label = $time->format('h:i A'); // 01:30 PM
+                                    @endphp
+                                    <div class="time-slot" data-time="{{ $time->format('H:i') }}">{{ $label }}</div>
+                                @endfor
+                            @endfor
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
-    </div>
-</div>
 
 <div class="step-content hidden" id="summaryCard">
- 
+
 </div>
 
         <!-- Navigation -->
@@ -1015,11 +1050,10 @@
         </div>
     </div>
 </div>
-
 <form id="bookingForm" action="{{ route('cart.store') }}" method="POST" style="display: none;">
     @csrf
-    
-    <input type="hidden" name="customer_id" id="inputCustomerName">
+    <input type="hidden" name="n_name" id="inputCustomerName">
+    <input type="hidden" name="customer_id" id="inputCustomerId">
     <input type="hidden" name="mobile_no" id="inputMobileNo">
     <input type="hidden" name="neighborhood" id="inputNeighborhood">
     <input type="hidden" name="branch" id="inputBranch">
@@ -1030,9 +1064,10 @@
     <input type="hidden" name="time" id="inputTime">
     <input type="hidden" name="staff_id" id="inputStaffId">
     <input type="hidden" name="status" id="inputStatus">
-    <input type="hidden" name="agreed" id="inputAgreed">
-    <input type="hidden" name="auto_change_staff" id="inputAutoChangeStaff">
+    <input type="hidden" name="agreed" id="inputAgreedHidden">
+    <input type="hidden" name="auto_change_staff" id="inputAutoChangeStaffHidden">
 </form>
+
 
 <script>
 
@@ -1094,7 +1129,7 @@ function updateUI() {
     });
 
     // ✅ عند الخطوة 8، نخفي كل شيء ونظهر كارت الملخص
-   
+
     // Update navigation buttons
     prevBtn.disabled = currentStep === 1;
     nextBtn.textContent = currentStep === maxSteps ? translations.complete : translations.next;
@@ -1192,7 +1227,7 @@ function updateUI() {
             });
         });
     }
-    
+
     document.addEventListener('DOMContentLoaded', function () {
     fetchServiceGroups(); // سيتم تحميل الخدمات تلقائيًا
 });
@@ -1282,48 +1317,46 @@ function updateUI() {
             console.error('Error fetching services:', error);
         });
 }
-    function fetchStaffMembers() {
-        fetch('/staff')
-            .then(response => response.json())
-            .then(data => {
-                const staffGrid = document.getElementById('staffGrid');
-                console.log(staffGrid);
-                if (!staffGrid) {
-                    console.error('ما في عنصر بالـ id = "staffGrid"');
-                    return;
-                }
-                staffGrid.innerHTML = ''; // clear old cards
+        function fetchStaffMembers() {
+            fetch('/staff')
+                .then(response => response.json())
+                .then(data => {
+                    const staffGrid = document.getElementById('staffGrid');
+                    if (!staffGrid) {
+                        console.error('ما في عنصر بالـ id = "staffGrid"');
+                        return;
+                    }
+                    staffGrid.innerHTML = ''; // clear old cards
 
-                data.forEach(staff => {
-                    const card = document.createElement('div');
-                    card.className = 'staff-card';
-                    card.dataset.staff = staff.id;
+                    data.forEach(staff => {
+                        const card = document.createElement('div');
+                        card.className = 'staff-card';
+                        card.dataset.staff = staff.id;
+                        console.log(staff);
+                        const fullName = staff.full_name || `${staff.first_name || ''} ${staff.last_name || ''}`;
+                        const initials = fullName.trim().split(' ').map(word => word[0]).join('').substring(0, 2).toUpperCase();
 
-                    const initials = staff.name.split(' ').map(word => word[0]).join('').substring(0, 2).toUpperCase();
+                        card.innerHTML = `
+        <div class="staff-avatar" style="background: linear-gradient(45deg, ${staff.color1 || '#4a90e2'}, ${staff.color2 || '#7b68ee'}); display: flex; align-items: center; justify-content: center; color: white; font-size: 24px;">
+            ${initials}
+        </div>
+        <div class="staff-name">${fullName}</div>
+    `;
 
-                    card.innerHTML = `
-                    <div class="staff-avatar" style="background: linear-gradient(45deg, ${staff.color1 || '#4a90e2'}, ${staff.color2 || '#7b68ee'}); display: flex; align-items: center; justify-content: center; color: white; font-size: 24px;">
-                        👨
-                    </div>
-                    <div class="staff-name">${staff.name}</div>
-                `;
+                        card.addEventListener('click', () => {
+                            document.querySelectorAll('.staff-card').forEach(c => c.classList.remove('selected'));
+                            card.classList.add('selected');
+                            selectedData.staff = staff.id;
 
-                    card.addEventListener('click', () => {
-                        document.querySelectorAll('.staff-card').forEach(c => c.classList.remove('selected'));
-                        card.classList.add('selected');
-                        selectedData.staff = staff.id;
-                        
-                        fetchAvailableTimes();
+                        });
 
+                        staffGrid.appendChild(card);
                     });
-
-                    staffGrid.appendChild(card);
+                })
+                .catch(error => {
+                    console.error('Error fetching staff:', error);
                 });
-            })
-            .catch(error => {
-                console.error('Error fetching staff:', error);
-            });
-    }
+        }
     function generateCalendar() {
         const year = currentDate.getFullYear();
         const month = currentDate.getMonth();
@@ -1368,49 +1401,12 @@ function updateUI() {
             daysContainer.appendChild(dayElement);
         }
     }
-function fetchAvailableTimes() {
-    const date = selectedData.date.toISOString().split('T')[0];
-    const staffId = selectedData.massage;
-
-    const apiUrl = `/available/${date}/${staffId}`;
-    console.log('Fetching available times from:', apiUrl);
-
-    fetch(apiUrl)
-        .then(response => response.json())
-        .then(data => {
-const container = document.querySelector('#time');
-            
-            if (!container) {
-                console.error('❌ .time-slots-container not found in the page.');
-                return;
-            }
-
-            container.innerHTML = '';
-
-            data.forEach(time => {
-                const slot = document.createElement('div');
-                slot.className = 'time-slot';
-                slot.textContent = time;
-                slot.addEventListener('click', () => {
-                    document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
-                    slot.classList.add('selected');
-                    selectedData.time = time;
-                    
-                });
-
-                container.appendChild(slot);
-            });
-        })
-        .catch(err => console.error('Error fetching times:', err));
-        
-        
-}
 
 
-function showSummary() {
-    const summaryCard = document.getElementById('summaryCard');
-    summaryCard.innerHTML = `
-            <div class="summary-details" style="padding: 20px; background-color: #f7f7f7; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+        function showSummary() {
+            const summaryCard = document.getElementById('summaryCard');
+            summaryCard.innerHTML = `
+        <div class="summary-details" style="padding: 20px; background-color: #f7f7f7; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
             <h3 style="color: #a8834b;">{{ __('messagess.booking_summary') }}:</h3>
             <p><strong>{{ __('messagess.branch') }}:</strong> ${selectedData.branch}</p>
             <p><strong>{{ __('messagess.service_group') }}:</strong> ${selectedData.service}</p>
@@ -1419,21 +1415,32 @@ function showSummary() {
             <p><strong>{{ __('messagess.date') }}:</strong> ${selectedData.date ? selectedData.date.toISOString().split('T')[0] : ''}</p>
             <p><strong>{{ __('messagess.time') }}:</strong> ${selectedData.time}</p>
         </div>
-                <div class="form-check mt-3">
-            <input class="form-check-input" type="checkbox" id="termsCheck">
-            <label class="form-check-label" for="termsCheck">
+
+        <div class="form-check mt-3">
+            <input class="form-check-input" type="checkbox" id="inputAgreed" name="agreed">
+            <label class="form-check-label" for="inputAgreed">
                 {{ __('messagess.agree_terms') }}
             </label>
         </div>
 
         <div class="form-check mt-2">
-            <input class="form-check-input" type="checkbox" id="flexibleStaff">
-            <label class="form-check-label" for="flexibleStaff">
+            <input class="form-check-input" type="checkbox" id="inputAutoChangeStaff" name="auto_change_staff">
+            <label class="form-check-label" for="inputAutoChangeStaff">
                 {{ __('messagess.flexible_staff') }}
             </label>
         </div>
     `;
-}
+
+            // هنا حدث تغيير الأسماء حسب الـ IDs الجديدة
+            document.getElementById('inputAgreed').addEventListener('change', (e) => {
+                termsAgreed = e.target.checked;
+            });
+
+            document.getElementById('inputAutoChangeStaff').addEventListener('change', (e) => {
+                flexibleStaff = e.target.checked;
+            });
+        }
+
 
 
    function validateCurrentStep() {
@@ -1484,7 +1491,8 @@ function showSummary() {
 
                 document.querySelectorAll('.step-content').forEach(el => el.classList.add('hidden'));
                 document.getElementById('summaryCard').classList.remove('hidden');
-            
+
+                // ✅ غيّر نص الزر إلى "Complete"
                 nextBtn.textContent = translations.complete;
             break;
             case 8:
@@ -1496,47 +1504,44 @@ function showSummary() {
 }
 
 
-function completeBooking() {
-    const customer_id = {{ auth()->user()->id }};
+        function completeBooking() {
+            const customer_id = {{ auth()->user()->id }};
+            const fullName = "{{ auth()->user()->name ?? 'عميل مجهول' }}";
 
-    const bookingData = {
-        customer_id,
-        mobile_no: '0500000000',
-        neighborhood: 'الربوة',
-        branch: selectedData.branch,
-        gender: 'women',
-        service_group_id: selectedData.service,
-        service_id: selectedData.massage,
-        date: selectedData.date ? selectedData.date.toISOString().split('T')[0] : null,
-        time: selectedData.time,
-        staff_id: selectedData.staff,
-        status: 'Salon',
-        agreed: document.getElementById('termsCheck').checked ? 1 : 0,
-        auto_change_staff: document.getElementById('flexibleStaff').checked ? 1 : 0,
+            const bookingData = {
+                customer_id,
+                n_name: fullName,
+                mobile_no: '0500000000',
+                neighborhood: 'الربوة',
+                branch: selectedData.branch,
+                gender: 'women',
+                service_group_id: selectedData.service,
+                service_id: selectedData.massage,
+                date: selectedData.date ? selectedData.date.toISOString().split('T')[0] : null,
+                time: selectedData.time,
+                staff_id: selectedData.staff,
+                status: 'Salon',
+                agreed: document.getElementById('inputAgreed')?.checked ? 1 : 0,
+                auto_change_staff: document.getElementById('inputAutoChangeStaff')?.checked ? 1 : 0,
+            };
 
-    };
+            document.getElementById('inputCustomerId').value = bookingData.customer_id;
+            document.getElementById('inputCustomerName').value = bookingData.n_name;
+            document.getElementById('inputMobileNo').value = bookingData.mobile_no;
+            document.getElementById('inputNeighborhood').value = bookingData.neighborhood;
+            document.getElementById('inputBranch').value = bookingData.branch;
+            document.getElementById('inputGender').value = bookingData.gender;
+            document.getElementById('inputServiceGroup').value = bookingData.service_group_id;
+            document.getElementById('inputServiceId').value = bookingData.service_id;
+            document.getElementById('inputDate').value = bookingData.date;
+            document.getElementById('inputTime').value = bookingData.time;
+            document.getElementById('inputStaffId').value = bookingData.staff_id;
+            document.getElementById('inputStatus').value = bookingData.status;
+            document.getElementById('inputAgreedHidden').value = bookingData.agreed;
+            document.getElementById('inputAutoChangeStaffHidden').value = bookingData.auto_change_staff;
 
-
-
-    document.getElementById('inputCustomerName').value = bookingData.customer_id;
-    document.getElementById('inputMobileNo').value = bookingData.mobile_no;
-    document.getElementById('inputNeighborhood').value = bookingData.neighborhood;
-    document.getElementById('inputBranch').value = bookingData.branch;
-    document.getElementById('inputGender').value = bookingData.gender;
-    document.getElementById('inputServiceGroup').value = bookingData.service_group_id;
-    document.getElementById('inputServiceId').value = bookingData.service_id;
-    document.getElementById('inputDate').value = bookingData.date;
-    document.getElementById('inputTime').value = bookingData.time;
-    document.getElementById('inputStaffId').value = bookingData.staff_id;
-    document.getElementById('inputStatus').value = bookingData.status;
-    document.getElementById('inputAgreed').value = bookingData.agreed;
-    document.getElementById('inputAutoChangeStaff').value = bookingData.auto_change_staff;
-
-console.log(bookingData.auto_change_staff);
-console.log( bookingData.agreed);
-
-    document.getElementById('bookingForm').submit();
-}
+            document.getElementById('bookingForm').submit();
+        }
 
 
     // Initialize the application

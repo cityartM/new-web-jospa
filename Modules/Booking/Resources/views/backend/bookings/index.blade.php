@@ -12,6 +12,7 @@
 @endhasPermission
 @endsection
 @section('content')
+
 <div class="card">
     <div class="card-body">
       <div data-render="app">

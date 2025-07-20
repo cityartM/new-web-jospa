@@ -7,6 +7,7 @@ use App\Http\Controllers\Backend\API\DashboardController;
 use App\Http\Controllers\Backend\API\NotificationsController;
 use App\Http\Controllers\Backend\API\SettingController;
 use App\Http\Controllers\Backend\API\UserApiController;
+use App\Http\Controllers\CalanderBookingController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -22,6 +23,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('branch-list', [BranchController::class, 'branchList']);
 Route::get('user-detail', [AuthController::class, 'userDetails']);
+Route::get('services', [CalanderBookingController::class, 'getservices']);
+Route::post('/Calander-bookings-new', [CalanderBookingController::class, 'store']);
+Route::get('/employees', [CalanderBookingController::class, 'emplouee']);
+// routes/api.php
+Route::put('/booking-carts/{id}', [CalanderBookingController::class, 'update']);
+Route::delete('/booking-carts/{id}', [CalanderBookingController::class, 'destroy']);
+Route::get('/booking-carts/by-time', [CalanderBookingController::class, 'getAllByTime']);
+Route::get('/booking-carts/by-day', [CalanderBookingController::class, 'getAllByDay']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -42,7 +51,6 @@ Route::get('branch-service', [BranchController::class, 'branchService']);
 Route::get('branch-review', [BranchController::class, 'branchReviews']);
 Route::get('branch-employee', [BranchController::class, 'branchEmployee']);
 Route::get('branch-gallery', [BranchController::class, 'branchGallery']);
-
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('branch/assign/{id}', [BranchController::class, 'assign_update']);
     Route::apiResource('branch', BranchController::class);
