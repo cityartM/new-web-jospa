@@ -77,9 +77,8 @@ Route::get('/details/{id}', [SaloneBookController::class, 'show'])->name('home.d
     })->name('salon.create');
 
 
-    Route::get('/giffte', function () {
-    return view('salon.gift');
-})->name('gift.page');
+Route::get('/giffte' , [GiftCardController::class, 'index'])->name('gift.page');
+
 Route::post('/gift-cards', [GiftCardController::class, 'store'])->name('gift.create');
 
 Route::post('/success-py-gift', [GiftCardController::class, 'handlePaymentResult']);
@@ -88,12 +87,12 @@ Route::post('/success-py-gift', [GiftCardController::class, 'handlePaymentResult
 Route::get('/ads', function () {return view('components.frontend.ads');})->name('ads.page');
 
 Route::get('/cart', [BookingCartController::class, 'index'])->name('cart.page');
-//Route::get('/cart', function () {
-//
-//    $cartItems = \Modules\Booking\Models\Booking::with(['services.employee', 'branch'])->get();
-//    //return $cartItems;
-//    return view('components.frontend.cart', compact('cartItems'));
-//})->name('cart.page');
+Route::get('/cart', function () {
+
+   $cartItems = \Modules\Booking\Models\Booking::with(['services.employee', 'branch'])->get();
+   //return $cartItems;
+   return view('components.frontend.cart', compact('cartItems'));
+})->name('cart.page');
 
 
 Route::post('/cart', [BookingCartController::class, 'store'])->name('cart.store');
