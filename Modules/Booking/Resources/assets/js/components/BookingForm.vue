@@ -199,6 +199,7 @@
         <p class="ps-3" v-if="id > 0">
           <strong>{{ $t('Appointment Id') }} :-{{ id }} </strong>
         </p>
+        <BookingStatus v-if="id" :status="status" :booking_id="id" :status-list="statusList" :employee_id="employee_id" @statusUpdate="updateStatus"></BookingStatus>
         <div class="offcanvas-body border-top">
           <div v-if="selectedCustomer" class="border-bottom mb-3">
             <div class="d-flex align-items-start gap-3 mb-3">

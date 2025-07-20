@@ -10,11 +10,11 @@
     </div>
     <!-- Dropdown Select for Status Change -->
     <select v-if="props.booking_id > 0 && props.employee_id > 0"  class="form-select w-auto" v-model="selectedStatus" @change="changeBookingStatus(selectedStatus)">
-      <option v-for="(item, key) in props.statusList" :key="key" :value="key">
+    <option v-for="(item, key) in filteredStatusList" :key="key" :value="key"  v-if="key !== 'completed'">
         {{ item.title }}
       </option>
     </select>
-    <template v-for="(singleStatus, key) in props.statusList" :key="key">
+    <template v-for="(singleStatus, key) in filteredStatusList" :key="key" >
       <button type="button"
           v-if="canShowButton(key, singleStatus?.next_status)" class="btn btn-outline-primary rounded-pill" @click="changeBookingStatus(singleStatus?.next_status)">
         {{ filterStatus(singleStatus?.next_status).title === 'Confirmed' ? 'Confirm' : filterStatus(singleStatus?.next_status).title }}
@@ -28,6 +28,16 @@
 import { ref, watch } from 'vue'
 import { UPDATE_STATUS } from '../../constant/booking'
 import { useRequest } from '@/helpers/hooks/useCrudOpration'
+
+import { computed } from 'vue'
+
+const filteredStatusList = computed(() => {
+  const excluded = ['completed']
+  return Object.fromEntries(
+    Object.entries(props.statusList).filter(([key]) => !excluded.includes(key))
+  )
+})
+
 
 // Props
 const props = defineProps({
