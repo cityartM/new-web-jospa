@@ -393,10 +393,7 @@ class ServicesController extends Controller
     public function edit($id)
     {
         $locale = app()->getLocale();
-        // $data = Service::selectRaw("*, name->'$.\"{$locale}\"' as name")
-        //     ->where('id', $id)
-        //     ->firstOrFail();
-        $data = Service::selectRaw("*, JSON_EXTRACT(name, '$.\"{$locale}\"') as name")
+        $data = Service::selectRaw("*, JSON_EXTRACT(name, '$.\"{$locale}\"') as translated_name")
             ->where('id', $id)
             ->firstOrFail();
 

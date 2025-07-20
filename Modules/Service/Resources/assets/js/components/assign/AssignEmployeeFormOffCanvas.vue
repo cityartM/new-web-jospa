@@ -3,7 +3,7 @@
     <div class="offcanvas offcanvas-end" tabindex="-1" id="service-employee-assign-form" aria-labelledby="form-offcanvasLabel">
       <div class="offcanvas-header border-bottom" v-if="service">
         <h6 class="m-0 h5">
-          {{ $t('service.singular_title') }}: <span>{{ service.name }}</span>
+          {{ $t('service.singular_title') }}: <span>{{ service.translated_name ?? service.name }}</span>
         </h6>
       </div>
       <div class="offcanvas-body">
