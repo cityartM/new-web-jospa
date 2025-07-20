@@ -72,7 +72,7 @@ Route::get('/details/{id}', [SaloneBookController::class, 'show'])->name('home.d
 
 
     Route::get('/salonService', function () {
-        $branches = Branch::all(); // يجيب كل الفروع من قاعدة البيانات
+        $branches = Branch::all();
         return view('salon.create', compact('branches'));
     })->name('salon.create');
 

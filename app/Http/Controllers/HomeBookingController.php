@@ -64,12 +64,37 @@ class HomeBookingController extends Controller
         return response()->json($availableTimes);
     }
 
+
+
+
+
+
+
+
     public function index()
     {
 
-        $employees = User::role('employee')->get(); // هذا ميثود من spatie مباشرة
-        return response()->json($employees);
+        $employees = User::role('employee')
+        ->where('is_manager', 0)
+        ->get();
+            return response()->json($employees);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public function getServiceGroups($gender)
     {
@@ -78,12 +103,32 @@ class HomeBookingController extends Controller
         return response()->json($groups);
     }
 
+
+
+
+
+
+
+
+
     public function getServicesByGroup($serviceGroupId)
     {
         $services = Service::where('category_id', $serviceGroupId)->get();
 
         return response()->json($services);
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
     public function store(Request $request)
     {
@@ -129,6 +174,20 @@ class HomeBookingController extends Controller
             ], 500);
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -203,6 +262,12 @@ class HomeBookingController extends Controller
         return view('components.frontend.status.FAILED');
     }
 }
+
+
+
+
+
+
 
 
 
