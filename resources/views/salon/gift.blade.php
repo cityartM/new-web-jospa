@@ -753,7 +753,7 @@
                                 <div class="checkbox-list">
                                     @foreach ($sub->services as $service)
                                         <div class="checkbox-item">
-                                          <input type="checkbox" id="service_{{ $service->id }}" name="selected_services[]" value="{{ $service->id }}" data-price="{{ $service->default_price }}">
+                                          <input type="checkbox" id="service_{{ $service->id }}" name="requested_services[]" value="{{ $service->id }}" data-price="{{ $service->default_price }}">
                                           <label for="service_{{ $service->id }}">
                                                 {{ $service->name }} -
                                                 {{ $service->default_price }} {{ __('messages.currency') }}
@@ -826,7 +826,7 @@
             thumbnailElement.classList.add('active');
         }
         document.addEventListener("DOMContentLoaded", function () {
-        const checkboxes = document.querySelectorAll('input[name="selected_services[]"]');
+        const checkboxes = document.querySelectorAll('input[name="requested_services[]"]');
         const displayAmount = document.getElementById('displayAmount');
 
         function calculateTotal() {

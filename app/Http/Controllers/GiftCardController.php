@@ -32,12 +32,12 @@ class GiftCardController extends Controller
             'recipient_name'      => 'required|string',
             'sender_phone'        => 'required',
             'recipient_phone'     => 'required',
-            'selected_services'   => 'required|array|min:1',
+            'requested_services'   => 'required|array|min:1',
         ], ['delivery_method.required'     => __('messages.gift_card_delivery_method_required'),'sender_name.required'         => __('messages.gift_card_sender_required'),'recipient_name.required'      => __('messages.gift_card_recipient_required'),'sender_phone.required'        => __('messages.gift_card_phone_required'),'recipient_phone.required'     => __('messages.gift_card_phone_required'),'selected_services.required'   => __('messages.gift_card_service_required'),'selected_services.min'        => __('messages.gift_card_service_required'),]);
     
         try {
             // 1. هات الخدمات المختارة
-            $selectedServices = $data['selected_services'];
+            $selectedServices = $data['requested_services'];
             $services = ServiceModel::whereIn('id', $selectedServices)->get();
             // 2. احسب السعر الإجمالي
             $total = $services->sum('default_price');
@@ -45,6 +45,7 @@ class GiftCardController extends Controller
             session([
                 'gift_card_data' => $data,
                 'gift_card_total' => $total,
+                'requested_services'  => $request->requested_services,
             ]);
 
             $apiKey1 = env('TAP_SECRET_KEY');
@@ -119,10 +120,10 @@ class GiftCardController extends Controller
                 'recipient_name'    => $data['recipient_name'],
                 'sender_phone'      => $data['sender_phone'],
                 'recipient_phone'   => $data['recipient_phone'],
+                'requested_services' => $data['requested_services'], 
                 'subtotal'          => $total,
             ]);
     
-            // تقدر تحذف السيشن بعد الاستخدام لو حبيت
             session()->forget(['gift_card_data', 'gift_card_total']);
     
             return view('components.frontend.status.CAPTURED');
