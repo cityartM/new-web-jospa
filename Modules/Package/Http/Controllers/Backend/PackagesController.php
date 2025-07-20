@@ -100,7 +100,7 @@ class PackagesController extends Controller
                 // If branch_id is provided, filter by it
                 return $query->where('branch_id', $branchId);
             })
-            ->selectRaw("*, name->'$.\"{$locale}\"' as name")
+            ->selectRaw("*, JSON_EXTRACT(name, '$.\"{$locale}\"') as name") 
             ->get();
 
         $data = [];
@@ -128,7 +128,7 @@ class PackagesController extends Controller
                         'name' => $row->name,
                         'description' => $row->description,
                         'services' => $services,
-                        'branch_name' => $row->branch->name,
+                        'branch_name' => $row->branch->name[$locale] ?? '',
                         'package_price' => $row->package_price,
                         'purchase_date' => $row->start_date,
                         'start_date' => $row->start_date,
@@ -272,7 +272,9 @@ class PackagesController extends Controller
     {
         $employee_id = $request->employee_id;
         $branch_id = $request->branch_id;
-        $data = Service::select('services.name as service_name', 'service_branches.*')
+        $locale = app()->getLocale();
+        $data = Service::selectRaw("JSON_UNQUOTE(JSON_EXTRACT(services.name, '$.\"$locale\"')) as service_name,service_branches.*")
+            // select('services.name as service_name', 'service_branches.*')
             ->with('employee')
             ->leftJoin('service_branches', 'service_branches.service_id', 'services.id')
             ->whereHas('category', function ($q) {
@@ -351,8 +353,11 @@ class PackagesController extends Controller
      */
     public function edit($id)
     {
-        $data = Package::where('id', $id)->with('service')->first();
-        // dd($data);
+        $locale = app()->getLocale();
+        $data = Package::where('id', $id)
+        ->selectRaw("*, JSON_EXTRACT(name, '$.\"{$locale}\"') as translated_name")
+        ->with('service')->first();
+        
         $data['employee_id'] = $data->employee()->pluck('employee_id');
 
         $media = $data->getFirstMedia('package_image');

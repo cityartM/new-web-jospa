@@ -51,9 +51,13 @@ class Booking extends BaseModel
 
     public function services()
     {
+        $locale = app()->getLocale();
         return $this->hasMany(BookingService::class, 'booking_id')->with('employee')
             ->leftJoin('services', 'booking_services.service_id', 'services.id')
-            ->select('services.name as service_name', 'booking_services.*');
+            ->selectRaw("
+                JSON_UNQUOTE(JSON_EXTRACT(services.name, '$.\"$locale\"')) as service_name,
+                booking_services.*
+            ");
     }
 
     public function packages()
@@ -137,9 +141,16 @@ class Booking extends BaseModel
     }
     public function bookingPackages()
     {
+        $locale = app()->getLocale();
         return $this->hasMany(BookingPackages::class, 'booking_id', 'id')
             ->leftJoin('packages', 'booking_packages.package_id', 'packages.id')
-            ->select('packages.name as name', 'packages.description', 'packages.start_date', 'packages.end_date', 'booking_packages.*');
+            ->selectRaw("
+                JSON_UNQUOTE(JSON_EXTRACT(packages.name, '$.\"$locale\"')) as name,
+                packages.description,
+                packages.start_date,
+                packages.end_date,
+                booking_packages.*
+            ");
     }
 
     public function scopeBranch($query)

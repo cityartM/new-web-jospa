@@ -331,6 +331,12 @@
   window.initDatatable = initDatatable
 
   function formatCurrency(number, noOfDecimal, decimalSeparator, thousandSeparator, currencyPosition, currencySymbol) {
+    number = Number(number);
+
+    if (isNaN(number)) {
+      number = 0;
+    }
+
     // Convert the number to a string with the desired decimal places
     let formattedNumber = number.toFixed(noOfDecimal)
 

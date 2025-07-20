@@ -25,19 +25,23 @@
           </div>
         </div>
         <div class="offcanvas-body border-top">
-          <div class="form-group" v-if="bookingType !== 'CALENDER_BOOKING' && branch.options.length > 1">
+          <!-- <div class="form-group" v-if="bookingType !== 'CALENDER_BOOKING' && branch.options.length > 1"> -->
+          <div class="form-group" v-if="!['check_in', 'checkout', 'confirmed'].includes(status)">
             <Multiselect id="branch_id" placeholder="Select Branch" v-model="branch_id" :disabled="is_paid || filterStatus(status).is_disabled" :value="branch_id" v-bind="singleSelectOption" :options="branch.options" @select="branchSelect" @change="removeBranch" class="form-group"></Multiselect>
           </div>
-          <div class="form-group" v-if="bookingType !== 'CALENDER_BOOKING' && branch_id">
+          <!-- <div class="form-group" v-if="bookingType !== 'CALENDER_BOOKING' && branch_id"> -->
+          <div class="form-group" v-if="!['check_in', 'checkout', 'confirmed'].includes(status)">
             <Multiselect id="employee_id" placeholder="Select Staff" v-model="employee_id" :value="employee_id" :disabled="is_paid || filterStatus(status).is_disabled" v-bind="singleSelectOption" :options="employee.options" @select="employeeSelect" @change="removeEmployee" class="form-group"></Multiselect>
           </div>
           <div class="row">
-            <div class="form-group col-6" v-if="bookingType !== 'CALENDER_BOOKING' && employee_id">
+            <!-- <div class="form-group col-6" v-if="bookingType !== 'CALENDER_BOOKING' && employee_id"> -->
+            <div class="form-group col-6" v-if="!['check_in', 'checkout', 'confirmed'].includes(status)" >
               <div class="booking-datepicker">
                 <flat-pickr v-model="current_date" :disabled="is_paid || filterStatus(status).is_disabled" placeholder="Select Date" @change="dateChange" :config="config" class="form-control" />
               </div>
             </div>
-            <div class="form-group col-6" v-if="bookingType !== 'CALENDER_BOOKING' && current_date && employee_id">
+            <!-- <div class="form-group col-6" v-if="bookingType !== 'CALENDER_BOOKING' && current_date && employee_id"> -->
+            <div class="form-group col-6"  v-if="!['check_in', 'checkout', 'confirmed'].includes(status)">
               <Multiselect id="star_time" placeholder="Select Time" v-model="start_date_time" :disabled="is_paid || filterStatus(status).is_disabled" :value="start_date_time" v-bind="singleSelectOption" :options="slots" @select="slotSelect" @change="removeSlot" class="form-group"></Multiselect>
             </div>
           </div>
@@ -195,6 +199,7 @@
         <p class="ps-3" v-if="id > 0">
           <strong>{{ $t('Appointment Id') }} :-{{ id }} </strong>
         </p>
+        <BookingStatus v-if="id" :status="status" :booking_id="id" :status-list="statusList" :employee_id="employee_id" @statusUpdate="updateStatus"></BookingStatus>
         <div class="offcanvas-body border-top">
           <div v-if="selectedCustomer" class="border-bottom mb-3">
             <div class="d-flex align-items-start gap-3 mb-3">

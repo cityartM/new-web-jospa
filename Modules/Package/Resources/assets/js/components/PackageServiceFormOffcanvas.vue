@@ -2,7 +2,7 @@
   <form @submit.prevent="formSubmit">
     <div class="offcanvas offcanvas-end" tabindex="-1" id="package-service-form" aria-labelledby="form-offcanvasLabel">
       <div class="offcanvas-header">
-        <h2 class="mb-0">{{ packages.name }}</h2>
+        <h2 class="mb-0">{{ packages.translated_name ?? packages.name }}</h2>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
         <div class="offcanvas-body">

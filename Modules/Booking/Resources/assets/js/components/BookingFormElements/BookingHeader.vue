@@ -10,9 +10,11 @@
   </div>
   <div class="d-flex align-items-center gap-2">
     <div v-if="booking_id > 0 && status !== 'cancelled' && status !== 'check_in'">
-      <strong
-        ><button data-bs-toggle="tooltip" title="Cancel Booking" type="button" @click="changeBookingStatus('cancelled', 'Are You Sure You want to Cancel?')"  class="btn btn-soft-danger btn-sm" ><i data-v-f9741b98="" class="fa-solid fa-trash"></i></button
-      ></strong>
+      <strong>
+        <button data-bs-toggle="tooltip" title="Cancel Booking" type="button" @click="changeBookingStatus('cancelled', 'Are You Sure You want to Cancel?')"  class="btn btn-soft-danger btn-sm" >
+          <i class="fa-solid fa-ban"></i>
+        </button>
+      </strong>
     </div>
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>

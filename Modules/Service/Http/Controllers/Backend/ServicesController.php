@@ -127,7 +127,7 @@ class ServicesController extends Controller
             });
         }
         $locale = app()->getLocale();
-        $data = $data->selectRaw("*, name->'$.\"{$locale}\"' as name")->get();
+        $data = $data->selectRaw("*, JSON_EXTRACT(name, '$.\"{$locale}\"') as name")->get();
 
         return response()->json($data);
     }
@@ -392,16 +392,15 @@ class ServicesController extends Controller
      */
     public function edit($id)
     {
-        $data = Service::findOrFail($id);
+        $locale = app()->getLocale();
+        $data = Service::selectRaw("*, JSON_EXTRACT(name, '$.\"{$locale}\"') as translated_name")
+            ->where('id', $id)
+            ->firstOrFail();
 
-        if (!is_null($data)) {
-            $custom_field_data = $data->withCustomFields();
-            $data['custom_field_data'] = collect($custom_field_data->custom_fields_data)
-                ->filter(function ($value) {
-                    return $value !== null;
-                })
-                ->toArray();
-        }
+        $custom_field_data = $data->withCustomFields();
+        $data['custom_field_data'] = collect($custom_field_data->custom_fields_data)
+            ->filter(fn ($value) => $value !== null)
+            ->toArray();
 
         return response()->json(['data' => $data, 'status' => true]);
     }
@@ -569,7 +568,10 @@ class ServicesController extends Controller
 
     public function getGalleryImages($id)
     {
-        $service = Service::findOrFail($id);
+        $locale = app()->getLocale();
+        $service = Service::selectRaw("*, JSON_EXTRACT(name, '$.\"{$locale}\"') as name")
+        ->where('id', $id)
+        ->firstOrFail();
 
         $data = ServiceGallery::where('service_id', $id)->get();
 

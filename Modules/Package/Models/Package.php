@@ -21,6 +21,7 @@ class Package extends BaseModel
     
     protected $casts = [
         'name' => 'array',
+        'package_price' => 'double',
     ];
 
     const CUSTOM_FIELD_MODEL = 'Modules\Package\Models\Package';
