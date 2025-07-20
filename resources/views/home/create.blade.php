@@ -8,9 +8,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
     <style>
+
+
         * {
             margin: 0;
             padding: 0;
@@ -21,6 +22,12 @@
             font-family: 'IBM Plex Sans Arabic', sans-serif !important;
             background-color: #f8f6f1;
             color: #333;
+        }
+        .calendar-day.disabled {
+            color: #ccc;
+            pointer-events: none;
+            background-color: #f4f4f4;
+            cursor: not-allowed;
         }
 
         /* Header Styles */
@@ -34,7 +41,7 @@
         }
 
         .header-container {
-            width: 1200px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
             display: flex;
@@ -103,7 +110,7 @@
 
         /* Main Container */
         .container {
-            width: 1200px;
+            max-width: 1200px;
             margin: 30px auto;
             padding: 0 20px;
             display: flex;
@@ -1109,7 +1116,7 @@
             <div class="progress-step active">{{ __('messagess.location') }}</div>
         <!--<div class="progress-step">{{ __('messagess.gender') }}</div>-->
             <div class="progress-step">{{ __('messagess.group') }}</div>
-            <div class="progress-step">{{ __('messagess.service') }}</div>
+            <div class="progress-step">{{ __('messagess.services') }}</div>
             <div class="progress-step">{{ __('messagess.date') }}</div>
             <div class="progress-step">{{ __('messagess.staff') }}</div>
             <div class="progress-step">{{ __('messagess.time') }}</div>
@@ -1210,7 +1217,7 @@
 
                     {{-- قبل الظهر --}}
                     <div class="time-section">
-                        <h4>{{ __('messages.morning') }}</h4>
+                        <h4>{{ __('messagess.morning') }}</h4>
                         <div class="time-grid">
                             @for ($hour = 0; $hour < 12; $hour++)
                                 @for ($min = 0; $min < 60; $min += 30)
@@ -1376,7 +1383,7 @@
                 document.querySelectorAll('.gender-card').forEach(c => c.classList.remove('selected'));
                 card.classList.add('selected');
                 selectedData.gender = card.dataset.gender;
-                fetchServiceGroups(selectedData.gender);
+                fetchServiceGroups();
 
             });
         });
@@ -1445,21 +1452,32 @@
         fetchServiceGroups(); // سيتم تحميل الخدمات تلقائيًا
     });
     function fetchServiceGroups() {
-        fetch(`/service-groups/1`)
+        fetch(`/service-groups`)
             .then(response => response.json())
             .then(data => {
                 const serviceGrid = document.querySelector('.service-grid');
-                serviceGrid.innerHTML = ''; // Clear previous content
+                serviceGrid.innerHTML = '';
+
+                const lang = typeof currentLang !== 'undefined' ? currentLang : 'en';
 
                 data.forEach(service => {
+                    let serviceName = '';
+
+                    try {
+                        const parsedName = JSON.parse(service.name);
+                        serviceName = parsedName[lang] || parsedName['en'];
+                    } catch (e) {
+                        serviceName = service.name; // احتياطًا في حال ما كان JSON صالح
+                    }
+
                     const card = document.createElement('div');
                     card.className = 'service-card';
                     card.dataset.service = service.id;
                     card.innerHTML = `
                     <div class="image-wrapper">
-                        <img src="${service.image}" alt="${service.name}" style="width:100px; hieght:100px;">
+                        <img src="${service.av2}" alt="${serviceName}" style="width:100px; height:100px;">
                     </div>
-                    <h4>${service.name}</h4>
+                    <h4>${serviceName}</h4>
                 `;
 
                     card.addEventListener('click', () => {
@@ -1468,7 +1486,6 @@
                         selectedData.service = card.dataset.service;
 
                         fetchServicesByGroup(selectedData.service);
-
                     });
 
                     serviceGrid.appendChild(card);
@@ -1486,23 +1503,42 @@
                 const massageContainer = document.querySelector('.massage-cards');
                 massageContainer.innerHTML = '';
 
+                // استخدم اللغة المرسلة من Laravel بدل lang attribute
+                const lang = typeof currentLang !== 'undefined' ? currentLang : 'en';
+
                 data.forEach(service => {
+                    let serviceName = '';
+                    let serviceLocation = '';
+
+                    try {
+                        const parsedName = JSON.parse(service.name);
+                        serviceName = parsedName[lang] || parsedName['en'];
+                    } catch (e) {
+                        serviceName = service.name;
+                    }
+
+                    try {
+                        const parsedLocation = JSON.parse(service.location);
+                        serviceLocation = parsedLocation[lang] || parsedLocation['en'];
+                    } catch (e) {
+                        serviceLocation = service.location;
+                    }
+
                     const card = document.createElement('div');
                     card.className = 'massage-card';
                     card.dataset.massage = service.id;
 
+
+
                     card.innerHTML = `
                     ${service.mostWanted ? `<div class="most-wanted">MOST WANTED</div>` : ''}
-                    <div class="massage-duration">${service.duration} Minutes</div>
-                    <div class="massage-name">${service.name}</div>
-                    <div class="massage-location">${service.location}</div>
-                    <div class="massage-price">${service.price} SAR</div>
+                    <div class="massage-duration">${service.duration_min} Minutes</div>
+                    <div class="massage-name">${serviceName}</div>
+                    <div class="massage-location">${service.description}</div>
+                    <div class="massage-price">${service.default_price} SAR</div>
                     <button class="massage-book-btn">Book Now</button>
                 `;
-
-                    // حدث على الكارد: اختيار الخدمة
                     card.addEventListener('click', (e) => {
-                        // إذا تم الضغط على الزر "Book Now"، لا تكمل تفعيل الكارد مرتين
                         if (e.target.classList.contains('massage-book-btn')) return;
 
                         document.querySelectorAll('.massage-card').forEach(c => c.classList.remove('selected'));
@@ -1510,17 +1546,13 @@
                         selectedData.massage = card.dataset.massage;
                     });
 
-                    // حدث مخصص على زر "Book Now"
                     card.querySelector('.massage-book-btn').addEventListener('click', () => {
-                        // فعل تحديد الكارد
                         document.querySelectorAll('.massage-card').forEach(c => c.classList.remove('selected'));
                         card.classList.add('selected');
                         selectedData.massage = card.dataset.massage;
 
-                        // فعل الزر التالي
                         document.getElementById('nextBtn').click();
 
-                        // تحميل الموظفين
                         fetchStaffMembers();
                     });
 
@@ -1531,6 +1563,7 @@
                 console.error('Error fetching services:', error);
             });
     }
+
 
     function fetchStaffMembers() {
         fetch('/staff')
@@ -1572,6 +1605,7 @@
                 console.error('Error fetching staff:', error);
             });
     }
+
     function generateCalendar() {
         const year = currentDate.getFullYear();
         const month = currentDate.getMonth();
@@ -1602,19 +1636,28 @@
                 dayElement.classList.add('other-month');
             }
 
+            // ⛔️ امنع اختيار الأيام السابقة
+            const today = new Date();
+            today.setHours(0, 0, 0, 0); // تجاهل الوقت، نقارن اليوم فقط
+            if (date < today) {
+                dayElement.classList.add('disabled'); // تضيف كلاس للتصميم (لون رمادي مثلاً)
+            } else {
+                dayElement.addEventListener('click', () => {
+                    document.querySelectorAll('.calendar-day').forEach(d => d.classList.remove('selected'));
+                    dayElement.classList.add('selected');
+                    selectedDate = new Date(date);
+                    selectedData.date = selectedDate;
+                });
+            }
+
+            // ✅ احتفظ بتحديد اليوم المختار
             if (selectedDate && date.toDateString() === selectedDate.toDateString()) {
                 dayElement.classList.add('selected');
             }
 
-            dayElement.addEventListener('click', () => {
-                document.querySelectorAll('.calendar-day').forEach(d => d.classList.remove('selected'));
-                dayElement.classList.add('selected');
-                selectedDate = new Date(date);
-                selectedData.date = selectedDate;
-            });
-
             daysContainer.appendChild(dayElement);
         }
+
     }
 
     function fetchAvailableTimes() {
@@ -1707,7 +1750,7 @@
                 const neighborhood = document.getElementById('neighborhood').value;
 
                 if (!name || !mobile || !neighborhood) {
-                    toastr.error("{{ __('messagess.location_required') }}");
+                    alert('Please fill in all location details');
                     return false;
                 }
 
@@ -1715,32 +1758,32 @@
                 break;
             case 3:
                 if (!selectedData.service) {
-                    toastr.error("{{ __('messagess.service_required') }}");
+                    alert('Please select a service category');
                     return false;
                 }
                 break;
             case 4:
                 if (!selectedData.massage) {
-                    toastr.error("{{ __('messagess.specific_service_required') }}");
+                    alert('Please select a specific service');
                     return false;
                 }
                 break;
             case 5:
                 if (!selectedData.date) {
-                    toastr.error("{{ __('messagess.date_required') }}");
+                    alert('Please select a date');
                     return false;
                 }
                 break;
             case 6:
                 if (!selectedData.staff ) {
-                    toastr.error("{{ __('messagess.staff_required') }}");
+                    alert('Please select a staff member ');
                     return false;
                 }
                 showBookingSummary();
                 break;
             case 7:
                 if (!selectedData.time) {
-                    toastr.error("{{ __('messagess.time_required') }}");
+                    alert('Please select a time');
                     return false;
                 }
 
@@ -1790,32 +1833,8 @@
 
     // Initialize the application
     document.addEventListener('DOMContentLoaded', initializeApp);
-
-    
 </script>
 
-<!-- jQuery (Toastr depends on it) -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
-<!-- JS for Toastr -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
-<!-- Display messages -->
-<script>
-    @if(session('success'))
-        toastr.success("{{ session('success') }}");
-    @endif
-
-    @if(session('error'))
-        toastr.error("{{ session('error') }}");
-    @endif
-
-    @if($errors->any())
-        @foreach($errors->all() as $error)
-            toastr.error("{{ $error }}");
-        @endforeach
-    @endif
-</script>
 
 </body>
 </html>

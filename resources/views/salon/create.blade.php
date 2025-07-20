@@ -4,14 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ __('messagess.booking_system') }}</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
-{{--  toastr.css --}}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-
-<meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <style>
         * {
@@ -37,7 +35,7 @@
         }
 
         .header-container {
-            width: 1200px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
             display: flex;
@@ -106,7 +104,7 @@
 
         /* Main Container */
         .container {
-            width: 1200px;
+            max-width: 1200px;
             margin: 30px auto;
             padding: 0 20px;
             display: flex;
@@ -124,67 +122,66 @@
             margin-top: 0;
             animation: fadeInRight 0.8s cubic-bezier(.4,1.6,.6,1);
         }
-    @keyframes fadeInRight {
-      0% { opacity: 0; transform: translateX(-40px); }
-      100% { opacity: 1; transform: translateX(0); }
-    }
-    .step {
-    white-space: nowrap;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding: 18px 32px;
-    border-bottom: 1px solid #f3e6d7;
-    cursor: pointer;
-    transition: all 0.3s;
-    font-size: 1.13rem;
-    color: #b6a07a;
-    background: transparent;
-    position: relative;
-    }
+        @keyframes fadeInRight {
+            0% { opacity: 0; transform: translateX(-40px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+        .step {
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 18px 32px;
+            border-bottom: 1px solid #f3e6d7;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.13rem;
+            color: #b6a07a;
+            background: transparent;
+            position: relative;
+        }
 
-    .step:last-child { border-bottom: none; }
-    .step.active {
-      color: #fff;
-      background: linear-gradient(90deg, #bc9a69 60%, #e2c89c 100%);
-      margin: 0;
-      border-radius: 0 30px 30px 0;
-      font-weight: bold;
-      box-shadow: 0 4px 18px #bc9a6920;
-      animation: stepPulse 0.5s;
-    }
-    @keyframes stepPulse {
-      0% { box-shadow: 0 0 0 0 #bc9a6940; }
-      70% { box-shadow: 0 0 0 10px #bc9a6920; }
-      100% { box-shadow: 0 4px 18px #bc9a6920; }
-    }
-    .step-number {
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      background: #e2c89c;
-      border: 2px solid #fff;
-      box-shadow: 0 1px 4px #bc9a6920;
-      transition: background 0.3s;
-    }
-    }
-    .step.active .step-number {
-      background: #fff;
-      border: 2px solid #bc9a69;
-    }
-    .step:hover:not(.active) {
-      background: #f7f3ee;
-      color: #bc9a69;
-      transform: translateX(6px) scale(1.03);
-    }
-    #step1 {
-  animation: fadeInUp 0.7s cubic-bezier(.4,1.6,.6,1);
-  background: #fff;
-  border-radius: 18px;
-  box-shadow: 0 4px 24px #bc9a6920;
-  padding: 32px 24px 24px 24px;
-  margin-bottom: 32px;
-}
+        .step:last-child { border-bottom: none; }
+        .step.active {
+            color: #fff;
+            background: linear-gradient(90deg, #bc9a69 60%, #e2c89c 100%);
+            margin: 0;
+            border-radius: 0 30px 30px 0;
+            font-weight: bold;
+            box-shadow: 0 4px 18px #bc9a6920;
+            animation: stepPulse 0.5s;
+        }
+        @keyframes stepPulse {
+            0% { box-shadow: 0 0 0 0 #bc9a6940; }
+            70% { box-shadow: 0 0 0 10px #bc9a6920; }
+            100% { box-shadow: 0 4px 18px #bc9a6920; }
+        }
+        .step-number {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #e2c89c;
+            border: 2px solid #fff;
+            box-shadow: 0 1px 4px #bc9a6920;
+            transition: background 0.3s;
+        }
+        .step.active .step-number {
+            background: #fff;
+            border: 2px solid #bc9a69;
+        }
+        .step:hover:not(.active) {
+            background: #f7f3ee;
+            color: #bc9a69;
+            transform: translateX(6px) scale(1.03);
+        }
+        #step1 {
+            animation: fadeInUp 0.7s cubic-bezier(.4,1.6,.6,1);
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 4px 24px #bc9a6920;
+            padding: 32px 24px 24px 24px;
+            margin-bottom: 32px;
+        }
 
 
         /* Content Area */
@@ -274,51 +271,51 @@
         }
 
         /* Service Grid */
-       .service-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2 بوكس جنب بعض */
-  gap: 16px;
-  padding: 10px;
-}
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 2 بوكس جنب بعض */
+            gap: 16px;
+            padding: 10px;
+        }
 
-.service-card {
-  background: #f9f9f9;
-  border-radius: 10px;
-  padding: 12px;
-  text-align: center;
-  cursor: pointer;
-  transition: 0.3s ease;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-}
+        .service-card {
+            background: #f9f9f9;
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
 
-.service-card:hover {
-  background: #f0f0f0;
-}
+        .service-card:hover {
+            background: #f0f0f0;
+        }
 
-.service-card.selected {
-  border: 2px solid #3498db;
-}
+        .service-card.selected {
+            border: 2px solid #3498db;
+        }
 
-.image-wrapper {
-  width: 80px;
-  height: 80px;
-  margin: 0 auto 8px;
-  overflow: hidden;
-  border-radius: 50%;
-  background: #ddd;
-}
+        .image-wrapper {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 8px;
+            overflow: hidden;
+            border-radius: 50%;
+            background: #ddd;
+        }
 
-.image-wrapper img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+        .image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
-.service-card h4 {
-  font-size: 15px;
-  margin: 6px 0 0;
-  line-height: 1.3;
-}
+        .service-card h4 {
+            font-size: 15px;
+            margin: 6px 0 0;
+            line-height: 1.3;
+        }
 
         .service-card:hover {
             border-color: #C8A882;
@@ -635,87 +632,42 @@
         }
 
         /* Responsive Design */
-        @media (max-width: 991.98px) {
+        @media (max-width: 768px) {
             .container {
                 flex-direction: column;
-                padding: 0 12px;
                 gap: 20px;
             }
+
             .sidebar {
                 width: 100%;
-                border-radius: 16px;
-                padding: 16px;
-                margin-bottom: 20px;
             }
-            .content {
-                padding: 18px 8px;
-                border-radius: 12px;
+
+            .gender-selection {
+                flex-direction: column;
+                gap: 20px;
+                align-items: center;
             }
-            .step {
-                padding: 12px 18px;
-                font-size: 1rem;
-            }
+
             .service-grid {
                 grid-template-columns: 1fr;
             }
+
             .staff-grid {
-                gap: 12px;
+                flex-direction: column;
+                align-items: center;
             }
-            .calendar {
-                padding: 16px;
-                border-radius: 10px;
-            }
+
             .service-detail {
                 flex-direction: column;
-                gap: 12px;
-                align-items: flex-start;
             }
+
             .service-image {
                 width: 100%;
-                height: 180px;
-                border-radius: 10px;
             }
-            .header {
-                width: 307%;
-            }
-        }
-        @media (max-width: 600px) {
-            .container {
-                padding: 0 4px;
-                gap: 10px;
-            }
-            .sidebar {
-                padding: 8px 2px;
-                border-radius: 8px;
-            }
-            .content {
-                padding: 8px 2px;
-                border-radius: 8px;
-            }
-            .step {
-                padding: 8px 8px;
-                font-size: 0.95rem;
-            }
-            .service-grid {
-                grid-template-columns: 1fr;
-                gap: 8px;
-            }
-            .staff-grid {
-                gap: 6px;
-            }
-            .calendar {
-                padding: 8px;
-                border-radius: 6px;
-            }
-            .service-detail {
+
+            .form-row {
                 flex-direction: column;
-                gap: 6px;
-                align-items: flex-start;
-            }
-            .service-image {
-                width: 100%;
-                height: 120px;
-                border-radius: 6px;
+                gap: 0;
             }
         }
 
@@ -811,70 +763,70 @@
             transform: rotate(15deg);
         }
         #staffGrid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-    }
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
 
-    .staff-card {
-      background: #f1f1f1;
-      border-radius: 8px;
-      padding: 12px;
-      text-align: center;
-      cursor: pointer;
-    }
+        .staff-card {
+            background: #f1f1f1;
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+        }
 
-    .staff-avatar {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      margin: 0 auto 8px;
-    }
+        .staff-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin: 0 auto 8px;
+        }
         .branch-options input[type="radio"]:checked + img {
-        border-color: #007bff;
-        box-shadow: 0 0 5px #007bff;
-    }
+            border-color: #007bff;
+            box-shadow: 0 0 5px #007bff;
+        }
     </style>
 </head>
 <body dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}" class="{{ app()->getLocale() }}">
 <!-- Header -->
- <header class="header" style="box-shadow: 0 4px 24px #bc9a6920; border-radius: 0 0 36px 36px; padding: 20px 0 0; text-align: center; position: relative; overflow: hidden;">
-  <div class="header-container" style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; padding: 0 20px;">
+<header class="header" style="box-shadow: 0 4px 24px #bc9a6920; border-radius: 0 0 36px 36px; padding: 20px 0 0; text-align: center; position: relative; overflow: hidden;">
+    <div class="header-container" style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; padding: 0 20px;">
 
-    <!-- الشعار -->
-    <div class="logo" style="display: flex; align-items: center; gap: 12px; animation: fadeDown 0.8s cubic-bezier(.4,1.6,.6,1);">
-        <a href="/">
-            <img src="/logo.webp" alt="JO SPA Logo" style="height: 60px; width: auto; border-radius: 12px; object-fit: contain;">
-        </a>
+        <!-- الشعار -->
+        <div class="logo" style="display: flex; align-items: center; gap: 12px; animation: fadeDown 0.8s cubic-bezier(.4,1.6,.6,1);">
+            <a href="/">
+                <img src="/logo.webp" alt="JO SPA Logo" style="height: 60px; width: auto; border-radius: 12px; object-fit: contain;">
+            </a>
+        </div>
+
+        <!-- العنوان -->
+        <div class="header-title" style="animation: fadeUp 0.9s cubic-bezier(.4,1.6,.6,1);">
+            <h2 style="font-size: 2.2rem; color: #a8834b; font-weight: bold; letter-spacing: 1.5px; margin: 0;">{{ __('messagess.salon_booking') }}</h2>
+        </div>
+
+        <!-- زر اللغة -->
+        <div class="header-right">
+            <li class="nav-item list-unstyled">
+                @php
+                    $currentLocale = session('locale', app()->getLocale());
+                    $targetLocale = $currentLocale === 'ar' ? 'en' : 'ar';
+                    $translationKey = $targetLocale === 'ar' ? 'messagess.nav_lang_ar' : 'messagess.nav_lang_en';
+                @endphp
+
+                <form id="change-lang-form" action="{{ route('change.lang', $targetLocale) }}" method="GET" style="display: none;"></form>
+
+                <button type="button"
+                        onclick="document.getElementById('change-lang-form').submit();"
+                        class="btn btn-sm btn-outline-light rounded-pill px-3 fw-semibold"
+                        style="transition: 0.3s;">
+                    {{ __($translationKey) }}
+                </button>
+            </li>
+        </div>
+
+
     </div>
-
-    <!-- العنوان -->
-    <div class="header-title" style="animation: fadeUp 0.9s cubic-bezier(.4,1.6,.6,1);">
-      <h2 style="font-size: 2.2rem; color: #a8834b; font-weight: bold; letter-spacing: 1.5px; margin: 0;">{{ __('messagess.salon_booking') }}</h2>
-    </div>
-
-    <!-- زر اللغة -->
-    <div class="header-right">
-    <li class="nav-item list-unstyled">
-        @php
-            $currentLocale = session('locale', app()->getLocale());
-            $targetLocale = $currentLocale === 'ar' ? 'en' : 'ar';
-            $translationKey = $targetLocale === 'ar' ? 'messagess.nav_lang_ar' : 'messagess.nav_lang_en';
-        @endphp
-
-        <form id="change-lang-form" action="{{ route('change.lang', $targetLocale) }}" method="GET" style="display: none;"></form>
-
-        <button type="button"
-            onclick="document.getElementById('change-lang-form').submit();"
-            class="btn btn-sm btn-outline-light rounded-pill px-3 fw-semibold"
-            style="transition: 0.3s;">
-            {{ __($translationKey) }}
-        </button>
-    </li>
-</div>
-
-
-  </div>
 </header>
 
 
@@ -889,7 +841,7 @@
         </div>
         <!--<div class="step" data-step="2">-->
         <!--    <div class="step-number"></div>-->
-        <!--    <span>{{ __('messagess.gender') }}</span>-->
+    <!--    <span>{{ __('messagess.gender') }}</span>-->
         <!--</div>-->
         <div class="step" data-step="3">
             <div class="step-number"></div>
@@ -920,43 +872,43 @@
     <div class="content">
         <!-- Progress Bar -->
         <div class="progress-bar">
-    <div class="progress-step active">{{ __('messagess.location') }}</div>
-    <!--
+            <div class="progress-step active">{{ __('messagess.location') }}</div>
+        <!--
     <div class="progress-step">{{ __('messagess.gender') }}</div>
     -->
-        <div class="progress-step">{{ __('messagess.group') }}</div>
-        <div class="progress-step">{{ __('messagess.service') }}</div>
-        <div class="progress-step">{{ __('messagess.date') }}</div>
-        <div class="progress-step">{{ __('messagess.staff') }}</div>
-        <div class="progress-step">{{ __('messagess.time') }}</div>
-        <div class="progress-step">{{ __('messagess.cart') }}</div>
+            <div class="progress-step">{{ __('messagess.group') }}</div>
+            <div class="progress-step">{{ __('messagess.services') }}</div>
+            <div class="progress-step">{{ __('messagess.date') }}</div>
+            <div class="progress-step">{{ __('messagess.staff') }}</div>
+            <div class="progress-step">{{ __('messagess.time') }}</div>
+            <div class="progress-step">{{ __('messagess.cart') }}</div>
         </div>
 
         <!-- Step 1: Location -->
-    <div id="step1" class="step-content">
-                <div class="location-form">
-                    <div class="form-group">
-                        <label style="font-weight: bold; font-size: 16px; display: block; text-align: center;">
-                            {{ __('messagess.select_branch') }}
-                        </label>
-                <br>
+        <div id="step1" class="step-content">
+            <div class="location-form">
+                <div class="form-group">
+                    <label style="font-weight: bold; font-size: 16px; display: block; text-align: center;">
+                        {{ __('messagess.select_branch') }}
+                    </label>
+                    <br>
 
-                        <div class="branch-options mt-3" style="display: flex; flex-wrap: wrap; gap: 50px; justify-content: center;">
-                            @foreach($branches as $branch)
-                                <label class="form-check" style="text-align: center; cursor: pointer; position: relative;">
-                                    <input class="form-check-input" type="radio" name="branch" value="{{ $branch->id }}"
-                                           style="position: absolute; opacity: 0; pointer-events: none;">
-                                    <img src="{{ asset('storage/branches/' . ($branch->image ?? 'default.png')) }}"
-                                         alt="{{ $branch->name }}"
-                                         style="width: 120px; height: 100px; border: 2px solid #ccc; border-radius: 10px; padding: 5px; transition: all 0.3s;">
-                                    <div style="margin-top: 8px;">{{ $branch->name }}</div>
-                                </label>
-                            @endforeach
-                        </div>
-
+                    <div class="branch-options mt-3" style="display: flex; flex-wrap: wrap; gap: 50px; justify-content: center;">
+                        @foreach($branches as $branch)
+                            <label class="form-check" style="text-align: center; cursor: pointer; position: relative;">
+                                <input class="form-check-input" type="radio" name="branch" value="{{ $branch->id }}"
+                                       style="position: absolute; opacity: 0; pointer-events: none;">
+                                <img src="{{ asset( ($branch->image . $branch->slug .'.png')) }}"
+                                     alt="{{ $branch->name }}"
+                                     style="width: 120px; height: 100px; border: 2px solid #ccc; border-radius: 10px; padding: 5px; transition: all 0.3s;">
+                                <div style="margin-top: 8px;">{{ $branch->name }}</div>
+                            </label>
+                        @endforeach
                     </div>
-    </div>
-</div>
+
+                </div>
+            </div>
+        </div>
         <!-- Step 3: Service Categories -->
         <div id="step3" class="step-content hidden">
             <div class="service-grid">
@@ -981,9 +933,9 @@
                     <button class="calendar-nav" id="nextMonth">›</button>
                 </div>
                 <div class="calendar-weekdays">
-            @foreach(__('messagess.weekdays') as $day)
-                <div class="calendar-weekday">{{ $day }}</div>
-            @endforeach
+                    @foreach(__('messagess.weekdays') as $day)
+                        <div class="calendar-weekday">{{ $day }}</div>
+                    @endforeach
                 </div>
                 <div class="calendar-days" id="calendarDays">
                     <!-- Calendar days will be generated by JavaScript -->
@@ -997,7 +949,7 @@
 
             </div>
         </div>
-            <!-- Time Slots -->
+        <!-- Time Slots -->
         <div id="step7" class="step-content hidden">
             <div class="time-slots">
                 <div class="time-period">
@@ -1005,7 +957,7 @@
 
                     {{-- قبل الظهر --}}
                     <div class="time-section">
-                        <h4>{{ __('messages.morning') }}</h4>
+                        <h4>{{ __('messagess.morning') }}</h4>
                         <div class="time-grid">
                             @for ($hour = 0; $hour < 12; $hour++)
                                 @for ($min = 0; $min < 60; $min += 30)
@@ -1039,9 +991,9 @@
             </div>
         </div>
 
-<div class="step-content hidden" id="summaryCard">
+        <div class="step-content hidden" id="summaryCard">
 
-</div>
+        </div>
 
         <!-- Navigation -->
         <div class="navigation">
@@ -1068,10 +1020,19 @@
     <input type="hidden" name="auto_change_staff" id="inputAutoChangeStaffHidden">
 </form>
 
+<style>
+    .calendar-day.disabled {
+        color: #ccc;
+        pointer-events: none;
+        background-color: #f4f4f4;
+        cursor: not-allowed;
+    }
 
+
+</style>
 <script>
 
-        const translations = {
+    const translations = {
         next: "{{ __('messagess.next') }}",
         complete: "{{ __('messagess.complete') }}"
     };
@@ -1107,33 +1068,33 @@
 
     }
 
-function updateUI() {
-    // Update sidebar
-    steps.forEach((step, index) => {
-        step.classList.toggle('active', index + 1 === currentStep);
-    });
+    function updateUI() {
+        // Update sidebar
+        steps.forEach((step, index) => {
+            step.classList.toggle('active', index + 1 === currentStep);
+        });
 
-    // Update progress bar
-    progressSteps.forEach((step, index) => {
-        step.classList.remove('active', 'completed');
-        if (index + 1 < currentStep) {
-            step.classList.add('completed');
-        } else if (index + 1 === currentStep) {
-            step.classList.add('active');
-        }
-    });
+        // Update progress bar
+        progressSteps.forEach((step, index) => {
+            step.classList.remove('active', 'completed');
+            if (index + 1 < currentStep) {
+                step.classList.add('completed');
+            } else if (index + 1 === currentStep) {
+                step.classList.add('active');
+            }
+        });
 
-    // Update step content
-    stepContents.forEach((content, index) => {
-        content.classList.toggle('hidden', index + 1 !== currentStep);
-    });
+        // Update step content
+        stepContents.forEach((content, index) => {
+            content.classList.toggle('hidden', index + 1 !== currentStep);
+        });
 
-    // ✅ عند الخطوة 8، نخفي كل شيء ونظهر كارت الملخص
+        // ✅ عند الخطوة 8، نخفي كل شيء ونظهر كارت الملخص
 
-    // Update navigation buttons
-    prevBtn.disabled = currentStep === 1;
-    nextBtn.textContent = currentStep === maxSteps ? translations.complete : translations.next;
-}
+        // Update navigation buttons
+        prevBtn.disabled = currentStep === 1;
+        nextBtn.textContent = currentStep === maxSteps ? translations.complete : translations.next;
+    }
 
     function setupEventListeners() {
         // Navigation buttons
@@ -1161,7 +1122,7 @@ function updateUI() {
                 document.querySelectorAll('.gender-card').forEach(c => c.classList.remove('selected'));
                 card.classList.add('selected');
                 selectedData.gender = card.dataset.gender;
-                fetchServiceGroups(selectedData.gender);
+                fetchServiceGroups();
 
             });
         });
@@ -1229,24 +1190,103 @@ function updateUI() {
     }
 
     document.addEventListener('DOMContentLoaded', function () {
-    fetchServiceGroups(); // سيتم تحميل الخدمات تلقائيًا
-});
+        fetchServiceGroups(); // سيتم تحميل الخدمات تلقائيًا
+    });
+    function fetchServicesByGroup(serviceGroupId) {
+        fetch(`/services/${serviceGroupId}`)
+            .then(response => response.json())
+            .then(data => {
+                const massageContainer = document.querySelector('.massage-cards');
+                massageContainer.innerHTML = '';
+
+                // استخدم اللغة المرسلة من Laravel بدل lang attribute
+                const lang = typeof currentLang !== 'undefined' ? currentLang : 'en';
+
+                data.forEach(service => {
+                    let serviceName = '';
+                    let serviceLocation = '';
+
+                    try {
+                        const parsedName = JSON.parse(service.name);
+                        serviceName = parsedName[lang] || parsedName['en'];
+                    } catch (e) {
+                        serviceName = service.name;
+                    }
+
+                    try {
+                        const parsedLocation = JSON.parse(service.location);
+                        serviceLocation = parsedLocation[lang] || parsedLocation['en'];
+                    } catch (e) {
+                        serviceLocation = service.location;
+                    }
+
+                    const card = document.createElement('div');
+                    card.className = 'massage-card';
+                    card.dataset.massage = service.id;
+
+
+
+                    card.innerHTML = `
+                    ${service.mostWanted ? `<div class="most-wanted">MOST WANTED</div>` : ''}
+                    <div class="massage-duration">${service.duration_min} Minutes</div>
+                    <div class="massage-name">${serviceName}</div>
+                    <div class="massage-location">${service.description}</div>
+                    <div class="massage-price">${service.default_price} SAR</div>
+                    <button class="massage-book-btn">Book Now</button>
+                `;
+                    card.addEventListener('click', (e) => {
+                        if (e.target.classList.contains('massage-book-btn')) return;
+
+                        document.querySelectorAll('.massage-card').forEach(c => c.classList.remove('selected'));
+                        card.classList.add('selected');
+                        selectedData.massage = card.dataset.massage;
+                    });
+
+                    card.querySelector('.massage-book-btn').addEventListener('click', () => {
+                        document.querySelectorAll('.massage-card').forEach(c => c.classList.remove('selected'));
+                        card.classList.add('selected');
+                        selectedData.massage = card.dataset.massage;
+
+                        document.getElementById('nextBtn').click();
+
+                        fetchStaffMembers();
+                    });
+
+                    massageContainer.appendChild(card);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching services:', error);
+            });
+    }
+
     function fetchServiceGroups() {
-        fetch(`/service-groups/1`)
+        fetch(`/service-groups`)
             .then(response => response.json())
             .then(data => {
                 const serviceGrid = document.querySelector('.service-grid');
-                serviceGrid.innerHTML = ''; // Clear previous content
+                serviceGrid.innerHTML = '';
+
+                const lang = typeof currentLang !== 'undefined' ? currentLang : 'en';
 
                 data.forEach(service => {
+                    let serviceName = '';
+
+                    try {
+                        const parsedName = JSON.parse(service.name);
+                        serviceName = parsedName[lang] || parsedName['en'];
+                    } catch (e) {
+                        serviceName = service.name; // احتياطًا في حال ما كان JSON صالح
+                    }
+
                     const card = document.createElement('div');
                     card.className = 'service-card';
                     card.dataset.service = service.id;
                     card.innerHTML = `
                     <div class="image-wrapper">
-                        <img src="${service.image}" alt="${service.name}">
+                        <img src="${service.av2}" alt="${serviceName}" style="width:100px; height:100px;">
                     </div>
-                    <h4>${service.name}</h4>
+                    <h4>${serviceName}</h4>
                 `;
 
                     card.addEventListener('click', () => {
@@ -1255,7 +1295,6 @@ function updateUI() {
                         selectedData.service = card.dataset.service;
 
                         fetchServicesByGroup(selectedData.service);
-
                     });
 
                     serviceGrid.appendChild(card);
@@ -1265,98 +1304,47 @@ function updateUI() {
                 console.error('Error fetching services:', error);
             });
     }
-   function fetchServicesByGroup(serviceGroupId) {
-    fetch(`/services/${serviceGroupId}`)
-        .then(response => response.json())
-        .then(data => {
-            const massageContainer = document.querySelector('.massage-cards');
-            massageContainer.innerHTML = '';
 
-            data.forEach(service => {
-                const card = document.createElement('div');
-                card.className = 'massage-card';
-                card.dataset.massage = service.id;
+    function fetchStaffMembers() {
+        fetch('/staff')
+            .then(response => response.json())
+            .then(data => {
+                const staffGrid = document.getElementById('staffGrid');
+                if (!staffGrid) {
+                    console.error('ما في عنصر بالـ id = "staffGrid"');
+                    return;
+                }
+                staffGrid.innerHTML = ''; // clear old cards
 
-                card.innerHTML = `
-                    ${service.mostWanted ? `<div class="most-wanted">MOST WANTED</div>` : ''}
-                    <div class="massage-duration">${service.duration} Minutes</div>
-                    <div class="massage-name">${service.name}</div>
-                    <div class="massage-location">${service.location}</div>
-                    <div class="massage-price">${service.price} SAR</div>
-                    <button class="massage-book-btn">Book Now</button>
-                `;
+                data.forEach(staff => {
+                    const card = document.createElement('div');
+                    card.className = 'staff-card';
+                    card.dataset.staff = staff.id;
+                    console.log(staff);
+                    const fullName = staff.full_name || `${staff.first_name || ''} ${staff.last_name || ''}`;
+                    const initials = fullName.trim().split(' ').map(word => word[0]).join('').substring(0, 2).toUpperCase();
 
-                // حدث على الكارد: اختيار الخدمة
-                card.addEventListener('click', (e) => {
-                    // إذا تم الضغط على الزر "Book Now"، لا تكمل تفعيل الكارد مرتين
-                    if (e.target.classList.contains('massage-book-btn')) return;
-
-                    document.querySelectorAll('.massage-card').forEach(c => c.classList.remove('selected'));
-                    card.classList.add('selected');
-                    selectedData.massage = card.dataset.massage;
-                });
-
-                // حدث مخصص على زر "Book Now"
-                card.querySelector('.massage-book-btn').addEventListener('click', () => {
-                    // فعل تحديد الكارد
-                    document.querySelectorAll('.massage-card').forEach(c => c.classList.remove('selected'));
-                    card.classList.add('selected');
-                    selectedData.massage = card.dataset.massage;
-
-                    // فعل الزر التالي
-                    document.getElementById('nextBtn').click();
-
-                    // تحميل الموظفين
-                    fetchStaffMembers();
-                });
-
-                massageContainer.appendChild(card);
-            });
-        })
-        .catch(error => {
-            console.error('Error fetching services:', error);
-        });
-}
-        function fetchStaffMembers() {
-            fetch('/staff')
-                .then(response => response.json())
-                .then(data => {
-                    const staffGrid = document.getElementById('staffGrid');
-                    if (!staffGrid) {
-                        console.error('ما في عنصر بالـ id = "staffGrid"');
-                        return;
-                    }
-                    staffGrid.innerHTML = ''; // clear old cards
-
-                    data.forEach(staff => {
-                        const card = document.createElement('div');
-                        card.className = 'staff-card';
-                        card.dataset.staff = staff.id;
-                        console.log(staff);
-                        const fullName = staff.full_name || `${staff.first_name || ''} ${staff.last_name || ''}`;
-                        const initials = fullName.trim().split(' ').map(word => word[0]).join('').substring(0, 2).toUpperCase();
-
-                        card.innerHTML = `
+                    card.innerHTML = `
         <div class="staff-avatar" style="background: linear-gradient(45deg, ${staff.color1 || '#4a90e2'}, ${staff.color2 || '#7b68ee'}); display: flex; align-items: center; justify-content: center; color: white; font-size: 24px;">
             ${initials}
         </div>
         <div class="staff-name">${fullName}</div>
     `;
 
-                        card.addEventListener('click', () => {
-                            document.querySelectorAll('.staff-card').forEach(c => c.classList.remove('selected'));
-                            card.classList.add('selected');
-                            selectedData.staff = staff.id;
+                    card.addEventListener('click', () => {
+                        document.querySelectorAll('.staff-card').forEach(c => c.classList.remove('selected'));
+                        card.classList.add('selected');
+                        selectedData.staff = staff.id;
 
-                        });
-
-                        staffGrid.appendChild(card);
                     });
-                })
-                .catch(error => {
-                    console.error('Error fetching staff:', error);
+
+                    staffGrid.appendChild(card);
                 });
-        }
+            })
+            .catch(error => {
+                console.error('Error fetching staff:', error);
+            });
+    }
     function generateCalendar() {
         const year = currentDate.getFullYear();
         const month = currentDate.getMonth();
@@ -1387,25 +1375,34 @@ function updateUI() {
                 dayElement.classList.add('other-month');
             }
 
+            // ⛔️ امنع اختيار الأيام السابقة
+            const today = new Date();
+            today.setHours(0, 0, 0, 0); // تجاهل الوقت، نقارن اليوم فقط
+            if (date < today) {
+                dayElement.classList.add('disabled'); // تضيف كلاس للتصميم (لون رمادي مثلاً)
+            } else {
+                dayElement.addEventListener('click', () => {
+                    document.querySelectorAll('.calendar-day').forEach(d => d.classList.remove('selected'));
+                    dayElement.classList.add('selected');
+                    selectedDate = new Date(date);
+                    selectedData.date = selectedDate;
+                });
+            }
+
+            // ✅ احتفظ بتحديد اليوم المختار
             if (selectedDate && date.toDateString() === selectedDate.toDateString()) {
                 dayElement.classList.add('selected');
             }
 
-            dayElement.addEventListener('click', () => {
-                document.querySelectorAll('.calendar-day').forEach(d => d.classList.remove('selected'));
-                dayElement.classList.add('selected');
-                selectedDate = new Date(date);
-                selectedData.date = selectedDate;
-            });
-
             daysContainer.appendChild(dayElement);
         }
+
     }
 
 
-        function showSummary() {
-            const summaryCard = document.getElementById('summaryCard');
-            summaryCard.innerHTML = `
+    function showSummary() {
+        const summaryCard = document.getElementById('summaryCard');
+        summaryCard.innerHTML = `
         <div class="summary-details" style="padding: 20px; background-color: #f7f7f7; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
             <h3 style="color: #a8834b;">{{ __('messagess.booking_summary') }}:</h3>
             <p><strong>{{ __('messagess.branch') }}:</strong> ${selectedData.branch}</p>
@@ -1420,157 +1417,130 @@ function updateUI() {
             <input class="form-check-input" type="checkbox" id="inputAgreed" name="agreed">
             <label class="form-check-label" for="inputAgreed">
                 {{ __('messagess.agree_terms') }}
-            </label>
-        </div>
+        </label>
+    </div>
 
-        <div class="form-check mt-2">
-            <input class="form-check-input" type="checkbox" id="inputAutoChangeStaff" name="auto_change_staff">
-            <label class="form-check-label" for="inputAutoChangeStaff">
-                {{ __('messagess.flexible_staff') }}
-            </label>
-        </div>
-    `;
+    <div class="form-check mt-2">
+        <input class="form-check-input" type="checkbox" id="inputAutoChangeStaff" name="auto_change_staff">
+        <label class="form-check-label" for="inputAutoChangeStaff">
+{{ __('messagess.flexible_staff') }}
+        </label>
+    </div>
+`;
 
-            // هنا حدث تغيير الأسماء حسب الـ IDs الجديدة
-            document.getElementById('inputAgreed').addEventListener('change', (e) => {
-                termsAgreed = e.target.checked;
-            });
+        // هنا حدث تغيير الأسماء حسب الـ IDs الجديدة
+        document.getElementById('inputAgreed').addEventListener('change', (e) => {
+            termsAgreed = e.target.checked;
+        });
 
-            document.getElementById('inputAutoChangeStaff').addEventListener('change', (e) => {
-                flexibleStaff = e.target.checked;
-            });
-        }
+        document.getElementById('inputAutoChangeStaff').addEventListener('change', (e) => {
+            flexibleStaff = e.target.checked;
+        });
+    }
 
 
 
-   function validateCurrentStep() {
-    switch (currentStep) {
-        case 1:
-            const selectedBranch = document.querySelector('input[name="branch"]:checked');
-            if (!selectedBranch) {
-                toastr.error('{{ __("messagess.please_select_branch") }}');
-                return false;
-            }
-            selectedData.branch = selectedBranch.value;
-            break;
+    function validateCurrentStep() {
+        switch (currentStep) {
+            case 1:
+                const selectedBranch = document.querySelector('input[name="branch"]:checked');
+                if (!selectedBranch) {
+                    alert('{{ __("messagess.please_select_branch") }}');
+                    return false;
+                }
+                selectedData.branch = selectedBranch.value;
+                break;
 
-        case 3:
-            if (!selectedData.service) {
-                toastr.error("{{ __('messagess.service_required') }}");
-                return false;
-            }
-            break;
+            case 3:
+                if (!selectedData.service) {
+                    alert('Please select a service category');
+                    return false;
+                }
+                break;
 
-        case 4:
-            if (!selectedData.massage) {
-                toastr.error("{{ __('messagess.specific_service_required') }}");
-                return false;
-            }
-            break;
+            case 4:
+                if (!selectedData.massage) {
+                    alert('Please select a specific service');
+                    return false;
+                }
+                break;
 
-        case 5:
-            if (!selectedData.date) {
-                toastr.error("{{ __('messagess.date_required') }}");
-                return false;
-            }
-            break;
+            case 5:
+                if (!selectedData.date) {
+                    alert('Please select a date');
+                    return false;
+                }
+                break;
 
-        case 6:
-            if (!selectedData.staff) {
-                toastr.error("{{ __('messagess.staff_required') }}");
-                return false;
-            }
-            showSummary();
-            break;
+            case 6:
+                if (!selectedData.staff) {
+                    alert('Please select a staff member');
+                    return false;
+                }
+                break;
 
-        case 7:
-            if (!selectedData.time) {
-                toastr.error("{{ __('messagess.time_required') }}");
-                return false;
-            }
+            case 7:
+                if (!selectedData.time) {
+                    alert('يرجى اختيار وقت');
+                    return false;
+                }
 
+                showSummary();
                 document.querySelectorAll('.step-content').forEach(el => el.classList.add('hidden'));
                 document.getElementById('summaryCard').classList.remove('hidden');
 
                 // ✅ غيّر نص الزر إلى "Complete"
                 nextBtn.textContent = translations.complete;
-            break;
-            case 8:
-                            completeBooking();
-                            break;
-           }
+                break;
 
-    return true;
-}
-
-
-        function completeBooking() {
-            const customer_id = {{ auth()->user()->id }};
-            const fullName = "{{ auth()->user()->name ?? 'عميل مجهول' }}";
-
-            const bookingData = {
-                customer_id,
-                n_name: fullName,
-                mobile_no: '0500000000',
-                neighborhood: 'الربوة',
-                branch: selectedData.branch,
-                gender: 'women',
-                service_group_id: selectedData.service,
-                service_id: selectedData.massage,
-                date: selectedData.date ? selectedData.date.toISOString().split('T')[0] : null,
-                time: selectedData.time,
-                staff_id: selectedData.staff,
-                status: 'Salon',
-                agreed: document.getElementById('inputAgreed')?.checked ? 1 : 0,
-                auto_change_staff: document.getElementById('inputAutoChangeStaff')?.checked ? 1 : 0,
-            };
-
-            document.getElementById('inputCustomerId').value = bookingData.customer_id;
-            document.getElementById('inputCustomerName').value = bookingData.n_name;
-            document.getElementById('inputMobileNo').value = bookingData.mobile_no;
-            document.getElementById('inputNeighborhood').value = bookingData.neighborhood;
-            document.getElementById('inputBranch').value = bookingData.branch;
-            document.getElementById('inputGender').value = bookingData.gender;
-            document.getElementById('inputServiceGroup').value = bookingData.service_group_id;
-            document.getElementById('inputServiceId').value = bookingData.service_id;
-            document.getElementById('inputDate').value = bookingData.date;
-            document.getElementById('inputTime').value = bookingData.time;
-            document.getElementById('inputStaffId').value = bookingData.staff_id;
-            document.getElementById('inputStatus').value = bookingData.status;
-            document.getElementById('inputAgreedHidden').value = bookingData.agreed;
-            document.getElementById('inputAutoChangeStaffHidden').value = bookingData.auto_change_staff;
-
-            document.getElementById('bookingForm').submit();
         }
+
+        return true;
+    }
+
+
+    function completeBooking() {
+        const customer_id = {{ auth()->user()->id }};
+        const fullName = "{{ auth()->user()->name ?? 'عميل مجهول' }}";
+
+        const bookingData = {
+            customer_id,
+            n_name: fullName,
+            mobile_no: '0500000000',
+            neighborhood: 'الربوة',
+            branch: selectedData.branch,
+            gender: 'women',
+            service_group_id: selectedData.service,
+            service_id: selectedData.massage,
+            date: selectedData.date ? selectedData.date.toISOString().split('T')[0] : null,
+            time: selectedData.time,
+            staff_id: selectedData.staff,
+            status: 'Salon',
+            agreed: document.getElementById('inputAgreed')?.checked ? 1 : 0,
+            auto_change_staff: document.getElementById('inputAutoChangeStaff')?.checked ? 1 : 0,
+        };
+
+        document.getElementById('inputCustomerId').value = bookingData.customer_id;
+        document.getElementById('inputCustomerName').value = bookingData.n_name;
+        document.getElementById('inputMobileNo').value = bookingData.mobile_no;
+        document.getElementById('inputNeighborhood').value = bookingData.neighborhood;
+        document.getElementById('inputBranch').value = bookingData.branch;
+        document.getElementById('inputGender').value = bookingData.gender;
+        document.getElementById('inputServiceGroup').value = bookingData.service_group_id;
+        document.getElementById('inputServiceId').value = bookingData.service_id;
+        document.getElementById('inputDate').value = bookingData.date;
+        document.getElementById('inputTime').value = bookingData.time;
+        document.getElementById('inputStaffId').value = bookingData.staff_id;
+        document.getElementById('inputStatus').value = bookingData.status;
+        document.getElementById('inputAgreedHidden').value = bookingData.agreed;
+        document.getElementById('inputAutoChangeStaffHidden').value = bookingData.auto_change_staff;
+
+        document.getElementById('bookingForm').submit();
+    }
 
 
     // Initialize the application
     document.addEventListener('DOMContentLoaded', initializeApp);
 </script>
-
-
-<!-- jQuery (Toastr depends on it) -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
-<!-- JS for Toastr -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
-<!-- Display messages -->
-<script>
-    @if(session('success'))
-        toastr.success("{{ session('success') }}");
-    @endif
-
-    @if(session('error'))
-        toastr.error("{{ session('error') }}");
-    @endif
-
-    @if($errors->any())
-        @foreach($errors->all() as $error)
-            toastr.error("{{ $error }}");
-        @endforeach
-    @endif
-</script>
-
 </body>
 </html>

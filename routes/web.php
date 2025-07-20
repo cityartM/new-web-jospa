@@ -102,7 +102,7 @@ Route::delete('/cart/{id}', [BookingCartController::class, 'destroy'])->name('ca
 Route::get('/profile', [SignController::class, 'profile'])->name('profile');
 Route::put('/profile/{id}/update', [SignController::class, 'update'])->name('profile.update');
 
-//  Balance 
+//  Balance
 Route::get('/pay-balance', [SignController::class, 'createPayment'])->name('balance');
 Route::get('/success-py', [SignController::class, 'handlePaymentResult']);
 
@@ -110,7 +110,7 @@ Route::get('/success-py', [SignController::class, 'handlePaymentResult']);
 });
 
 
-Route::get('/service-groups/{gender}', [HomeBookingController::class, 'getServiceGroups']);
+Route::get('/service-groups', [HomeBookingController::class, 'getServiceGroups']);
 Route::get('/services/{serviceGroupId}', [HomeBookingController::class, 'getServicesByGroup']);
 Route::get('/staff', [HomeBookingController::class, 'index']);
 Route::post('/bookings', [HomeBookingController::class, 'store'])->name('bookings.store');
