@@ -25,13 +25,13 @@ class BookingResource extends JsonResource
                 ->where('package_id', $bookingPackage->package_id)
                 ->get();
         }
-
+        $local = app()->getLocale();
         return [
             'id' => $this->id,
             'note' => $this->note,
             'start_date_time' => $this->start_date_time,
             'branch_id' => $this->branch_id,
-            'branch_name' => $this->branch->name,
+            'branch_name' => $this->branch->name[$local],
             'employee_id' => optional($this->booking_service->first())->employee_id?? optional($this->bookingPackages->first())->employee_id?? '-',
             'employee_name' => optional($this->booking_service->first()?->employee)->full_name
             ?? optional($this->bookingPackages->first()?->employee)->full_name

@@ -1005,7 +1005,7 @@
 
                     {{-- قبل الظهر --}}
                     <div class="time-section">
-                        <h4>{{ __('messagess.morning') }}</h4>
+                        <h4>{{ __('messages.morning') }}</h4>
                         <div class="time-grid">
                             @for ($hour = 0; $hour < 12; $hour++)
                                 @for ($min = 0; $min < 60; $min += 30)
