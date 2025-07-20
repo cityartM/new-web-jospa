@@ -14,8 +14,8 @@ class SignController extends Controller
 {
     public function index()
     {
-       
-        return view("components.frontend.auth.signup" , compact('balance'));
+
+        return view("components.frontend.auth.signup" );
     }
 
 
@@ -88,9 +88,9 @@ class SignController extends Controller
             'date_of_birth'  => 'nullable|date|before:today',
             'profile_image'  => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
         ]);
-    
+
         $data = [];
-    
+
         if ($request->hasFile('profile_image')) {
             $image = $request->file('profile_image');
             $imageName = 'user_' . $id . '_' . time() . '.' . $image->getClientOriginalExtension();
@@ -99,7 +99,7 @@ class SignController extends Controller
         } else {
             $data['avatar'] = auth()->user()->avatar;
         }
-    
+
         $data['first_name']    = $request->first_name;
         $data['last_name']     = $request->last_name;
         $data['email']         = $request->email;
@@ -108,12 +108,12 @@ class SignController extends Controller
         $data['address']       = $request->address;
         $data['city']          = $request->city;
         $data['country']       = $request->country;
-    
+
         User::where('id', $id)->update($data);
-    
+
         return redirect()->back()->with('success', __('messages.profile_updated'));
     }
-    
+
     public function myBookings()
     {
         $user = auth()->user();
@@ -131,9 +131,9 @@ class SignController extends Controller
 
     public function createPayment(Request $request)
     {
-        
+
         $amount = $request->amount;
-    
+
         if (!$amount || !is_numeric($amount)) {
             return redirect()->back()->with('error', 'Invalid amount');
         }
@@ -158,7 +158,7 @@ class SignController extends Controller
                 "id" => "src_all"
             ],
             "redirect" => [
-                "url" => url("/success-py?am=$amount") 
+                "url" => url("/success-py?am=$amount")
             ]
         ]);
 
@@ -177,17 +177,17 @@ class SignController extends Controller
     public function handlePaymentResult(Request $request)
     {
         $tapId = $request->get('tap_id');
-    
-        if (!$tapId) { 
+
+        if (!$tapId) {
             return view('components.frontend.status.ERPAY')->with('error', 'No tap_id provided.');
         }
-    
+
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . env('TAP_SECRET_KEY'),
         ])->get("https://api.tap.company/v2/charges/{$tapId}");
-    
+
         $charge = $response->json();
-    
+
         if (isset($charge['status']) && $charge['status'] === 'CAPTURED') {
 
                 $amount = floatval($request->query('am'));
@@ -196,11 +196,11 @@ class SignController extends Controller
                     [
                         'amount' => 0,
                         'title' => auth()->user()->first_name . " " . auth()->user()->second_name,
-                    ]                
+                    ]
                 );
-            
+
                 $wallet->increment('amount', $amount);
-            
+
             return view('components.frontend.status.CAPTURED');
         } else {
 

@@ -11,6 +11,7 @@ use App\Models\ServiceGroupHome;
 use Carbon\Carbon;
 use App\Models\StaffWorkingHour;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 
 
@@ -27,6 +28,7 @@ class HomeBookingController extends Controller
 
     public function getAvailableTimes($date, $staffId)
     {
+        // 1. جلب دوام الموظف (افترض جدول staff_working_hours يحتوي start_time و end_time كـ TIME)
         $workingHours = StaffWorkingHour::where('staff_id', $staffId)->first();
 
         if (!$workingHours) {
@@ -65,69 +67,46 @@ class HomeBookingController extends Controller
     }
 
 
-
-
-
-
-
-
     public function index()
     {
+        $employees = DB::table('users')
+            ->join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
+            ->join('roles', 'roles.id', '=', 'model_has_roles.role_id')
+            ->where('roles.name', 'employee')
+            ->where('model_has_roles.model_type', \App\Models\User::class)
+            ->where('users.is_manager', 0)
+            ->whereNull('deleted_at')
+            ->select('users.*')
+            ->get();
 
-        $employees = User::role('employee')
-        ->where('is_manager', 0)
-        ->get();
-            return response()->json($employees);
+        return response()->json($employees);
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public function getServiceGroups($gender)
+    public function getServiceGroups()
     {
-        $groups = Category::all();
+        $groups = DB::table('categories')
+            ->select('id', 'name', 'av2') // ← أضف av2 هنا
+            ->whereNull('parent_id')
+            ->whereNull('deleted_at')
+            ->get()
+            ->map(function ($item) {
+                $item->av2 = asset( $item->av2); // مثال: storage/289.jpg
+                return $item;
+            });
 
         return response()->json($groups);
     }
 
 
-
-
-
-
-
-
-
     public function getServicesByGroup($serviceGroupId)
     {
-        $services = Service::where('category_id', $serviceGroupId)->get();
+        $services = DB::table('services')
+            ->where('category_id', $serviceGroupId)
+            ->get();
 
         return response()->json($services);
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
     public function store(Request $request)
@@ -241,33 +220,27 @@ class HomeBookingController extends Controller
 
 
     public function handlePaymentResult(Request $request)
-{
-    $tapId = $request->get('tap_id');
+    {
+        $tapId = $request->get('tap_id');
 
-    if (!$tapId) {
-        return view('components.frontend.status.ERPAY')->with('error', 'No tap_id provided.');
+        if (!$tapId) {
+            return view('components.frontend.status.ERPAY')->with('error', 'No tap_id provided.');
+        }
+
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . env('TAP_SECRET_KEY'),
+        ])->get("https://api.tap.company/v2/charges/{$tapId}");
+
+        $charge = $response->json();
+
+        if (isset($charge['status']) && $charge['status'] === 'CAPTURED') {
+            //  الدفع تم بنجاح، سجل البيانات في قاعدة البيانات أو فعل الاشتراك
+            return view('components.frontend.status.CAPTURED');
+        } else {
+            //  الدفع فشل أو تم رفضه
+            return view('components.frontend.status.FAILED');
+        }
     }
-
-    $response = Http::withHeaders([
-        'Authorization' => 'Bearer ' . env('TAP_SECRET_KEY'),
-    ])->get("https://api.tap.company/v2/charges/{$tapId}");
-
-    $charge = $response->json();
-
-    if (isset($charge['status']) && $charge['status'] === 'CAPTURED') {
-        //  الدفع تم بنجاح، سجل البيانات في قاعدة البيانات أو فعل الاشتراك
-        return view('components.frontend.status.CAPTURED');
-    } else {
-        //  الدفع فشل أو تم رفضه
-        return view('components.frontend.status.FAILED');
-    }
-}
-
-
-
-
-
-
 
 
 
