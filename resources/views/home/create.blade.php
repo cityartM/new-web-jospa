@@ -1305,6 +1305,8 @@
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
 
+    const currentLang = "{{ app()->getLocale() }}";
+
     // Application State
     let currentStep = 1;
     let maxSteps = 7;

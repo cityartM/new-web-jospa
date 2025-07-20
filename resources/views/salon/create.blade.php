@@ -1055,6 +1055,8 @@
     const progressSteps = document.querySelectorAll('.progress-step');
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
+    
+    const currentLang = "{{ app()->getLocale() }}";
 
     // Initialize Calendar
     let currentDate = new Date();
