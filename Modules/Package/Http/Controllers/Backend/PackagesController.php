@@ -90,21 +90,18 @@ class PackagesController extends Controller
      */
     public function index_list(Request $request)
     {
-
-        // $query_data = Package::with('service.services','branch')->get();
         $branchId = $request->get('branch_id');
         $locale = app()->getLocale();
-        // Query the packages with or without filtering by branch
+    
         $query_data = Package::with('service.services', 'branch')
             ->when($branchId, function ($query, $branchId) {
-                // If branch_id is provided, filter by it
                 return $query->where('branch_id', $branchId);
             })
-            ->selectRaw("*, JSON_EXTRACT(name, '$.\"{$locale}\"') as name") 
             ->get();
-
+    
         $data = [];
         $today = date('Y-m-d');
+    
         foreach ($query_data as $row) {
             if ($row->status == 1 && $row->end_date >= $today) {
                 $services = [];
@@ -122,10 +119,11 @@ class PackagesController extends Controller
                         ];
                     }
                 }
+    
                 if ($services) {
                     $data[] = [
                         'id' => $row->id,
-                        'name' => $row->name,
+                        'name' => $row->getTranslation('name', $locale), // ✅ ده الصح
                         'description' => $row->description,
                         'services' => $services,
                         'branch_name' => $row->branch->name[$locale] ?? '',
@@ -138,9 +136,10 @@ class PackagesController extends Controller
                 }
             }
         }
-
+    
         return response()->json($data);
     }
+    
 
 
     public function userPackageList(Request $request, $user_id)

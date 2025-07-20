@@ -71,7 +71,7 @@ class SignController extends Controller
         $user = auth()->user();
         $wallet = Wallet::where('user_id', auth()->id())->first();
         $balance = $wallet ? $wallet->amount : 0.00;
-            return view('components.frontend.auth.profile', compact('user', 'balance'));
+        return view('components.frontend.auth.profile', compact('user', 'balance'));
     }
 
 
