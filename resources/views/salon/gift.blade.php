@@ -692,12 +692,12 @@
                         <h3 class="section-title fw-bold">{{ __('messagess.delivery_method') }}</h3>
                         <div class="radio-group">
                             <label class="radio-item">
-                                <input type="radio" name="delivery_method" value="traditional" checked>
+                                <input type="radio" name="delivery_method" value="في المحل" checked>
                                 <span class="radio-indicator"></span>
                                 <span class="radio-text">{{ __('messagess.traditional_gift_card') }}</span>
                             </label>
                             <label class="radio-item">
-                                <input type="radio" name="delivery_method" value="email">
+                                <input type="radio" name="delivery_method" value='بطاقة الكترونية'>
                                 <span class="radio-indicator"></span>
                                 <span class="radio-text">{{ __('messagess.email_delivery') }}</span>
                             </label>
