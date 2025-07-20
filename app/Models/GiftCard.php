@@ -18,6 +18,6 @@ class GiftCard extends Model
     ];
 
     protected $casts = [
-        'selected_services' => 'array',
+        'requested_services' => 'array',
     ];
 }

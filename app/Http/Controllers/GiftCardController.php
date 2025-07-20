@@ -119,7 +119,7 @@ class GiftCardController extends Controller
                 'recipient_name'    => $data['recipient_name'],
                 'sender_phone'      => $data['sender_phone'],
                 'recipient_phone'   => $data['recipient_phone'],
-                'requested_services' => $data['requested_services'], 
+                'requested_services' => json_encode($data['requested_services']),
                 'subtotal'          => $total,
             ]);
     
