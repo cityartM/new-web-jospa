@@ -44,10 +44,10 @@ class Booking extends BaseModel
         return \Modules\Booking\database\factories\BookingFactory::new();
     }
 
-    public function branch()
-    {
-        return $this->belongsTo(Branch::class, 'branch_id');
-    }
+        public function branch()
+        {
+            return $this->belongsTo(Branch::class, 'branch_id');
+        }
 
     public function services()
     {
@@ -55,10 +55,10 @@ class Booking extends BaseModel
         return $this->hasMany(BookingService::class, 'booking_id')->with('employee')
             ->leftJoin('services', 'booking_services.service_id', 'services.id')
             ->selectRaw("
-                JSON_UNQUOTE(JSON_EXTRACT(services.name, '$.\"$locale\"')) as service_name,
-                booking_services.*
-            ");
-    }
+                            JSON_UNQUOTE(JSON_EXTRACT(services.name, '$.\"$locale\"')) as service_name,
+                            'services.*',
+                            booking_services.*
+                        ");    }
 
     public function packages()
     {
@@ -101,7 +101,7 @@ class Booking extends BaseModel
 
     public function service()
     {
-        return $this->hasMany(BookingService::class, 'id', 'booking_id')->with('employee');
+        return $this->hasOne(BookingService::class, 'booking_id', 'id')->with(['employee', 'service']);
     }
 
     public function mainServices()
@@ -179,12 +179,12 @@ class Booking extends BaseModel
           END) AS total_tax_amount'),
           DB::raw('
           COALESCE(SUM(DISTINCT booking_services.service_price), 0) +
-          SUM(CASE 
-              WHEN JSON_UNQUOTE(JSON_EXTRACT(tx.tax_info, \'$.type\')) = \'percent\' 
+          SUM(CASE
+              WHEN JSON_UNQUOTE(JSON_EXTRACT(tx.tax_info, \'$.type\')) = \'percent\'
               THEN booking_services.service_price * JSON_UNQUOTE(JSON_EXTRACT(tx.tax_info, \'$.percent\')) / 100
-              WHEN JSON_UNQUOTE(JSON_EXTRACT(tx.tax_info, \'$.type\')) = \'fixed\' 
+              WHEN JSON_UNQUOTE(JSON_EXTRACT(tx.tax_info, \'$.type\')) = \'fixed\'
               THEN JSON_UNQUOTE(JSON_EXTRACT(tx.tax_info, \'$.tax_amount\'))
-              ELSE 0 
+              ELSE 0
           END) +
           COALESCE(SUM( tip_earnings.tip_amount), 0)
           AS total_amount')
@@ -234,16 +234,16 @@ class Booking extends BaseModel
 public static function tipamount()
 {
     return self::select(
-        DB::raw('DATE(bookings.start_date_time) AS start_date_time'), 
+        DB::raw('DATE(bookings.start_date_time) AS start_date_time'),
         DB::raw('COUNT(DISTINCT bookings.id) AS total_bookings'),
-        DB::raw('COALESCE(SUM(tip_earnings.tip_amount), 0) AS total_tip_amount') 
+        DB::raw('COALESCE(SUM(tip_earnings.tip_amount), 0) AS total_tip_amount')
     )
     ->leftJoin('tip_earnings', function ($join) {
         $join->on('bookings.id', '=', 'tip_earnings.tippable_id')
             ->where('tip_earnings.tippable_type', '=', 'Modules\\Booking\\Models\\Booking');
     })
-    ->where('bookings.status', 'completed') 
-    ->groupBy(DB::raw('DATE(bookings.start_date_time)')); 
+    ->where('bookings.status', 'completed')
+    ->groupBy(DB::raw('DATE(bookings.start_date_time)'));
 
 }
 
