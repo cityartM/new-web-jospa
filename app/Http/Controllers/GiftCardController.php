@@ -45,7 +45,6 @@ class GiftCardController extends Controller
             session([
                 'gift_card_data' => $data,
                 'gift_card_total' => $total,
-                'requested_services'  => $request->requested_services,
             ]);
 
             $apiKey1 = env('TAP_SECRET_KEY');

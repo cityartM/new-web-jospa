@@ -13,7 +13,6 @@ class GiftCard extends Model
         'sender_phone',
         'recipient_phone',
         'requested_services',
-        'selected_services',
         'options_amount',
         'subtotal',
     ];
