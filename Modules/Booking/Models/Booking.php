@@ -44,14 +44,10 @@ class Booking extends BaseModel
         return \Modules\Booking\database\factories\BookingFactory::new();
     }
 
-        public function branch()
-        {
-            return $this->belongsTo(Branch::class, 'branch_id');
-        }
-        public function branch()
-        {
-            return $this->belongsTo(Branch::class, 'branch_id');
-        }
+    public function branch()
+    {
+        return $this->belongsTo(Branch::class, 'branch_id');
+    }
 
     public function services()
     {
