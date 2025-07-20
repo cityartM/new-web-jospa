@@ -31,7 +31,7 @@ class Service extends BaseModel
         'status' => 'integer',
 
     ];
-
+//dddddddddd
     const CUSTOM_FIELD_MODEL = 'Modules\Service\Models\Service';
 
     /**
