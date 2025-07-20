@@ -208,7 +208,7 @@ return [
     'placed_on' => 'Placed On',
     'type' => 'Type',
     'customer' => 'Customer',
-    'currency' => 'Currency',
+    'currency' => 'Riyal',
     'commission' => 'Commission',
     'confirm' => 'Confirm',
     'password_msg' => 'This is a secure area of the application. Please confirm your password before continuing.',
@@ -275,4 +275,18 @@ return [
     'shift_updated' => 'Shift updated successfully',
     'shift_deleted' => 'Shift deleted successfully',
     'shift_not_found' => 'Shift not found',
+    
+    // Gift Card Messages
+    'gift_card_created' => 'Gift card created successfully',
+    'gift_card_updated' => 'Gift card updated successfully',
+    'gift_card_deleted' => 'Gift card deleted successfully',
+    'gift_card_sent' => 'Gift card sent successfully',
+    'gift_card_delivered' => 'Gift card delivered successfully',
+    'gift_card_error' => 'An error occurred while creating the gift card',
+    'gift_card_validation_error' => 'Please check the entered data',
+    'gift_card_service_required' => 'Please select at least one service',
+    'gift_card_sender_required' => 'Sender name is required',
+    'gift_card_recipient_required' => 'Recipient name is required',
+    'gift_card_phone_required' => 'Phone number is required',
+    'gift_card_delivery_method_required' => 'Delivery method is required',
 ];

@@ -209,7 +209,7 @@ return [
     'placed_on' => 'تم الطلب في',
     'type' => 'يكتب',
     'customer' => 'العميل',
-    'currency' => 'العملة',
+    'currency' => 'ريال',
     'commission' => 'العمولة',
     'confirm' => 'تأكيد',
     'password_msg' => 'هذه المنطقة آمنة من التطبيق. يرجى تأكيد كلمة المرور الخاصة بك قبل الاستمرار.',
@@ -272,4 +272,17 @@ return [
     'shift_deleted' => 'تم حذف الوردية بنجاح',
     'shift_not_found' => 'لم يتم العثور على الوردية',
 
+    // رسائل الهدايا
+    'gift_card_created' => 'تم إنشاء بطاقة الهدية بنجاح',
+    'gift_card_updated' => 'تم تحديث بطاقة الهدية بنجاح',
+    'gift_card_deleted' => 'تم حذف بطاقة الهدية بنجاح',
+    'gift_card_sent' => 'تم إرسال بطاقة الهدية بنجاح',
+    'gift_card_delivered' => 'تم تسليم بطاقة الهدية بنجاح',
+    'gift_card_error' => 'حدث خطأ أثناء إنشاء بطاقة الهدية',
+    'gift_card_validation_error' => 'يرجى التأكد من صحة البيانات المدخلة',
+    'gift_card_service_required' => 'يرجى اختيار خدمة واحدة على الأقل',
+    'gift_card_sender_required' => 'اسم المرسل مطلوب',
+    'gift_card_recipient_required' => 'اسم المستلم مطلوب',
+    'gift_card_phone_required' => 'رقم الهاتف مطلوب',
+    'gift_card_delivery_method_required' => 'طريقة التوصيل مطلوبة',
 ];

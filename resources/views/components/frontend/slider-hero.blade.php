@@ -1,13 +1,24 @@
-<link rel="preconnect" href="https://fonts.googleapis.com">
+{{-- <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet"> --}}
+<link rel="preconnect" href="https://fonts.bunny.net">
+<link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet">
+<style>
+    @font-face {
+        font-family: 'Greta Arabic Bold Italic';
+        src: url('https://alazhar-talbinah.com/fonts/Greta-Arabic-Bold-Italic.ttf') format('truetype');
+        font-weight: bold;
+        font-style: italic;
+        font-display: swap;
+    }
+  </style>
 <style>
 .hero-btn:hover {
     background: black !important;
     transform: translateY(-5px);
 }
       body {
-font-family: 'IBM Plex Sans Arabic', sans-serif !important;
+        font-family: 'Greta Arabic Bold Italic';
 }
 
 </style>

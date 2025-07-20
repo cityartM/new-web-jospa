@@ -1,3 +1,7 @@
+@php
+    $currentLocale = app()->getLocale();
+@endphp
+
 <!DOCTYPE html>
 <html dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}" class="{{ app()->getLocale() }}">
 <head>
@@ -49,7 +53,7 @@
                     <svg class="sparkle" width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M12 0l1.5 5.5L19 6l-5.5 1.5L12 13l-1.5-5.5L5 6l5.5-1.5L12 0z"/>
                     </svg>
-                    <h1>{{ $package->name }}</h1>
+                    <h1>{{ $package->name[$currentLocale] }}</h1>
                     <svg class="sparkle" width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M12 0l1.5 5.5L19 6l-5.5 1.5L12 13l-1.5-5.5L5 6l5.5-1.5L12 0z"/>
                     </svg>

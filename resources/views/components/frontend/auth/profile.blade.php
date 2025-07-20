@@ -284,6 +284,48 @@
       .profile-hero {
         z-index: auto !important;
       }
+
+      /* إصلاح ألوان Toastr */
+      #toast-container > .toast {
+        background-color: #333 !important;
+        color: #fff !important;
+      }
+
+      #toast-container > .toast-success {
+        background-color: #51A351 !important;
+        color: #fff !important;
+      }
+
+      #toast-container > .toast-error {
+        background-color: #BD362F !important;
+        color: #fff !important;
+      }
+
+      #toast-container > .toast-info {
+        background-color: #2F96B4 !important;
+        color: #fff !important;
+      }
+
+      #toast-container > .toast-warning {
+        background-color: #F89406 !important;
+        color: #fff !important;
+      }
+
+      #toast-container > .toast-success .toast-message {
+        color: #fff !important;
+      }
+
+      #toast-container > .toast-error .toast-message {
+        color: #fff !important;
+      }
+
+      #toast-container > .toast-info .toast-message {
+        color: #fff !important;
+      }
+
+      #toast-container > .toast-warning .toast-message {
+        color: #fff !important;
+      }
     </style>
 </head>
 <body class="bg-white">

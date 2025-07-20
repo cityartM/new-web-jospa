@@ -40,6 +40,10 @@ class Package extends BaseModel
         return $this->belongsTo(Branch::class, 'branch_id');
     }
 
+    public function getNameAttribute($value)
+    {
+        return json_decode($value, true);
+    }
 
 
     public function scopeBranch($query)

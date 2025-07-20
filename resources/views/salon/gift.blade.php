@@ -11,10 +11,54 @@
     <link rel="stylesheet" href="jospa-gift-card.css">
 
     {{-- toastr.css --}}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 
     {{-- bootstrap --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    
+    <style>
+        /* إصلاح ألوان Toastr */
+        #toast-container > .toast {
+          background-color: #333 !important;
+          color: #fff !important;
+        }
+
+        #toast-container > .toast-success {
+          background-color: #51A351 !important;
+          color: #fff !important;
+        }
+
+        #toast-container > .toast-error {
+          background-color: #BD362F !important;
+          color: #fff !important;
+        }
+
+        #toast-container > .toast-info {
+          background-color: #2F96B4 !important;
+          color: #fff !important;
+        }
+
+        #toast-container > .toast-warning {
+          background-color: #F89406 !important;
+          color: #fff !important;
+        }
+
+        #toast-container > .toast-success .toast-message {
+          color: #fff !important;
+        }
+
+        #toast-container > .toast-error .toast-message {
+          color: #fff !important;
+        }
+
+        #toast-container > .toast-info .toast-message {
+          color: #fff !important;
+        }
+
+        #toast-container > .toast-warning .toast-message {
+          color: #fff !important;
+        }
+    </style>
 
     {{-- font-family --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -699,7 +743,7 @@
 
 
 
-
+                        <input type="hidden" id="tlt" value="" name="subtotal">
                         <!-- 1 -->
                         @foreach ($subCategories as $sub)
                             <div class="container">
@@ -709,8 +753,8 @@
                                 <div class="checkbox-list">
                                     @foreach ($sub->services as $service)
                                         <div class="checkbox-item">
-                                            <input type="checkbox" id="service_{{ $service->id }}" name="services[]" value="{{ $service->id }}">
-                                            <label for="service_{{ $service->id }}">
+                                          <input type="checkbox" id="service_{{ $service->id }}" name="selected_services[]" value="{{ $service->id }}" data-price="{{ $service->default_price }}">
+                                          <label for="service_{{ $service->id }}">
                                                 {{ $service->name }} -
                                                 {{ $service->default_price }} {{ __('messages.currency') }}
                                             </label>
@@ -741,7 +785,7 @@
                             <h3>{{ __('messagess.total_amount') }}</h3>
                             <h3>SR<span id="displayAmount">0.00</span></h3>
                         </div>
-                        <button class="add-to-cart-button">
+                        <button type="submit" class="add-to-cart-button">
                             <svg class="svg-inline--fa fa-credit-card ml-2" aria-hidden="true" focusable="false"
                                 data-prefix="fas" data-icon="credit-card" role="img"
                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
@@ -781,6 +825,28 @@
             allThumbnails.forEach(thumb => thumb.classList.remove('active'));
             thumbnailElement.classList.add('active');
         }
+        document.addEventListener("DOMContentLoaded", function () {
+        const checkboxes = document.querySelectorAll('input[name="selected_services[]"]');
+        const displayAmount = document.getElementById('displayAmount');
+
+        function calculateTotal() {
+            let total = 0;
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    const price = parseFloat(checkbox.dataset.price || 0);
+                    total += price;
+                }
+            });
+            displayAmount.textContent = total.toFixed(2); // عرض الرقم بصيغة 00.00
+            document.getElementById('tlt').value = total.toFixed(2); // عرض الرقم بصيغة 00.00
+        }
+
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', calculateTotal);
+        });
+
+        calculateTotal(); // لحساب القيمة أول ما الصفحة تفتح
+    });
     </script>
 
     {{-- JS for Toastr  --}}
