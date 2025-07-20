@@ -87,13 +87,6 @@ Route::get('/success-py-gift', [GiftCardController::class, 'handlePaymentResult'
 Route::get('/ads', function () {return view('components.frontend.ads');})->name('ads.page');
 
 Route::get('/cart', [BookingCartController::class, 'index'])->name('cart.page');
-Route::get('/cart', function () {
-
-   $cartItems = \Modules\Booking\Models\Booking::with(['services.employee', 'branch'])->get();
-   //return $cartItems;
-   return view('components.frontend.cart', compact('cartItems'));
-})->name('cart.page');
-
 
 Route::post('/cart', [BookingCartController::class, 'store'])->name('cart.store');
 
