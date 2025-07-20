@@ -82,6 +82,8 @@ Route::get('/details/{id}', [SaloneBookController::class, 'show'])->name('home.d
 })->name('gift.page');
 Route::post('/gift-cards', [GiftCardController::class, 'store'])->name('gift.create');
 
+Route::post('/success-py-gift', [GiftCardController::class, 'handlePaymentResult']);
+
 // ADS page
 Route::get('/ads', function () {return view('components.frontend.ads');})->name('ads.page');
 
