@@ -15,16 +15,20 @@ class SaloneBookController extends Controller
 {
 
 
-public function show($id)
+    public function show($id)
     {
         // جلب بيانات الباكيج
         $package = DB::table('packages')->where('id', $id)->first();
-
+    
         if (!$package) {
             abort(404, 'Package not found');
         }
-
-        // جلب الخدمات المرتبطة بالباكيج مع تفاصيل كل خدمة
+    
+        // تحويل الباكيج إلى مصفوفة
+        $package = (array) $package;
+        $package['name'] = json_decode($package['name'], true);
+    
+        // جلب الخدمات المرتبطة بالباكيج
         $services = DB::table('package_services')
             ->join('services', 'package_services.service_id', '=', 'services.id')
             ->select(
@@ -38,54 +42,18 @@ public function show($id)
             )
             ->where('package_services.package_id', $id)
             ->get();
+    
 
-        // حساب مجموع أسعار الخدمات
+        $currentLocale = app()->getLocale();
+        $services->transform(function ($service) use ($currentLocale) {
+        $service->service_name = json_decode($service->service_name, true)[$currentLocale] ?? '';
+        return $service;
+    });
+
+
         $totalServicePrice = $services->sum('service_price');
         $totalService = $services->sum('discounted_price');
-
-        // إرجاع البيانات للـ view
+    
         return view('home.details', compact('package', 'services', 'totalServicePrice','totalService'));
     }
-    
-    
-    public function index()
-    {
-        return response()->json(StaffHome::all());
-    }
-
-    public function getServiceGroups($gender)
-    {
-        $groups = ServiceGroupHome::where('gender', $gender)->get();
-
-        return response()->json($groups);
-    }
-
-    public function getServicesByGroup($serviceGroupId)
-    {
-        $services = ServiceHome::where('service_group_homes_id', $serviceGroupId)->get();
-
-        return response()->json($services);
-    }
-
-    public function store(Request $request)
-    {
-        $data = $request->validate([
-            'customer_name'     => 'required|string|max:255',
-            'mobile_no'         => 'required|string|max:20',
-            'neighborhood'      => 'required|string|max:255',
-            'gender'            => 'required|in:men,women',
-            'service_group_id'  => 'required|exists:service_group_homes,id',
-            'service_id'        => 'required|exists:service_homes,id',
-            'date'              => 'required|date',
-            'time'              => 'required|string',
-            'staff_id'          => 'required|exists:staff_homes,id',
-        ]);
-        
-        $data['type'] = 'salon';
-
-        HomeBookService::create($data);
-
-        return response()->json(['message' => 'Booking saved successfully']);
-    }
-
-}
+}    

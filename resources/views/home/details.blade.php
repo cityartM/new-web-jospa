@@ -1,3 +1,7 @@
+@php
+    $currentLocale = app()->getLocale();
+@endphp
+
 <!DOCTYPE html>
 <html dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}" class="{{ app()->getLocale() }}">
 <head>
@@ -49,7 +53,7 @@
                     <svg class="sparkle" width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M12 0l1.5 5.5L19 6l-5.5 1.5L12 13l-1.5-5.5L5 6l5.5-1.5L12 0z"/>
                     </svg>
-                    <h1>{{ $package->name[app()->getLocale()] ?? '' }}</h1>
+                    <h1>{{ $package['name'][app()->getLocale()] ?? '' }}</h1>
                     <svg class="sparkle" width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M12 0l1.5 5.5L19 6l-5.5 1.5L12 13l-1.5-5.5L5 6l5.5-1.5L12 0z"/>
                     </svg>
@@ -76,7 +80,7 @@
 @foreach($services as $service)
     <div class="service-card">
         <div class="card-content">
-            <h3>{{ $service->service_name }}</h3>
+            <h3>{{  $service->service_name }}</h3>
             <p class="duration">{{ __('messagess.duration', ['minutes' => $service->duration_min]) }}</p>
             <p class="service-price">SR {{ $service->discounted_price }}</p>
         </div>
