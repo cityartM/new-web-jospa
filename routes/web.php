@@ -42,6 +42,7 @@ use App\Models\Branch;
 Route::get('/pay-now', [HomeBookingController::class, 'createPayment']);
 Route::get('/payment-success', [HomeBookingController::class, 'handlePaymentResult']);
 
+
 //    SMS API
 Route::post('/send-sms', [HomeBookingController::class, 'send']);
 
@@ -53,6 +54,10 @@ Route::post('/signin', [SignController::class, 'verify'])->name('signin.verify')
 
 
 Route::middleware('user.auth')->group(function () {
+
+    Route::get('/homeService', function () {
+        return view('home.create');
+    })->name('home.create');
 
     Route::get('/homeService', function () {
         return view('home.create');
@@ -80,7 +85,6 @@ Route::post('/gift-cards', [GiftCardController::class, 'store'])->name('gift.cre
 // ADS page
 Route::get('/ads', function () {return view('components.frontend.ads');})->name('ads.page');
 
-// Cart
 Route::get('/cart', [BookingCartController::class, 'index'])->name('cart.page');
 //Route::get('/cart', function () {
 //

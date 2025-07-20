@@ -396,6 +396,7 @@
         max-width: 1140px;
         margin: 48px auto 0 auto;
         background: #fff;
+        background: #fff;
         border-radius: 24px;
         box-shadow: 0 4px 32px #ede7f6a0;
         padding: 40px 32px 32px 32px;
@@ -755,7 +756,7 @@
         @if($cartItems->count())
              <div class="main-container">
             <div class="cart-title">{{ __('messagess.cart') }}</div>
-             @foreach($cartItems as $item)
+                 @foreach($cartItems as $item)
                      @foreach($item->services as $service)
                          <div class="service-card">
                              <div class="service-details">
@@ -782,8 +783,9 @@
                          </div>
                      @endforeach
                  @endforeach
-            
-            <div class="summary-section">
+
+
+                 <div class="summary-section">
                 <div class="summary-coupon">
                     <button>{{ __('messagess.add_invoice_coupon') }}</button>
                     <input type="text" placeholder="{{ __('messagess.enter_invoice_coupon') }}">

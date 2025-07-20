@@ -167,6 +167,7 @@
       box-shadow: 0 1px 4px #bc9a6920;
       transition: background 0.3s;
     }
+    }
     .step.active .step-number {
       background: #fff;
       border: 2px solid #bc9a69;
@@ -1400,44 +1401,6 @@ function updateUI() {
             daysContainer.appendChild(dayElement);
         }
     }
-function fetchAvailableTimes() {
-    const date = selectedData.date.toISOString().split('T')[0];
-    const staffId = selectedData.massage;
-
-    const apiUrl = `/available/${date}/${staffId}`;
-    console.log('Fetching available times from:', apiUrl);
-
-    fetch(apiUrl)
-        .then(response => response.json())
-        .then(data => {
-const container = document.querySelector('#time');
-            
-            if (!container) {
-                console.error('❌ .time-slots-container not found in the page.');
-                return;
-            }
-
-            container.innerHTML = '';
-
-            data.forEach(time => {
-                const slot = document.createElement('div');
-                slot.className = 'time-slot';
-                slot.textContent = time;
-                slot.addEventListener('click', () => {
-                    document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
-                    slot.classList.add('selected');
-                    selectedData.time = time;
-                    
-                    showSummary();
-                });
-
-                container.appendChild(slot);
-            });
-        })
-        .catch(err => console.error('Error fetching times:', err));
-        
-        
-}
 
 
         function showSummary() {
@@ -1477,7 +1440,6 @@ const container = document.querySelector('#time');
                 flexibleStaff = e.target.checked;
             });
         }
-
 
 
 
@@ -1529,7 +1491,7 @@ const container = document.querySelector('#time');
 
                 document.querySelectorAll('.step-content').forEach(el => el.classList.add('hidden'));
                 document.getElementById('summaryCard').classList.remove('hidden');
-            
+
                 // ✅ غيّر نص الزر إلى "Complete"
                 nextBtn.textContent = translations.complete;
             break;
