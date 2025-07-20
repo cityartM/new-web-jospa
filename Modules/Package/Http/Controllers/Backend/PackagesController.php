@@ -353,8 +353,11 @@ class PackagesController extends Controller
      */
     public function edit($id)
     {
-        $data = Package::where('id', $id)->with('service')->first();
-        // dd($data);
+        $locale = app()->getLocale();
+        $data = Package::where('id', $id)
+        ->selectRaw("*, JSON_EXTRACT(name, '$.\"{$locale}\"') as translated_name")
+        ->with('service')->first();
+        
         $data['employee_id'] = $data->employee()->pluck('employee_id');
 
         $media = $data->getFirstMedia('package_image');
