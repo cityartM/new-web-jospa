@@ -1055,6 +1055,8 @@
     const progressSteps = document.querySelectorAll('.progress-step');
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
+    const currentLang = "{{ app()->getLocale() }}";
+    console.log('Current Language:', currentLang); // لازم تطلع 'ar' أو 'en' مثلاً
 
     // Initialize Calendar
     let currentDate = new Date();
@@ -1248,8 +1250,9 @@
                         selectedData.massage = card.dataset.massage;
 
                         document.getElementById('nextBtn').click();
+                        const selectedBranch = document.querySelector('input[name="branch"]:checked');
 
-                        fetchStaffMembers();
+                        fetchStaffMembers(selectedBranch);
                     });
 
                     massageContainer.appendChild(card);
@@ -1268,7 +1271,7 @@
                 serviceGrid.innerHTML = '';
 
                 const lang = typeof currentLang !== 'undefined' ? currentLang : 'en';
-
+                console.log("current lang " + lang);
                 data.forEach(service => {
                     let serviceName = '';
 
@@ -1305,8 +1308,8 @@
             });
     }
 
-    function fetchStaffMembers() {
-        fetch('/staff')
+    function fetchStaffMembers(selectedBranch) {
+        fetch(`/staff/${selectedBranch.value}`)
             .then(response => response.json())
             .then(data => {
                 const staffGrid = document.getElementById('staffGrid');

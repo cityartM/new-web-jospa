@@ -112,7 +112,7 @@ Route::get('/success-py', [SignController::class, 'handlePaymentResult']);
 
 Route::get('/service-groups', [HomeBookingController::class, 'getServiceGroups']);
 Route::get('/services/{serviceGroupId}', [HomeBookingController::class, 'getServicesByGroup']);
-Route::get('/staff', [HomeBookingController::class, 'index']);
+Route::get('/staff/{id}', [HomeBookingController::class, 'index']);
 Route::post('/bookings', [HomeBookingController::class, 'store'])->name('bookings.store');
 
 Route::get('/available/{date}/{staffId}', [HomeBookingController::class, 'getAvailableTimes']);

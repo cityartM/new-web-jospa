@@ -66,22 +66,27 @@ class HomeBookingController extends Controller
         return response()->json($availableTimes);
     }
 
-
-    public function index()
+    public function index(Request $request,$branchId)
     {
-        $employees = DB::table('users')
+
+        $query = DB::table('users')
             ->join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
             ->join('roles', 'roles.id', '=', 'model_has_roles.role_id')
             ->where('roles.name', 'employee')
             ->where('model_has_roles.model_type', \App\Models\User::class)
             ->where('users.is_manager', 0)
-            ->whereNull('deleted_at')
-            ->select('users.*')
-            ->get();
+            ->whereNull('users.deleted_at');
+
+        // لو فيه فرع محدد، ضيف الانضمام و الشرط
+        if ($branchId) {
+            $query->join('branch_employee', 'users.id', '=', 'branch_employee.employee_id')
+                ->where('branch_employee.branch_id', $branchId);
+        }
+
+        $employees = $query->select('users.*')->get();
 
         return response()->json($employees);
     }
-
 
     public function getServiceGroups()
     {

@@ -1304,6 +1304,8 @@
     const progressSteps = document.querySelectorAll('.progress-step');
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
+    const currentLang = "{{ app()->getLocale() }}";
+    console.log('Current Language:', currentLang); // لازم تطلع 'ar' أو 'en' مثلاً
 
     // Application State
     let currentStep = 1;
@@ -1459,7 +1461,7 @@
                 serviceGrid.innerHTML = '';
 
                 const lang = typeof currentLang !== 'undefined' ? currentLang : 'en';
-
+                console.log("current lang " + lang);
                 data.forEach(service => {
                     let serviceName = '';
 
