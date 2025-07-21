@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 use App\Models\BookingCart;
+use App\Models\LoyaltyPoint;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Modules\Booking\Models\Booking;
 use Modules\Booking\Models\BookingService;
@@ -81,7 +83,12 @@ class BookingCartController extends Controller
             $bookingService->sequance         = 1; // أو عدّدهم لو عندك أكثر من خدمة
             $bookingService->created_by       = auth()->id(); // أو 1
             $bookingService->save();
+            $pointsToAdd = 10;
 
+            LoyaltyPoint::updateOrCreate(
+                ['user_id' => $data['staff_id']],
+                ['points' => DB::raw('points + ' . $pointsToAdd)]
+            );
             return redirect()->route('cart.page')->with('success', 'تم إضافة الحجز إلى السلة بنجاح.');
         } catch (\Exception $e) {
             Log::error('Booking Store Error: ' . $e->getMessage(), [
