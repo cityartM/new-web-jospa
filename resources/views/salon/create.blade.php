@@ -1250,8 +1250,7 @@
                         selectedData.massage = card.dataset.massage;
 
                         document.getElementById('nextBtn').click();
-
-                        fetchStaffMembers();
+                        fetchStaffMembers(selectedData.branch);
                     });
 
                     massageContainer.appendChild(card);
@@ -1307,8 +1306,9 @@
             });
     }
 
-    function fetchStaffMembers() {
-        fetch('/staff')
+    function fetchStaffMembers(branchId) {
+        
+        fetch(`/staff?branch_id=${branchId}`)
             .then(response => response.json())
             .then(data => {
                 const staffGrid = document.getElementById('staffGrid');

@@ -1549,7 +1549,7 @@
 
 
     function fetchStaffMembers() {
-        fetch('/staff')
+        fetch(`/staff?branch_id=0`)
             .then(response => response.json())
             .then(data => {
                 const staffGrid = document.getElementById('staffGrid');

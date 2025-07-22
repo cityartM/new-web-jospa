@@ -29,7 +29,6 @@ class HomeBookingController extends Controller
 
     public function getAvailableTimes($date, $staffId)//49
     {
-        // 1. جلب دوام الموظف (افترض جدول staff_working_hours يحتوي start_time و end_time كـ TIME)
         $workingHours = StaffWorkingHour::where('staff_id', $staffId)->first();
 
         if (!$workingHours) {
@@ -68,20 +67,28 @@ class HomeBookingController extends Controller
     }
 
 
-    public function index()
-    {
-        $employees = DB::table('users')
-            ->join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
-            ->join('roles', 'roles.id', '=', 'model_has_roles.role_id')
-            ->where('roles.name', 'employee')
-            ->where('model_has_roles.model_type', \App\Models\User::class)
-            ->where('users.is_manager', 0)
-            ->whereNull('deleted_at')
-            ->select('users.*')
-            ->get();
+public function index(Request $request)
+{
+    $branchId = (int) $request->get('branch_id');
 
-        return response()->json($employees);
+    $query = DB::table('users')
+        ->join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
+        ->join('roles', 'roles.id', '=', 'model_has_roles.role_id')
+        ->join('branch_employee', 'users.id', '=', 'branch_employee.employee_id')
+        ->where('roles.name', 'employee')
+        ->where('model_has_roles.model_type', \App\Models\User::class)
+        ->where('users.is_manager', 0)
+        ->whereNull('users.deleted_at');
+
+    if ($branchId != 0) {
+        $query->where('branch_employee.branch_id', $branchId);
     }
+
+    $employees = $query->select('users.*')->get();
+
+    return response()->json($employees);
+}
+
 
 
     public function getServiceGroups()
