@@ -23,71 +23,83 @@ class GiftCardController extends Controller
     }
 
 
-    public function store(Request $request)
-    {
-        // التحقق من البيانات
-        $data = $request->validate([
-            'delivery_method'     => 'required|string',
-            'sender_name'         => 'required|string',
-            'recipient_name'      => 'required|string',
-            'sender_phone'        => 'required',
-            'recipient_phone'     => 'required',
-            'requested_services'   => 'required|array|min:1',
-        ], ['delivery_method.required'     => __('messages.gift_card_delivery_method_required'),'sender_name.required'         => __('messages.gift_card_sender_required'),'recipient_name.required'      => __('messages.gift_card_recipient_required'),'sender_phone.required'        => __('messages.gift_card_phone_required'),'recipient_phone.required'     => __('messages.gift_card_phone_required'),'selected_services.required'   => __('messages.gift_card_service_required'),'selected_services.min'        => __('messages.gift_card_service_required'),]);
-    
-        try {
-            // 1. هات الخدمات المختارة
-            $selectedServices = $data['requested_services'];
-            $services = ServiceModel::whereIn('id', $selectedServices)->get();
-            // 2. احسب السعر الإجمالي
-            $total = $services->sum('default_price');
+ public function store(Request $request)
+{
+    // 1. التحقق من صحة البيانات
+    $data = $request->validate([
+        'delivery_method'     => 'required|string',
+        'sender_name'         => 'required|string',
+        'recipient_name'      => 'required|string',
+        'sender_phone'        => 'required',
+        'recipient_phone'     => 'required',
+        'requested_services'  => 'required|array|min:1',
+    ], [
+        'delivery_method.required'     => __('messages.gift_card_delivery_method_required'),
+        'sender_name.required'         => __('messages.gift_card_sender_required'),
+        'recipient_name.required'      => __('messages.gift_card_recipient_required'),
+        'sender_phone.required'        => __('messages.gift_card_phone_required'),
+        'recipient_phone.required'     => __('messages.gift_card_phone_required'),
+        'requested_services.required'  => __('messages.gift_card_service_required'),
+        'requested_services.min'       => __('messages.gift_card_service_required'),
+    ]);
 
-            session([
-                'gift_card_data' => $data,
-                'gift_card_total' => $total,
-            ]);
+    try {
+        // 2. التأكد من أن الخدمات مصفوفة صحيحة وتحويلها لأرقام
+        $selectedServices = array_map('intval', $data['requested_services']);
 
-            $apiKey1 = env('TAP_SECRET_KEY');
-            // 1. بيانات الطلب
-            $response = Http::withHeaders([
-                'Authorization' => "Bearer $apiKey1",
-                'Content-Type' => 'application/json',
-            ])->post('https://api.tap.company/v2/charges', [
-                "amount" => $total, // المبلغ   changed
-                "currency" => "SAR",
-                "threeDSecure" => true,
-                "save_card" => false,
-                "description" => "طلب دفع",
-                "statement_descriptor" => "Jospa Store",
-                "customer" => [
-                    "first_name" => auth()->user()->first_name,
-                    "email" => auth()->user()->email ,
-                ],
-                "source" => [
-                    "id" => "src_all"
-                ],
-                "redirect" => [
-                    "url" => url("/success-py-gift?am=$total") 
-                ]
-            ]);
-    
-            // 2. استقبل بيانات العملية
-            $res = $response->json();
-    
-            // 3. لو فيه لينك للبوابة
-            if (isset($res['transaction']['url'])) {
-                return redirect()->to($res['transaction']['url']);
-            }
-    
-            // 4. في حالة فشل
-            return view('components.frontend.status.ERPAY');
-            
-    
-            
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error','payment failed')->withInput();
+        // 3. جلب الخدمات من قاعدة البيانات
+        $services = \App\Models\Service::whereIn('id', $selectedServices)->get();
+
+        // 4. حساب المجموع الإجمالي
+        $total = $services->sum('default_price');
+
+        // 5. تخزين البيانات في السيشن
+        session([
+            'gift_card_data' => array_merge($data, [
+                'requested_services' => $selectedServices, // تأكد إنها array مش string
+            ]),
+            'gift_card_total' => $total,
+        ]);
+
+        // 6. إرسال طلب الدفع إلى TAP
+        $apiKey = env('TAP_SECRET_KEY');
+        $response = \Illuminate\Support\Facades\Http::withHeaders([
+            'Authorization' => "Bearer $apiKey",
+            'Content-Type'  => 'application/json',
+        ])->post('https://api.tap.company/v2/charges', [
+            "amount" => $total,
+            "currency" => "SAR",
+            "threeDSecure" => true,
+            "save_card" => false,
+            "description" => "طلب دفع",
+            "statement_descriptor" => "Jospa Store",
+            "customer" => [
+                "first_name" => auth()->user()->first_name,
+                "email" => auth()->user()->email,
+            ],
+            "source" => [
+                "id" => "src_all"
+            ],
+            "redirect" => [
+                "url" => url("/success-py-gift?am=$total")
+            ]
+        ]);
+
+        $res = $response->json();
+
+        // 7. التحقق من وجود رابط الدفع
+        if (isset($res['transaction']['url'])) {
+            return redirect()->to($res['transaction']['url']);
         }
+
+        // 8. فشل إنشاء الدفع
+        return view('components.frontend.status.ERPAY');
+
+    } catch (\Exception $e) {
+        return redirect()->back()->with('error', __('messages.payment_failed'))->withInput();
     }
+}
+
 
     public function handlePaymentResult(Request $request)
     {

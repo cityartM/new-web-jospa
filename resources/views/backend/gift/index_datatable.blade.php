@@ -37,7 +37,7 @@
                 <td>{{ $gift->sender_phone ?? '-' }}</td>
                 <td>{{ $gift->recipient_phone ?? '-' }}</td>  
                 <td>
-                    @foreach($giftCard->services_list as $service)
+                    @foreach($gift->services_list as $service)
                     {{ $service->name }}
                     @endforeach
                     </td>
