@@ -48,7 +48,7 @@ class GiftCardController extends Controller
         $selectedServices = array_map('intval', $data['requested_services']);
 
         // 3. جلب الخدمات من قاعدة البيانات
-        $services = \App\Models\Service::whereIn('id', $selectedServices)->get();
+        $services = ServiceModel::whereIn('id', $selectedServices)->get();
 
         // 4. حساب المجموع الإجمالي
         $total = $services->sum('default_price');

@@ -38,9 +38,9 @@
                 <td>{{ $gift->recipient_phone ?? '-' }}</td>  
                 <td>
                     @foreach($gift->services_list as $service)
-                    {{ $service->name }}
+                        <span class="badge bg-primary">{{ $service->name }}</span>
                     @endforeach
-                    </td>
+                </td>
                 <td>{{ $gift->subtotal ?? '-' }}</td> 
                 <td>{{ $gift->created_at ? $gift->created_at->format('Y-m-d') : '-' }}</td>
                 <td>{{ $gift->updated_at ? $gift->updated_at->format('Y-m-d') : '-' }}</td>
