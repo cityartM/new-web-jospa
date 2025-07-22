@@ -1,5 +1,12 @@
 <?php
 return [
+  'gifts' => 'Gifts',
+  'al_wasila'   => 'Al Wasila',
+  'ad_doubiya'  => 'Ad Doubiya',
+  'al_qura'     => 'Al Qura',
+  'al_murabba'  => 'Al Murabba',
+  'morning' => 'Morning',
+  'afternoon' => 'Afternoon',
   'profile_updated' => 'Profile updated successfully',
     'e_wallet'                 => 'E-Wallet',
     'my_bookings'              => 'My Bookings',

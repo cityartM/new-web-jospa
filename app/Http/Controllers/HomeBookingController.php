@@ -21,12 +21,13 @@ use Modules\Booking\Models\Booking;
 use Modules\Category\Models\Category;
 use Modules\Service\Models\Service;
 use Illuminate\Support\Facades\Log;
+use Modules\Booking\Models\BookingService;
 
 
 class HomeBookingController extends Controller
 {
 
-    public function getAvailableTimes($date, $staffId)
+    public function getAvailableTimes($date, $staffId)//49
     {
         // 1. جلب دوام الموظف (افترض جدول staff_working_hours يحتوي start_time و end_time كـ TIME)
         $workingHours = StaffWorkingHour::where('staff_id', $staffId)->first();
@@ -39,11 +40,11 @@ class HomeBookingController extends Controller
         $end = Carbon::createFromFormat('H:i:s', $workingHours->end_time);
 
         // 2. جلب أوقات الحجز الموجودة لذلك الموظف والتاريخ
-        $bookedTimes = Booking::where('staff_id', $staffId)
-            ->where('date', $date)
+        $bookedTimes = BookingService::where('employee_id', $staffId)
+            ->whereDate('start_date_time', $date)
             ->pluck('start_date_time')
-            ->map(function ($time) use ($date) {
-                return $date . ' ' . $time . ':00'; // إذا time مثل '10:00'
+            ->map(function ($time) {
+                return $time; // أو عدل التنسيق حسب حاجتك
             })
             ->toArray();
 

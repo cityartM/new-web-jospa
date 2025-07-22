@@ -1,6 +1,13 @@
 <?php   
 
 return [  
+    'gifts' => 'الهدايا',
+    'al_wasila'   => 'الوسيلة',
+    'ad_doubiya'  => 'الدوبية',
+    'al_qura'     => 'القرى',
+    'al_murabba'  => 'المربع',
+    'morning' => 'قبل الظهر',
+    'afternoon' => 'بعد الظهر',
     'e_wallet'                 => 'المحفظه الالكترونيه',
     'my_bookings'              => 'حجوزاتي',
     'location_required'        => 'يرجى إدخال جميع تفاصيل الموقع',

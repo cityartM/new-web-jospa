@@ -32,6 +32,13 @@
                   $menu = $menu->handle('menu', 'vertical', 'ARRAY_MENU');
               @endphp
                 @include(config('laravel-menu.views.bootstrap-items'), ['items' => $menu->roots()])
+                <!-- عنصر ثابت مخصص -->
+                <li class="{{ request()->routeIs('app.gift') ? 'active' : '' }}">
+                    <a href="{{ route('app.gift') }}" class="{{ request()->routeIs('app.gift') ? 'active' : '' }}">
+                        <i class="fa fa-chart-bar"></i>
+                        <span>veiw</span>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

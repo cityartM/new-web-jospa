@@ -1116,7 +1116,7 @@
             <div class="progress-step active">{{ __('messagess.location') }}</div>
         <!--<div class="progress-step">{{ __('messagess.gender') }}</div>-->
             <div class="progress-step">{{ __('messagess.group') }}</div>
-            <div class="progress-step">{{ __('messagess.services') }}</div>
+            <div class="progress-step">{{ __('messagess.service') }}</div>
             <div class="progress-step">{{ __('messagess.date') }}</div>
             <div class="progress-step">{{ __('messagess.staff') }}</div>
             <div class="progress-step">{{ __('messagess.time') }}</div>
@@ -1210,47 +1210,28 @@
 
     {{-- Step 7  --}}
     <!-- Time Slots -->
+       
         <div id="step7" class="step-content hidden">
             <div class="time-slots">
                 <div class="time-period">
                     <div class="time-period-title">{{ __('messagess.select_time') }}</div>
-
+        
                     {{-- قبل الظهر --}}
-                    <div class="time-section">
+                    <div class="time-section" id="morning-section">
                         <h4>{{ __('messagess.morning') }}</h4>
-                        <div class="time-grid">
-                            @for ($hour = 0; $hour < 12; $hour++)
-                                @for ($min = 0; $min < 60; $min += 30)
-                                    @php
-                                        $time = \Carbon\Carbon::createFromTime($hour, $min);
-                                        $label = $time->format('h:i A'); // 01:30 AM
-                                    @endphp
-                                    <div class="time-slot" data-time="{{ $time->format('H:i') }}">{{ $label }}</div>
-                                @endfor
-                            @endfor
-                        </div>
+                        <div class="time-grid" id="morning-grid"></div>
                     </div>
-
+        
                     {{-- بعد الظهر --}}
-                    <div class="time-section mt-4">
+                    <div class="time-section mt-4" id="afternoon-section">
                         <h4>{{ __('messagess.afternoon') }}</h4>
-                        <div class="time-grid">
-                            @for ($hour = 12; $hour < 24; $hour++)
-                                @for ($min = 0; $min < 60; $min += 30)
-                                    @php
-                                        $time = \Carbon\Carbon::createFromTime($hour, $min);
-                                        $label = $time->format('h:i A'); // 01:30 PM
-                                    @endphp
-                                    <div class="time-slot" data-time="{{ $time->format('H:i') }}">{{ $label }}</div>
-                                @endfor
-                            @endfor
-                        </div>
+                        <div class="time-grid" id="afternoon-grid"></div>
                     </div>
-
+        
                 </div>
             </div>
         </div>
-
+        
 
         <div class="step-content hidden" id="summaryCard">dddddddddddddddddddddddddddddddddddddddd</div>
 
@@ -1582,7 +1563,6 @@
                     const card = document.createElement('div');
                     card.className = 'staff-card';
                     card.dataset.staff = staff.id;
-                    console.log(staff);
                     const fullName = staff.full_name || `${staff.first_name || ''} ${staff.last_name || ''}`;
                     const initials = fullName.trim().split(' ').map(word => word[0]).join('').substring(0, 2).toUpperCase();
 
@@ -1662,43 +1642,74 @@
 
     }
 
-    function fetchAvailableTimes() {
-        const date = selectedData.date.toISOString().split('T')[0];
-        const staffId = selectedData.massage;
-
-        const apiUrl = `/available/${date}/${staffId}`;
-        console.log('Fetching available times from:', apiUrl);
-
-        fetch(apiUrl)
-            .then(response => response.json())
-            .then(data => {
-                const container = document.querySelector('#time');
-
-                if (!container) {
-                    console.error('❌ .time-slots-container not found in the page.');
-                    return;
-                }
-
-                container.innerHTML = '';
-
-                data.forEach(time => {
-                    const slot = document.createElement('div');
-                    slot.className = 'time-slot';
-                    slot.textContent = time;
-                    slot.addEventListener('click', () => {
-                        document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
-                        slot.classList.add('selected');
-                        selectedData.time = time;
-
-                    });
-
-                    container.appendChild(slot);
-                });
-            })
-            .catch(err => console.error('Error fetching times:', err));
-
-
+function fetchAvailableTimes() {
+    if (!selectedData.date || !selectedData.massage) {
+        console.warn('Date or staffId is missing.');
+        return;
     }
+
+    const date = selectedData.date.toISOString().split('T')[0];
+    const staffId = selectedData.massage;
+    console.log(staffId);
+    
+    const apiUrl = `/available/${date}/${staffId}`;
+
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            const morningGrid = document.querySelector('#morning-grid');
+            const afternoonGrid = document.querySelector('#afternoon-grid');
+
+            if (!morningGrid || !afternoonGrid) {
+                console.error('❌ عناصر الوقت غير موجودة في الصفحة.');
+                return;
+            }
+
+            morningGrid.innerHTML = '';
+            afternoonGrid.innerHTML = '';
+
+            if (data.length === 0) {
+                morningGrid.innerHTML = '<p>لا توجد مواعيد متاحة لهذا اليوم.</p>';
+                return;
+            }
+
+            data.forEach(time => {
+                const hour = parseInt(time.split(':')[0], 10);
+                const slot = document.createElement('div');
+                slot.className = 'time-slot';
+                slot.textContent = formatTime12Hour(time);
+                slot.dataset.time = time;
+
+                slot.addEventListener('click', () => {
+                    document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+                    slot.classList.add('selected');
+                    selectedData.time = time;
+                    showSummary();
+                });
+
+                if (hour < 12) {
+                    morningGrid.appendChild(slot);
+                } else {
+                    afternoonGrid.appendChild(slot);
+                }
+            });
+        })
+        .catch(err => console.error('❌ خطأ أثناء جلب المواعيد:', err));
+}
+
+// تحويل الوقت من 24h إلى 12h بصيغة AM/PM
+function formatTime12Hour(time24) {
+    const [hour, minute] = time24.split(':');
+    const date = new Date();
+    date.setHours(hour);
+    date.setMinutes(minute);
+    return date.toLocaleTimeString('en-US', {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true
+    });
+}
+
 
     function showBookingSummary() {
         const bookingData = {
@@ -1824,6 +1835,7 @@
         document.getElementById('inputServiceGroup').value = bookingData.service_group_id;
         document.getElementById('inputServiceId').value = bookingData.service_id;
         document.getElementById('inputDate').value = bookingData.date;
+
         document.getElementById('inputTime').value = bookingData.time;
         document.getElementById('inputStaffId').value = bookingData.staff_id;
         document.getElementById('inputStatus').value = bookingData.status;

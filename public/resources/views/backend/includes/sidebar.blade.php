@@ -26,13 +26,20 @@
     </div>
     <div class="sidebar-body pt-0 data-scrollbar">
         <div class="sidebar-list" id="sidebar">
-            <ul class="navbar-nav iq-main-menu" id="sidebar-menu">
-              @php
-                  $menu = new \App\Http\Middleware\GenerateMenus();
-                  $menu = $menu->handle('menu', 'vertical', 'ARRAY_MENU');
-              @endphp
-                @include(config('laravel-menu.views.bootstrap-items'), ['items' => $menu->roots()])
-            </ul>
+        <ul class="navbar-nav iq-main-menu" id="sidebar-menu">
+            @php
+                $menu = new \App\Http\Middleware\GenerateMenus();
+                $menu = $menu->handle('menu', 'vertical', 'ARRAY_MENU');
+            @endphp
+            @include(config('laravel-menu.views.bootstrap-items'), ['items' => $menu->roots()])
+            <!-- عنصر ثابت مخصص -->
+            <li class="{{ request()->routeIs('app.gift') ? 'active' : '' }}">
+                <a href="{{ route('app.gift') }}" class="{{ request()->routeIs('app.gift') ? 'active' : '' }}">
+                    <i class="fa fa-chart-bar"></i>
+                    <span>public</span>
+                </a>
+            </li>
+        </ul>
         </div>
     </div>
     <div class="sidebar-footer"></div>

@@ -330,3 +330,7 @@ Route::group(['prefix' => 'app', 'middleware' => 'auth'], function () {
 });
 
 Route::get('/my-bookings', [SignController::class, 'myBookings'])->name('profile.my_bookings');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/app/gift', [App\Http\Controllers\GiftController::class, 'index'])->name('app.gift');
+});

@@ -38,7 +38,7 @@
                 </svg>
             @endfor
         </div>
-        <a href="#td" class="hero-btn btn text-white d-flex align-items-center justify-content-center gap-2" style="white-space: nowrap;width: 225px;height: 63.6px;font-weight: bold;background-color: var(--primary-color);border-right: 3px solid white;border-left: 3px solid white;font-size: 1.8rem;border-radius: 30px;padding: 15px 45px;color: white;display: flex;align-items: center;justify-content: center;gap: 10px;transition: background-color 0.3s ease, transform 0.3s ease;font-family: 'IBM Plex Sans Arabic', sans-serif !important;">
+        <a href="#bookNaw" class="hero-btn btn text-white d-flex align-items-center justify-content-center gap-2" style="white-space: nowrap;width: 225px;height: 63.6px;font-weight: bold;background-color: var(--primary-color);border-right: 3px solid white;border-left: 3px solid white;font-size: 1.8rem;border-radius: 30px;padding: 15px 45px;color: white;display: flex;align-items: center;justify-content: center;gap: 10px;transition: background-color 0.3s ease, transform 0.3s ease;font-family: 'IBM Plex Sans Arabic', sans-serif !important;">
 
             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                  class="bi bi-calendar-check me-2" viewBox="0 0 16 16">
@@ -47,7 +47,7 @@
                 <path
                     d="M1 4a2 2 0 0 1 2-2h1V1.5a.5.5 0 0 1 1 0V2h4V1.5a.5.5 0 0 1 1 0V2h1a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v1h12V4a1 1 0 0 0-1-1H3zm11 3H2v7a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V6z" />
             </svg>
-            {{ __('messagess.hero_book_now') }}
+            <span>{{ __('messagess.hero_book_now') }}</span>
         </a>
     </div>
 </div>
