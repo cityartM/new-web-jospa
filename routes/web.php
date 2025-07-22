@@ -119,7 +119,7 @@ Route::get('language/{language}', [LanguageController::class, 'switch'])->name('
 Route::get('/clear-config', function () {
     Artisan::call('config:clear');
     return 'Config cache cleared!';
-});
+});          
 
 // Clear application cache
 Route::get('/clear-cache', function () {
