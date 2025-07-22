@@ -307,5 +307,8 @@ return [
     'updated_at'         => 'تاريخ التحديث',
     'action' => 'الإجراء',
     'no_gift_cards' => 'لا توجد بطاقات هدايا',
+    'delete'         => 'حذف',
+    'confirm_delete' => 'هل أنت متأكد أنك تريد حذف هذه الهدية؟',
+    'gift_deleted_successfully' => 'تم حذف الهدية بنجاح.',
 
 ];

@@ -1,6 +1,9 @@
 <?php
 
 return [
+    'gift_deleted_successfully' => 'Gift deleted successfully.',
+    'delete'         => 'Delete',
+    'confirm_delete' => 'Are you sure you want to delete this gift?',
     'no_gift_cards' => 'No gift cards available',
     'action' => 'Action',
     'delivery_method'    => 'Delivery Method',

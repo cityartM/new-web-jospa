@@ -15,4 +15,13 @@ class GiftController extends Controller
 
         return view('backend.gift.index_datatable', compact('module_action', 'gifts' , 'module_title'));
     }
+
+        public function destroy($id)
+    {
+        $gift = GiftCard::findOrFail($id);
+
+        $gift->delete();
+
+        return redirect()->back()->with('success', __('messages.gift_deleted_successfully'));
+    }
 }

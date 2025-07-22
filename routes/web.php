@@ -24,7 +24,7 @@ use App\Http\Controllers\SignController;
 use App\Models\BookingCart;
 use Modules\Category\Models\Category;
 use App\Models\Branch;
-
+use App\Http\Controllers\GiftController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -332,5 +332,7 @@ Route::group(['prefix' => 'app', 'middleware' => 'auth'], function () {
 Route::get('/my-bookings', [SignController::class, 'myBookings'])->name('profile.my_bookings');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/app/gift', [App\Http\Controllers\GiftController::class, 'index'])->name('app.gift');
+    Route::get('/app/gift', [GiftController::class, 'index'])->name('app.gift');
+    Route::get('/gift/delete/{id}', [GiftController::class, 'destroy'])->name('gift.delete');
+
 });
