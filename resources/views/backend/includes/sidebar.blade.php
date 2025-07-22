@@ -33,10 +33,10 @@
               @endphp
                 @include(config('laravel-menu.views.bootstrap-items'), ['items' => $menu->roots()])
                 <!-- عنصر ثابت مخصص -->
-                <li class="{{ request()->routeIs('app.gift') ? 'active' : '' }}">
-                    <a href="{{ route('app.gift') }}" class="{{ request()->routeIs('app.gift') ? 'active' : '' }}">
+                <li class="nav-item {{ request()->routeIs('app.gift') ? 'active' : '' }}">
+                    <a href="{{ route('app.gift') }}" class="nav-link {{ request()->routeIs('app.gift') ? 'active' : '' }}">
                         <i class="fa fa-chart-bar"></i>
-                        <span>{{ __('messagess.gifts') }}</span>
+                        <span class="item-name">{{ __('messagess.gifts') }}</span>
                     </a>
                 </li>
             </ul>

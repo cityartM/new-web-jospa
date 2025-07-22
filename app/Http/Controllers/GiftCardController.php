@@ -123,7 +123,6 @@ class GiftCardController extends Controller
                 return view('components.frontend.status.ERPAY')->with('error', 'Missing session data.');
             }
     
-            // احفظ بيانات كرت الهدية
             $giftCard = GiftCard::create([
                 'delivery_method'   => $data['delivery_method'],
                 'sender_name'       => $data['sender_name'],

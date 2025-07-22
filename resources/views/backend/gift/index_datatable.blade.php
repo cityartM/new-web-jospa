@@ -38,7 +38,7 @@
                 <td>{{ $gift->recipient_phone ?? '-' }}</td>  
                 <td>
                     @foreach($gift->services_list as $service)
-                        <span class="badge bg-primary">{{ $service->name }}</span>
+                        <span class="badge bg-primary">{{ $service->name }}</span> <br>
                     @endforeach
                 </td>
                 <td>{{ $gift->subtotal ?? '-' }}</td> 
