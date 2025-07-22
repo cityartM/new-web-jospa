@@ -142,7 +142,6 @@ class HomeBookingController extends Controller
 
             return response()->json(['message' => 'Booking saved successfully']);
         } catch (\Exception $e) {
-            // 🧾 سجل الخطأ في ملف laravel.log
             Log::error('Booking Store Error: ' . $e->getMessage(), [
                 'stack' => $e->getTraceAsString(),
                 'request_data' => $request->all(),
@@ -150,7 +149,7 @@ class HomeBookingController extends Controller
 
             return response()->json([
                 'message' => 'حدث خطأ أثناء حفظ الحجز',
-                'error' => $e->getMessage(), // اختياري للـ debug فقط، احذف في الإنتاج
+                'error' => $e->getMessage(), 
             ], 500);
         }
     }

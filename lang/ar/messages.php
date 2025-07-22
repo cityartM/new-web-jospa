@@ -295,4 +295,17 @@ return [
     'gift_card_inactive' => 'غير مفعلة',
     'gift_card_created_at' => 'تاريخ الإنشاء',
     'gift_card_none' => 'لا توجد بطاقات هدايا',
+        'delivery_method'    => 'طريقة التوصيل',
+    'sender_name'        => 'اسم المرسل',
+    'recipient_name'     => 'اسم المستلم',
+    'sender_phone'       => 'جوال المرسل',
+    'recipient_phone'    => 'جوال المستلم',
+    'selected_services'  => 'الخدمات المطلوبة',
+    'subtotal'           => 'المجموع الفرعي',
+    'status'             => 'الحالة',
+    'created_at'         => 'تاريخ الإنشاء',
+    'updated_at'         => 'تاريخ التحديث',
+    'action' => 'الإجراء',
+    'no_gift_cards' => 'لا توجد بطاقات هدايا',
+
 ];

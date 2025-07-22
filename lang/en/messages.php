@@ -1,6 +1,18 @@
 <?php
 
 return [
+    'no_gift_cards' => 'No gift cards available',
+    'action' => 'Action',
+    'delivery_method'    => 'Delivery Method',
+    'sender_name'        => 'Sender Name',
+    'recipient_name'     => 'Recipient Name',
+    'sender_phone'       => 'Sender Phone',
+    'recipient_phone'    => 'Recipient Phone',
+    'selected_services'  => 'Selected Services',
+    'subtotal'           => 'Subtotal',
+    'status'             => 'Status',
+    'created_at'         => 'Created At',
+    'updated_at'         => 'Updated At',
     'gift_cards_list' => 'Gift Cards List',
     'gift_card_name' => 'Card Name',
     'gift_card_code' => 'Code',
