@@ -25,7 +25,6 @@ class GiftCardController extends Controller
 
  public function store(Request $request)
 {
-    // 1. التحقق من صحة البيانات
     $data = $request->validate([
         'delivery_method'     => 'required|string',
         'sender_name'         => 'required|string',
@@ -116,7 +115,7 @@ class GiftCardController extends Controller
         $charge = $response->json();
     
         if (isset($charge['status']) && $charge['status'] === 'CAPTURED') {
-            // استرجع البيانات من السيشن
+
             $data = session('gift_card_data');
             $total = session('gift_card_total');
     

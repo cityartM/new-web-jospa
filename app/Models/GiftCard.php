@@ -24,6 +24,12 @@ class GiftCard extends Model
 
 public function getServicesListAttribute()
 {
-    return Service::whereIn('id', $this->requested_services ?? [])->get();
+    $serviceIds = json_decode($this->requested_services ?? '[]', true);
+
+    if (!is_array($serviceIds)) {
+        return collect();
+    }
+
+    return Service::whereIn('id', $serviceIds)->get();
 }
 }
