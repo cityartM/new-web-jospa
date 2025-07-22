@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 
-
 // To Payment & SMS
 use Illuminate\Support\Facades\Http;
 use Modules\Booking\Models\Booking;
@@ -22,49 +21,75 @@ use Modules\Category\Models\Category;
 use Modules\Service\Models\Service;
 use Illuminate\Support\Facades\Log;
 use Modules\Booking\Models\BookingService;
-
+use Modules\BussinessHour\Models\BussinessHour;
 
 class HomeBookingController extends Controller
 {
 
-    public function getAvailableTimes($date, $staffId)//49
-    {
-        $workingHours = StaffWorkingHour::where('staff_id', $staffId)->first();
 
-        if (!$workingHours) {
-            return response()->json([]);
-        }
-
-        $start = Carbon::createFromFormat('H:i:s', $workingHours->start_time);
-        $end = Carbon::createFromFormat('H:i:s', $workingHours->end_time);
-
-        // 2. جلب أوقات الحجز الموجودة لذلك الموظف والتاريخ
-        $bookedTimes = BookingService::where('employee_id', $staffId)
-            ->whereDate('start_date_time', $date)
-            ->pluck('start_date_time')
-            ->map(function ($time) {
-                return $time; // أو عدل التنسيق حسب حاجتك
-            })
-            ->toArray();
-
-        // 3. توليد الفترات الزمنية بفاصل ساعة
-        $availableTimes = [];
-        $current = $start->copy();
-
-        while ($current->lt($end)) {
-            $timeStr = $current->format('H:i');
-
-            // 4. التحقق اذا الوقت محجوز
-            if (!in_array($timeStr, $bookedTimes)) {
-                $availableTimes[] = $timeStr;
-            }
-
-            // نزيد ساعة
-            $current->addHour();
-        }
-
-        return response()->json($availableTimes);
+public function getAvailableTimes($date, $staffId)
+{
+    $user = User::find($staffId);
+    if (!$user) {
+        return response()->json([]);
     }
+
+    $branchId = $user->branch->branch_id;
+    $dayName = strtolower(Carbon::parse($date)->format('l'));
+
+    $workingHours = BussinessHour::where('branch_id', $branchId)
+        ->where('day', $dayName)
+        ->where('is_holiday', 0)
+        ->orderBy('id', 'desc')
+        ->first();
+
+    if (!$workingHours) {
+        return response()->json([]);
+    }
+
+    $start = Carbon::createFromFormat('H:i:s', $workingHours->start_time);
+    $end = Carbon::createFromFormat('H:i:s', $workingHours->end_time);
+
+    // // الأوقات المحجوزة
+    $bookedTimes = BookingService::where('employee_id', $staffId)
+        ->whereDate('start_date_time', $date)
+        ->pluck('start_date_time')
+        ->map(fn($time) => Carbon::parse($time)->format('H:i'))
+        ->toArray();
+
+    // أوقات الراحة (من الـ JSON في قاعدة البيانات)
+    $breaks = $workingHours->breaks;
+
+    $availableTimes = [];
+    $current = $start->copy();
+
+    while ($current->lt($end)) {
+        $timeStr = $current->format('H:i');
+
+        $isInBreak = false;
+
+        // نتحقق إذا الوقت ده جوه وقت الراحة
+        foreach ($breaks as $break) {
+            $breakStart = Carbon::createFromFormat('H:i', $break['start_break']);
+            $breakEnd = Carbon::createFromFormat('H:i:s', $break['end_break']);
+
+            if ($current->between($breakStart, $breakEnd)) {
+                $isInBreak = true;
+                break;
+            }
+        }
+
+        // لو مش في وقت راحة ولا محجوز
+        if (!$isInBreak && !in_array($timeStr, $bookedTimes)) {
+            $availableTimes[] = $timeStr;
+        }
+
+        $current->addHour();
+    }
+
+    return response()->json($availableTimes);
+}
+
 
 
 public function index(Request $request)

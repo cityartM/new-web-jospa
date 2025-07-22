@@ -1401,6 +1401,74 @@
 
         }
 
+    
+function fetchAvailableTimes() {
+    if (!selectedData.date || !selectedData.massage) {
+        console.warn('Date or staffId is missing.');
+        return;
+    }
+
+    const date = selectedData.date.toISOString().split('T')[0];
+    const staffId = selectedData.massage;
+    console.log(date);
+    
+    const apiUrl = `/available/${date}/${staffId}`;
+
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            const morningGrid = document.querySelector('#morning-grid');
+            const afternoonGrid = document.querySelector('#afternoon-grid');
+
+            if (!morningGrid || !afternoonGrid) {
+                console.error('❌ عناصر الوقت غير موجودة في الصفحة.');
+                return;
+            }
+
+            morningGrid.innerHTML = '';
+            afternoonGrid.innerHTML = '';
+
+            if (data.length === 0) {
+                morningGrid.innerHTML = '<p>لا توجد مواعيد متاحة لهذا اليوم.</p>';
+                return;
+            }
+
+            data.forEach(time => {
+                const hour = parseInt(time.split(':')[0], 10);
+                const slot = document.createElement('div');
+                slot.className = 'time-slot';
+                slot.textContent = formatTime12Hour(time);
+                slot.dataset.time = time;
+
+                slot.addEventListener('click', () => {
+                    document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+                    slot.classList.add('selected');
+                    selectedData.time = time;
+                    showSummary();
+                });
+
+                if (hour < 12) {
+                    morningGrid.appendChild(slot);
+                } else {
+                    afternoonGrid.appendChild(slot);
+                }
+            });
+        })
+        .catch(err => console.error('❌ خطأ أثناء جلب المواعيد:', err));
+}
+
+// تحويل الوقت من 24h إلى 12h بصيغة AM/PM
+function formatTime12Hour(time24) {
+    const [hour, minute] = time24.split(':');
+    const date = new Date();
+    date.setHours(hour);
+    date.setMinutes(minute);
+    return date.toLocaleTimeString('en-US', {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true
+    });
+}
 
         function showSummary() {
             const summaryCard = document.getElementById('summaryCard');

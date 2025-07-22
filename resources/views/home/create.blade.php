@@ -1642,6 +1642,9 @@
 
     }
 
+
+
+    
 function fetchAvailableTimes() {
     if (!selectedData.date || !selectedData.massage) {
         console.warn('Date or staffId is missing.');
@@ -1650,13 +1653,12 @@ function fetchAvailableTimes() {
 
     const date = selectedData.date.toISOString().split('T')[0];
     const staffId = selectedData.massage;
-    console.log(staffId);
     
-    const apiUrl = `/available/${date}/${staffId}`;
-
-    fetch(apiUrl)
+    fetch(`/available/${date}/${staffId}`)
         .then(response => response.json())
         .then(data => {
+            console.log("📥 الأوقات المتاحة:", data);
+
             const morningGrid = document.querySelector('#morning-grid');
             const afternoonGrid = document.querySelector('#afternoon-grid');
 
@@ -1673,26 +1675,27 @@ function fetchAvailableTimes() {
                 return;
             }
 
-            data.forEach(time => {
-                const hour = parseInt(time.split(':')[0], 10);
-                const slot = document.createElement('div');
-                slot.className = 'time-slot';
-                slot.textContent = formatTime12Hour(time);
-                slot.dataset.time = time;
+data.forEach(time => {
+    const hour = parseInt(time.split(':')[0], 10);
+    const slot = document.createElement('div');
+    slot.className = 'time-slot';
+    slot.textContent = formatTime12Hour(time);
+    slot.dataset.time = time;
 
-                slot.addEventListener('click', () => {
-                    document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
-                    slot.classList.add('selected');
-                    selectedData.time = time;
-                    showSummary();
-                });
+    slot.addEventListener('click', () => {
+        document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+        slot.classList.add('selected');
+        selectedData.time = time;
+        showSummary();
+    });
 
-                if (hour < 12) {
-                    morningGrid.appendChild(slot);
-                } else {
-                    afternoonGrid.appendChild(slot);
-                }
-            });
+    if (hour < 12) {
+        morningGrid.appendChild(slot);
+    } else {
+        afternoonGrid.appendChild(slot);
+    }
+});
+
         })
         .catch(err => console.error('❌ خطأ أثناء جلب المواعيد:', err));
 }
