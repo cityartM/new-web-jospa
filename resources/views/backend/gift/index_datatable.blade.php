@@ -36,12 +36,18 @@
                 <td>{{ $gift->recipient_name ?? '-' }}</td> 
                 <td>{{ $gift->sender_phone ?? '-' }}</td>
                 <td>{{ $gift->recipient_phone ?? '-' }}</td>  
-                <td>{{ $gift->requested_services ?? '-' }}</td>
+                <td>
+                    @foreach($giftCard->services_list as $service)
+                    {{ $service->name }}
+                    @endforeach
+                    </td>
                 <td>{{ $gift->subtotal ?? '-' }}</td> 
                 <td>{{ $gift->created_at ? $gift->created_at->format('Y-m-d') : '-' }}</td>
                 <td>{{ $gift->updated_at ? $gift->updated_at->format('Y-m-d') : '-' }}</td>
-                <td> <a href="{{ route('gift.delete', $gift->id) }}"class="btn btn-soft-danger btn-sm"onclick="return confirm('{{ __('messages.confirm_delete') }}');">
-                    {{ __('messages.delete') }}</a><i class="fa-solid fa-trash"></i></a> 
+                <td>
+                    <a href="{{ route('gift.delete', $gift->id) }}" id="delete-bookings-138" class="btn btn-soft-danger btn-sm" onclick="return confirm('{{ __('messages.confirm_delete') }}');">
+                        <i class="fa-solid fa-trash"></i>
+                    </a>
                 </td>
                 </tr>
             @empty

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Modules\Service\Models\Service;
 
 class GiftCard extends Model
 {
@@ -20,4 +21,9 @@ class GiftCard extends Model
     protected $casts = [
         'requested_services' => 'array',
     ];
+
+public function getServicesListAttribute()
+{
+    return Service::whereIn('id', $this->requested_services ?? [])->get();
+}
 }
