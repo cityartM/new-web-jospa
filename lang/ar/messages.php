@@ -285,4 +285,14 @@ return [
     'gift_card_recipient_required' => 'اسم المستلم مطلوب',
     'gift_card_phone_required' => 'رقم الهاتف مطلوب',
     'gift_card_delivery_method_required' => 'طريقة التوصيل مطلوبة',
+
+    'gift_cards_list' => 'قائمة بطاقات الهدايا',
+    'gift_card_name' => 'اسم البطاقة',
+    'gift_card_code' => 'الكود',
+    'gift_card_amount' => 'القيمة',
+    'gift_card_status' => 'الحالة',
+    'gift_card_active' => 'مفعلة',
+    'gift_card_inactive' => 'غير مفعلة',
+    'gift_card_created_at' => 'تاريخ الإنشاء',
+    'gift_card_none' => 'لا توجد بطاقات هدايا',
 ];

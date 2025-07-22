@@ -36,7 +36,7 @@
                 <li class="{{ request()->routeIs('app.gift') ? 'active' : '' }}">
                     <a href="{{ route('app.gift') }}" class="{{ request()->routeIs('app.gift') ? 'active' : '' }}">
                         <i class="fa fa-chart-bar"></i>
-                        <span>veiw</span>
+                        <span>{{ __('messagess.gifts') }}</span>
                     </a>
                 </li>
             </ul>

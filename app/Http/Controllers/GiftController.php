@@ -3,12 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Modules\Category\Models\Category;
+use App\Models\GiftCard; // تأكد من وجود هذا الموديل أو عدل المسار حسب مشروعك
 
 class GiftController extends Controller
 {
     public function index()
     {
-        return "added successfully";
+        $module_action = 'List';
+        $module_title = 'Gift Cards';
+        $gifts = GiftCard::all(); // جلب كل بيانات الهدايا
+
+        return view('backend.gift.index_datatable', compact('module_action', 'gifts' , 'module_title'));
     }
 }

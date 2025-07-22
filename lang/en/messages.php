@@ -1,6 +1,15 @@
 <?php
 
 return [
+    'gift_cards_list' => 'Gift Cards List',
+    'gift_card_name' => 'Card Name',
+    'gift_card_code' => 'Code',
+    'gift_card_amount' => 'Amount',
+    'gift_card_status' => 'Status',
+    'gift_card_active' => 'Active',
+    'gift_card_inactive' => 'Inactive',
+    'gift_card_created_at' => 'Created At',
+    'gift_card_none' => 'No gift cards found',
     'Welcome to' => 'Welcome to :name Admin Dashboard.',
     'yes' => 'Yes',
     'no' => 'No',
