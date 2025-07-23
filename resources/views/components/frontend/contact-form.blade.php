@@ -27,26 +27,28 @@ font-family: 'IBM Plex Sans Arabic', sans-serif !important;
 
             <!-- Right: Contact Form -->
             <div class="col-12 col-lg-6">
-                <form>
+                <form action="{{ route('contact.store') }}" method="POST">
+                    @csrf
+
                     <div class="mb-3">
                         <label for="name" class="form-label fw-bold" style="color: #333;">{{ __('messagess.your_name') }}</label>
-                        <input type="text" class="form-control form-control-lg" id="name" placeholder="{{ __('messagess.enter_your_name') }}" style="border-radius: 8px; border: 2px solid #e9ecef;">
+                        <input name="name" type="text" class="form-control form-control-lg" id="name" placeholder="{{ __('messagess.enter_your_name') }}" style="border-radius: 8px; border: 2px solid #e9ecef;">
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label fw-bold" style="color: #333;">{{ __('messagess.your_email') }}</label>
-                        <input type="email" class="form-control form-control-lg" id="email" placeholder="{{ __('messagess.enter_your_email') }}" style="border-radius: 8px; border: 2px solid #e9ecef;">
+                        <input name="email" type="email" class="form-control form-control-lg" id="email" placeholder="{{ __('messagess.enter_your_email') }}" style="border-radius: 8px; border: 2px solid #e9ecef;">
                     </div>
                     <div class="mb-3">
                         <label for="phone" class="form-label fw-bold" style="color: #333;">{{ __('messagess.your_phone') }}</label>
-                        <input type="tel" class="form-control form-control-lg" id="phone" placeholder="{{ __('messagess.enter_your_phone') }}" style="border-radius: 8px; border: 2px solid #e9ecef;">
+                        <input name="phone" type="tel" class="form-control form-control-lg" id="phone" placeholder="{{ __('messagess.enter_your_phone') }}" style="border-radius: 8px; border: 2px solid #e9ecef;">
                     </div>
                     <div class="mb-3">
                         <label for="message" class="form-label fw-bold" style="color: #333;">{{ __('messagess.your_message') }}</label>
-                        <textarea class="form-control form-control-lg" id="message" rows="4" placeholder="{{ __('messagess.enter_your_message') }}e" style="border-radius: 8px; border: 2px solid #e9ecef;"></textarea>
+                        <textarea name="message" class="form-control form-control-lg" id="message" rows="4" placeholder="{{ __('messagess.enter_your_message') }}e" style="border-radius: 8px; border: 2px solid #e9ecef;"></textarea>
                     </div>
                     <div class="mb-4">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="privacy" style="border: 2px solid var(--primary-color);">
+                            <input name="accepted_terms" class="form-check-input" type="checkbox" id="privacy" style="border: 2px solid var(--primary-color);" required>
                             <label class="form-check-label" for="privacy" style="color: #333;">
                                   {{ __('messagess.accept') }} <a href="#" target="_blank" style="color: var(--primary-color);">{{ __('messagess.privacy_policy') }}</a>  {{ __('messagess.and') }} <a href="#" style="color: var(--primary-color);">{{ __('messagess.terms_conditions') }}</a>.
                             </label>
@@ -60,3 +62,4 @@ font-family: 'IBM Plex Sans Arabic', sans-serif !important;
         </div>
     </div>
 </section>
+

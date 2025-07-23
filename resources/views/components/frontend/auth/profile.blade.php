@@ -21,7 +21,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">  
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
       body {
         background: #f7f7f7;
@@ -191,7 +191,7 @@
           font-size: 0.89rem;
         }
       }
-  
+
           .h5{
               font-size:15.6px;
           }
@@ -311,7 +311,7 @@
 
         <!-- رصيد المستخدم في الزاوية -->
         <div class="profile-balance-corner"style="{{ app()->getLocale() == 'ar' ? 'right:19%;' : 'left:19%;' }}">
-            
+
             <div>
               <h3>{{ __('messagess.e_wallet') }}</h3>
             </div>
@@ -340,7 +340,7 @@
       <img src="{{ $user->avatar ?? $user->profile_image }}" alt="avatar" class="profile-avatar-lg">
       <h2 class="fw-bold mt-2 mb-1">{{ $user->first_name }} {{ $user->last_name }}</h2>
       <div class="text-muted mb-2">{{ $user->email }}</div>
-      
+
 
 
 
@@ -371,7 +371,7 @@
           <div class="info-label">{{ __('profile.mobile_number') }}</div>
           <div class="info-value">{{ $user->mobile }}</div>
         </div>
-      
+
         {{-- التواريخ: التسجيل، الميلاد، آخر دخول --}}
         <div class="col-md-4 col-12 mb-3">
           <div class="info-label">{{ __('profile.birth_date') }}</div>
@@ -389,7 +389,7 @@
         </div>
 
       </div>
-      
+
     </div>
     </div>
     <!-- Modal شحن الرصيد -->
@@ -482,20 +482,20 @@
     @include('components.frontend.footer')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    
+
     <!-- Toastr JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
       <script>
       document.addEventListener("DOMContentLoaded", function () {
           @if(session('success'))
               toastr.success("{{ session('success') }}");
           @endif
-  
+
           @if(session('error'))
               toastr.error("{{ session('error') }}");
           @endif
-  
+
           @if($errors->any())
               @foreach($errors->all() as $error)
                   toastr.error("{{ $error }}");

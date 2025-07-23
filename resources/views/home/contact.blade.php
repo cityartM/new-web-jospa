@@ -1,42 +1,21 @@
-<!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}" dir="{{ language_direction() }}" class="theme-fs-sm">
+@extends('backend.layouts.app')
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+@section('title', 'اسم الصفحة') {{-- يمكنك تغيير "اسم الصفحة" لما تريد --}}
 
-    <title>@yield('title') | {{ app_name() }}</title>
+@push('after-styles')
+    {{-- أضف هنا أي ملفات CSS إضافية --}}
+    <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+@endpush
 
-    <link rel="stylesheet" href="{{ mix('css/libs.min.css') }}">
-    <link rel="stylesheet" href="{{ mix('css/backend.css') }}">
-    @if (language_direction() == 'rtl')
-        <link rel="stylesheet" href="{{ asset('css/rtl.css') }}">
-    @endif
-    <link rel="stylesheet" href="{{ asset('custom-css/frontend.css') }}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-    @stack('after-styles')
-    <!-- Toastr CSS -->
-      <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
+@section('content')
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
-</head>
-<body class="bg-white">
-    <!-- Lightning Progress Bar -->
-    @include('components.frontend.progress-bar')
+    <div class="iq-navbar-header navs-bg-color">
+        <div style="margin: 0; padding: 0; background: transparent; box-shadow: none;">
+            <h2 style="margin-top: -40px; padding: 0; font-size: 24px;">
+                Contact Messages
+            </h2>
+        </div>
 
-    <!-- Hero Section (30% of screen) -->
-    <div class="position-relative" style="height: 290.79px;">
-        <img src="{{ asset('images/frontend/slider1.webp') }}" alt="Contact Hero" class="w-100 h-100" style="object-fit: cover;">
-        <div class="position-absolute top-0 start-0 w-100 h-100" style="background: rgba(0,0,0,0.35);"></div>
-
-        <!-- First Navbar -->
-        @include('components.frontend.navbar')
-
-        <!-- Second Navbar -->
-        @include('components.frontend.second-navbar')
     </div>
     <style>
         * {
@@ -249,69 +228,94 @@
             accent-color: #d4af8c;
         }
     </style>
-    <div class="container py-4 " style="min-height:100vh">
-        <h2 class="mb-4 text-center">{{ __('profile.my_bookings') }}</h2>
-        <div class="table-responsive">
-            <table>
-                <thead >
-                    <tr>
-                        <th>#</th>
-                        <th>{{ __('profile.customer_name') }}</th>
-                        <th>{{ __('profile.mobile_number') }}</th>
-                        <th>{{ __('profile.neighborhood') }}</th>
-                        <th>{{ __('profile.branch') }}</th>
-                        <th>{{ __('profile.service') }}</th>
-                        <th>{{ __('profile.booking_date') }}</th>
-                        <th>{{ __('profile.booking_time') }}</th>
-                        <th>{{ __('profile.staff') }}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse($bookings as $booking)
-                        <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $booking->customer->first_name }} {{ $booking->customer->last_name }}</td>
-                            <td>{{ $booking->mobile_no }}</td>
-                            <td>{{ $booking->neighborhood }}</td>
-                            <td>{{ $booking->branch ?? '---'}}</td>
-                            <td>{{ $booking->service->name}}</td>
-                            <td>{{ $booking->date }}</td>
-                            <td>{{ $booking->time }}</td>
-                            <td>{{ $booking->staff->name }}</td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="7">{{ __('profile.no_bookings') }}</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
+    <div class="table-container">
+        <!-- Header -->
+
+        <!-- Controls -->
+        <div class="table-controls">
+            <div class="control-group">
+                <button class="btn">No Action</button>
+                <button class="btn active">Export</button>
+            </div>
+            <div class="control-group">
+                <select class="btn">
+                    <option>All</option>
+                </select>
+                <input type="text" class="search-input" placeholder="Search...">
+                <button class="btn new-btn">New</button>
+                <button class="btn filter-btn">Advance Filter</button>
+            </div>
         </div>
+
+        <!-- Table -->
+        <table>
+            <thead>
+            <tr>
+                <th><input type="checkbox" class="checkbox"></th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Message</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            @forelse ($messages as $message)
+                <tr>
+                    <td><input type="checkbox" class="checkbox"></td>
+                    <td>{{ $message->name }}</td>
+                    <td>{{ $message->email }}</td>
+                    <td>{{ $message->phone }}</td>
+                    <td>{{ \Illuminate\Support\Str::limit($message->message, 50) }}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <!-- Trigger Modal -->
+                            <button class="action-btn reply-btn" style="font-size: 22px;" title="Reply" data-bs-toggle="modal" data-bs-target="#replyModal-{{ $message->id }}">
+                                📧
+                            </button>
+                        </div>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="replyModal-{{ $message->id }}" tabindex="-1" aria-labelledby="replyModalLabel-{{ $message->id }}" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <form action="{{ route('admin.contact-messages.reply', $message->id) }}" method="POST">
+                                    @csrf
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="replyModalLabel-{{ $message->id }}">Reply to {{ $message->email }}</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="mb-3">
+                                                <label for="replyMessage" class="form-label">Your Reply</label>
+                                                <textarea name="message" class="form-control" rows="5" required></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary">Send Reply</button>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </td>
+
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="6" style="text-align: center;">No messages found.</td>
+                </tr>
+            @endforelse
+            </tbody>
+        </table>
     </div>
 
-    @include('components.frontend.footer')
 
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Toastr JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-      <script>
-      document.addEventListener("DOMContentLoaded", function () {
-          @if(session('success'))
-              toastr.success("{{ session('success') }}");
-          @endif
+@endsection
 
-          @if(session('error'))
-              toastr.error("{{ session('error') }}");
-          @endif
-
-          @if($errors->any())
-              @foreach($errors->all() as $error)
-                  toastr.error("{{ $error }}");
-              @endforeach
-          @endif
-      });
-  </script>
-</body>
-</html>
+@push('after-scripts')
+    {{-- أضف هنا أي ملفات JavaScript إضافية --}}
+    <script src="{{ asset('js/custom.js') }}"></script>
+@endpush

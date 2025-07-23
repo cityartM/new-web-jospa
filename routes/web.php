@@ -6,6 +6,7 @@ use App\Http\Controllers\Backend\BranchController;
 use App\Http\Controllers\Backend\NotificationsController;
 use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\UserController;
+use App\Http\Controllers\ContactMessageController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\PermissionController;
@@ -42,6 +43,7 @@ use App\Models\Branch;
 Route::get('/pay-now', [HomeBookingController::class, 'createPayment']);
 Route::get('/payment-success', [HomeBookingController::class, 'handlePaymentResult']);
 
+Route::post('/contact', [ContactMessageController::class, 'store'])->name('contact.store');
 
 //    SMS API
 Route::post('/send-sms', [HomeBookingController::class, 'send']);
@@ -63,6 +65,13 @@ Route::middleware('user.auth')->group(function () {
         return view('home.create');
     })->name('home.create');
 
+
+    Route::get('/contact/alll', function () {
+        return view('home.contact');
+    });
+
+    Route::get('/admin/contact-messages', [ContactMessageController::class, 'index'])->name('contact.index');
+    Route::post('/admin/contact-messages/{id}/reply', [ContactMessageController::class, 'reply'])->name('admin.contact-messages.reply');
 
     Route::get('/booking-calander', function () {
     return view('booking.create');
