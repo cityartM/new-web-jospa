@@ -102,7 +102,7 @@
     Route::get('/success-py', [SignController::class, 'handlePaymentResult']);
 
 
-    });
+    }); 
 
 
     Route::get('/service-groups', [HomeBookingController::class, 'getServiceGroups']);
