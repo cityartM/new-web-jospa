@@ -46,28 +46,26 @@
                 <thead class="table-light">
                     <tr>
                         <th>#</th>
-                        <th>{{ __('profile.customer_name') }}</th>
-                        <th>{{ __('profile.mobile_number') }}</th>
                         <th>{{ __('profile.neighborhood') }}</th>
                         <th>{{ __('profile.branch') }}</th>
                         <th>{{ __('profile.service') }}</th>
                         <th>{{ __('profile.booking_date') }}</th>
                         <th>{{ __('profile.booking_time') }}</th>
                         <th>{{ __('profile.staff') }}</th>
+                        <th>{{ __('profile.type') }}</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($bookings as $booking)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $booking->customer->first_name }} {{ $booking->customer->last_name }}</td>
-                            <td>{{ $booking->mobile_no }}</td>
                             <td>{{ $booking->neighborhood }}</td>
                             <td>{{ $booking->branch ?? '---'}}</td>
                             <td>{{ $booking->service->name}}</td>
                             <td>{{ $booking->date }}</td>
                             <td>{{ $booking->time }}</td>
                             <td>{{ $booking->staff->name }}</td>
+                            <td>{{ $booking->status }}</td>
                         </tr>
                     @empty
                         <tr>

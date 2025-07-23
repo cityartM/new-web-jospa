@@ -35,31 +35,31 @@ public function getAvailableTimes($date, $staffId)
     }
 
     $branchId = $user->branch->branch_id;
+    $shift = $user->shift?->shift_id ;
     $dayName = strtolower(Carbon::parse($date)->format('l'));
-
+    
     $workingHours = BussinessHour::where('branch_id', $branchId)
-        ->where('day', $dayName)
-        ->where('is_holiday', 0)
-        ->orderBy('id', 'desc')
-        ->first();
-
+    ->where('day', $dayName)
+    ->where('is_holiday', 0)
+    ->where('shift_id', $shift)
+    ->orderBy('id', 'desc')
+    ->first();
+    
     if (!$workingHours) {
         return response()->json([]);
     }
-
-    $start = Carbon::createFromFormat('H:i:s', $workingHours->start_time);
-    $end = Carbon::createFromFormat('H:i:s', $workingHours->end_time);
-
-    // // الأوقات المحجوزة
+    
+$start = Carbon::createFromFormat('H:i:s', $workingHours->start_time);
+$end   = Carbon::createFromFormat('H:i:s', $workingHours->end_time);
+    // الأوقات المحجوزة
     $bookedTimes = BookingService::where('employee_id', $staffId)
         ->whereDate('start_date_time', $date)
         ->pluck('start_date_time')
         ->map(fn($time) => Carbon::parse($time)->format('H:i'))
-        ->toArray();
+        ->toArray(); // ["21:00"]
 
     // أوقات الراحة (من الـ JSON في قاعدة البيانات)
     $breaks = $workingHours->breaks;
-
     $availableTimes = [];
     $current = $start->copy();
 
@@ -68,23 +68,24 @@ public function getAvailableTimes($date, $staffId)
 
         $isInBreak = false;
 
-        // نتحقق إذا الوقت ده جوه وقت الراحة
-        foreach ($breaks as $break) {
-            $breakStart = Carbon::createFromFormat('H:i', $break['start_break']);
-            $breakEnd = Carbon::createFromFormat('H:i:s', $break['end_break']);
+    foreach ($breaks as $break) {
+        $breakStart = Carbon::parse($break['start_break']);
+        $breakEnd = Carbon::parse($break['end_break']);
 
-            if ($current->between($breakStart, $breakEnd)) {
-                $isInBreak = true;
-                break;
-            }
+        if ($current->between($breakStart, $breakEnd)) {
+            $isInBreak = true;
+            break;
         }
+    }
+
 
         // لو مش في وقت راحة ولا محجوز
         if (!$isInBreak && !in_array($timeStr, $bookedTimes)) {
             $availableTimes[] = $timeStr;
         }
 
-        $current->addHour();
+        $current->addMinutes(30);
+
     }
 
     return response()->json($availableTimes);

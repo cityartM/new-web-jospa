@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'logout' => 'Logout',
+    'type' => 'Type',
     'birth_date' => 'Birth Date',
     'title' => 'My Profile',
     'info' => 'Information',

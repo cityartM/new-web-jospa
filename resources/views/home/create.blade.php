@@ -1646,14 +1646,14 @@
 
     
 function fetchAvailableTimes() {
+    
     if (!selectedData.date || !selectedData.massage) {
         console.warn('Date or staffId is missing.');
         return;
     }
 
     const date = selectedData.date.toISOString().split('T')[0];
-    const staffId = selectedData.massage;
-    
+    const staffId = selectedData.staff;
     fetch(`/available/${date}/${staffId}`)
         .then(response => response.json())
         .then(data => {
@@ -1679,7 +1679,7 @@ data.forEach(time => {
     const hour = parseInt(time.split(':')[0], 10);
     const slot = document.createElement('div');
     slot.className = 'time-slot';
-    slot.textContent = formatTime12Hour(time);
+    slot.textContent = time;
     slot.dataset.time = time;
 
     slot.addEventListener('click', () => {
@@ -1700,19 +1700,6 @@ data.forEach(time => {
         .catch(err => console.error('❌ خطأ أثناء جلب المواعيد:', err));
 }
 
-// تحويل الوقت من 24h إلى 12h بصيغة AM/PM
-function formatTime12Hour(time24) {
-    const [hour, minute] = time24.split(':');
-    const date = new Date();
-    date.setHours(hour);
-    date.setMinutes(minute);
-    return date.toLocaleTimeString('en-US', {
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: true
-    });
-}
-
 
     function showBookingSummary() {
         const bookingData = {
@@ -1730,7 +1717,7 @@ function formatTime12Hour(time24) {
         const summaryCard = document.getElementById('summaryCard');
         summaryCard.classList.remove('hidden');
         summaryCard.innerHTML = `
-        <div class="summary-details" style="padding: 20px; background-color: #f7f7f7; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+        <div class="summary-details" style="margin-bottom: 12px;padding: 20px; background-color: #f7f7f7; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
             <h3 style="color: #a8834b;">{{__('messagess.booking_summary') }}:</h3>
             <p><strong>{{__('messagess.name') }}:</strong> ${bookingData.n_name}</p>
             <p><strong>{{__('messagess.mobile_no') }}:</strong> ${bookingData.mobile_no}</p>

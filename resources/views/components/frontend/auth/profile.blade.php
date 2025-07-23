@@ -48,6 +48,7 @@
       }
       .profile-balance-corner {
         position: absolute;
+        display: flex;
         top: 0;
         align-items: center;
         padding: 10px;
@@ -353,7 +354,6 @@
 
         <!-- رصيد المستخدم في الزاوية -->
         <div class="profile-balance-corner"style="{{ app()->getLocale() == 'ar' ? 'right:19%;' : 'left:19%;' }}">
-            
             <div>
               <h3>{{ __('messagess.e_wallet') }}</h3>
             </div>
@@ -371,9 +371,12 @@
         </div>
 
         <div class="profile-balance-corner "style="{{ app()->getLocale() == 'ar' ? 'left:19%;' : 'right:19%;' }}">
-            <a href="{{route('profile.my_bookings')}}" style="text-decoration-line: none;background-color: #bc9a69;color: #fff;border-radius: 35px;padding: 13px;font-size: 16px;font-weight: bold;" >{{ __('messagess.my_bookings') }}</a>
+          <a href="{{route('profile.my_bookings')}}" style="margin: 17px;text-decoration-line: none;background-color: #bc9a69;color: #fff;border-radius: 35px;padding: 10px;font-size: 16px;font-weight: bold;" >{{ __('messagess.my_bookings') }}</a>
+          <form method="POST" action="{{ route('logout') }}">
+              @csrf
+              <button style="text-decoration-line: none;background-color: #bc2c2c;color: #fff;border-radius: 35px;padding: 10px;font-size: 16px;font-weight: bold;border: none;position: relative;" type="submit">{{__('profile.logout')}}</button>
+          </form>
         </div>
-
 
 
 

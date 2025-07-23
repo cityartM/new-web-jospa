@@ -41,10 +41,7 @@ font-family: 'IBM Plex Sans Arabic', sans-serif !important;
                         <h4 class="fw-bold mb-0" style="font-size: 1.8rem;">{{ __('messagess.email') }}</h4>
                     </div>
                     <div class="d-flex flex-column align-items-start gap-2" style="color: #333;">
-                        <div><strong>{{ __('messagess.info') }}:</strong> info@jospa-sa.com</div>
                         <div><strong>{{ __('messagess.support') }}:</strong> info@jospa-sa.com</div>
-                        <div><strong>{{ __('messagess.press') }}:</strong> info@jospa-sa.com</div>
-                        <div><strong>{{ __('messagess.contact') }}:</strong> info@jospa-sa.com</div>
                     </div>
                 </div>
             </div>

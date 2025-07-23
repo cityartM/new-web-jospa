@@ -95,6 +95,7 @@
     // Profile
     Route::get('/profile', [SignController::class, 'profile'])->name('profile');
     Route::put('/profile/{id}/update', [SignController::class, 'update'])->name('profile.update');
+    Route::post('/logout', [SignController::class, 'logout'])->name('logout');
 
     //  Balance
     Route::get('/pay-balance', [SignController::class, 'createPayment'])->name('balance');
